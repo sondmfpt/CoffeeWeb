@@ -27,15 +27,8 @@ public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("USER");
-        if (user == null) {
-            response.sendRedirect("./login");
-        }
-
-        System.out.println(user.getRole());
-
-        RequestDispatcher rd = request.getRequestDispatcher("index.html");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);
     }
 
