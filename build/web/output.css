@@ -1179,6 +1179,30 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.active--order {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(238 225 196 / var(--tw-bg-opacity)) !important;
+}
+
+.active--category {
+  cursor: default !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(158 130 108 / var(--tw-text-opacity)) !important;
+}
+
+.active--category::before {
+  position: absolute !important;
+  --tw-translate-x: -0.75rem !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+  --tw-content: '*' !important;
+  content: var(--tw-content) !important;
+}
+
+.active--category:hover {
+  --tw-translate-x: 0px !important;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+}
+
 .placeholder\:text-coffee-700::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(158 130 108 / var(--tw-text-opacity));

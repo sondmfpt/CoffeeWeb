@@ -17,7 +17,7 @@ public class DBHelper implements Serializable {
 
     public static Connection makeConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/coffee_shop?useSSL=false&allowPublicKeyRetrieval=true";
+        String url = "jdbc:mysql://localhost:3306/coffee_shop_product?useSSL=false&allowPublicKeyRetrieval=true";
         Connection con = DriverManager.getConnection(url, "springstudent", "springstudent");
         return con;
     }
