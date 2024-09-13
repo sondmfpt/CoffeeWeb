@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.util.Date;
+
 /**
  *
  * @author Son Duong
@@ -12,20 +14,24 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private String email;
+    private String gender;
     private String phone;
+    private Date date;
+    private String email;
     private String address;
     private String role;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String phone, String address, String role) {
+    public User(int id, String firstName, String lastName, String gender, String phone, Date date, String email, String address, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.gender = gender;
         this.phone = phone;
+        this.date = date;
+        this.email = email;
         this.address = address;
         this.role = role;
     }
@@ -54,12 +60,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getGender() {
+        return gender;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getPhone() {
@@ -68,6 +74,22 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -85,6 +107,8 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    
     
     
 }

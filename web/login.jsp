@@ -79,7 +79,7 @@
                             <h1 class="text-center text-xl font-bold text-slate-800">Registration</h1>
                             <p class="text-gray-500">Complete your profile by filling in this account creation form</p>
                         </div>
-                        <form class="" method="POST">
+                        <form class="" action="./registration" method="POST">
 
                             <div class="my-2">
                                 <label for="username">Username</label>
@@ -103,14 +103,32 @@
                                         <label for="firstName">FirstName</label>
                                         <input id="firstName"
                                                class="w-full border border-gray-300 rounded text-md p-2 my-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                               type="text" name="firstName" placeholder="First Name"/>
+                                               type="text" name="firstname" placeholder="First Name"/>
                                     </div>
                                     <div>
                                         <label for="lastName">LastName</label>
                                         <input id="lastName"
                                                class="w-full border border-gray-300 rounded text-md p-2 my-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                               type="text" name="lastName" placeholder="Last Name"/>
+                                               type="text" name="lastname" placeholder="Last Name"/>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="my-2 flex gap-5">
+                                <p>Gender: </p>
+                                <div class="flex gap-4">
+                                    <div>
+                                        <label for="male">Male</label>
+                                        <input id="male" type="radio" name="gender" value="Male">
+                                    </div>
+                                    <div>
+                                        <label for="female">Female</label>
+                                        <input id="female" type="radio" name="gender" value="Female">
+                                    </div>
+                                    <div>
+                                        <label for="other">Other</label>
+                                        <input id="other" type="radio" name="gender" value="Other">
+                                    </div>                        
                                 </div>
                             </div>
 
@@ -127,7 +145,7 @@
                                 <p>Date of Birth</p>
                                 <div class="my-2 grid grid-cols-12 gap-3">
                                     <div class="col-span-5">
-                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-month">
                                             <option value="" disabled selected>Month</option>
                                             <option value="01">January</option>
                                             <option value="02">February</option>
@@ -145,27 +163,20 @@
                                     </div>
                                     <!-- Day Dropdown -->
                                     <div class="col-span-3">
-                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-day">
                                             <option value="" disabled selected>Day</option>
-                                            <!-- Generate options for 1-31 -->
-                                            <script>
-                                                for (let day = 1; day <= 31; day++) {
-                                                    document.write(`<option value="${day < 10 ? '0' + day : day}">${day}</option>`);
-                                                }
-                                            </script>
+                                            <c:forEach var="day" begin="1" end="31">
+                                                <option value="${day < 10 ? '0' + day : day}">${day}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     <!-- Year Dropdown -->
                                     <div class="col-span-4">
-                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-year">
                                             <option value="" disabled selected>Year</option>
-                                            <!-- Generate options for years (e.g., 1900 to current year) -->
-                                            <script>
-                                                let currentYear = new Date().getFullYear();
-                                                for (let year = currentYear; year >= 1900; year--) {
-                                                    document.write(`<option value="${year}">${year}</option>`);
-                                                }
-                                            </script>
+                                            <c:forEach var="i" begin="0" end="${currentYear - 1900}">
+                                                <option value="${currentYear - i}">${currentYear - i}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import models.Login;
 import models.User;
 import utils.DBHelper;
@@ -42,9 +44,11 @@ public class LoginDAO {
                     String lastName = rs.getString("last_name");
                     String email = rs.getString("email");
                     String phone = rs.getString("phone");
+                    String gender = rs.getString("gender");
+                    Date date = rs.getDate("date_of_birth");
                     String address = rs.getString("address");
                     String role = rs.getString("role_name");
-                    user = new User(id, firstName, lastName, email, phone, address, role);
+                    user = new User(id, firstName, lastName, gender, phone, date, email, address, role);
                 }
 
             }
@@ -59,6 +63,37 @@ public class LoginDAO {
                 con.close();
             }
             return user;
+        }
+    }
+    
+    public void registration(String username, String password, String firstname, String lastname, String gender, String phone, LocalDate date) throws SQLException, ClassNotFoundException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO users(first_name, last_name, gender, phone, date_of_birth) "
+                        + "VALUE (?, ?, ?, ?, ?) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, firstname);
+                stm.setString(2, lastname);
+                stm.setString(3, gender);
+                stm.setString(4, phone);
+                stm.setDate(5, java.sql.Date.valueOf(date));
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
     }
 
