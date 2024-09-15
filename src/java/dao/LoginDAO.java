@@ -65,8 +65,63 @@ public class LoginDAO {
             return user;
         }
     }
-    
-    public void registration(String username, String password, String firstname, String lastname, String gender, String email, LocalDate date) throws SQLException, ClassNotFoundException{
+
+    public void saveToken(String email, String token) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO user_verification (email, token) VALUES (?, ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setString(2, token);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public boolean checkToken(String token) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM user_verification WHERE token = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, token);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public void registration(String username, String password, String firstname, String lastname, String gender, String email, LocalDate date) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -81,6 +136,46 @@ public class LoginDAO {
                 stm.setString(3, gender);
                 stm.setString(4, email);
                 stm.setDate(5, java.sql.Date.valueOf(date));
+                stm.executeUpdate();
+            }
+        } finally {
+            int maxUserId = getMaxAccountId();
+            saveAccount(maxUserId, username, password);
+        }
+    }
+
+    public int getMaxAccountId() throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int maxId = 0;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT id FROM users ORDER BY id DESC LIMIT 1";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    maxId = rs.getInt("id");
+                }
+            }
+        } finally {
+            return maxId;
+        }
+    }
+
+    public void saveAccount(int userId, String username, String password) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO accounts (username, password, user_id) VALUES (?, ?, ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                stm.setInt(3, userId);
                 stm.executeUpdate();
             }
         } finally {
