@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
-import models.Login;
+import models.Accounts;
 import models.User;
 import utils.DBHelper;
 
@@ -29,9 +29,9 @@ public class LoginDAO {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT u.*, r.role_name "
-                        + "FROM login l "
-                        + "JOIN users u ON l.user_id = u.user_id "
-                        + "JOIN role r ON r.role_id = u.role_id "
+                        + "FROM accounts a "
+                        + "JOIN users u ON a.user_id = u.id "
+                        + "JOIN role r ON r.id = u.role_id "
                         + "WHERE username = ? "
                         + "AND password = ?";
                 stm = con.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class LoginDAO {
                 stm.setString(2, password);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    int id = rs.getInt("user_id");
+                    int id = rs.getInt("id");
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
                     String email = rs.getString("email");
