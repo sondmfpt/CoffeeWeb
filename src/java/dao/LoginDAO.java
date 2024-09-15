@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import models.Login;
 import models.User;
 import utils.DBHelper;
 
@@ -27,7 +26,7 @@ public class LoginDAO {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT u.*, r.role_name "
-                        + "FROM login l "
+                        + "FROM accounts l "
                         + "JOIN users u ON l.user_id = u.user_id "
                         + "JOIN role r ON r.role_id = u.role_id "
                         + "WHERE username = ? "
