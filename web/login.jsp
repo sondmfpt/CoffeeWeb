@@ -48,14 +48,14 @@
                                 </div>
                             </c:if>
                             <div class="my-2">
-                                <label for="username">Username</label>
-                                <input id="username" class="border border-gray-300 rounded text-md p-2 my-1 w-full" type="text"
+                                <label for="username_login">Username</label>
+                                <input id="username_login" class="border border-gray-300 rounded text-md p-2 my-1 w-full" type="text"
                                        name="username"
                                        placeholder="Username"/><br>
                             </div>
                             <div class="my-2">
-                                <label for="password">Password</label>
-                                <input id="password" class="border border-gray-300 rounded text-md p-2 my-1 w-full"
+                                <label for="password_login">Password</label>
+                                <input id="password_login" class="border border-gray-300 rounded text-md p-2 my-1 w-full"
                                        type="password"
                                        name="password"
                                        placeholder="Password"/><br>
@@ -82,16 +82,16 @@
                         <form class="" action="./registration" method="POST">
 
                             <div class="my-2">
-                                <label for="username">Username</label>
-                                <input id="username"
+                                <label for="username_regis">Username</label>
+                                <input id="username_regis"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                        type="text"
                                        name="username"
                                        placeholder="Username"/><br>
                             </div>
                             <div class="my-2">
-                                <label for="password">Password</label>
-                                <input id="password"
+                                <label for="password_regis">Password</label>
+                                <input id="password_regis"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                        type="password"
                                        name="password"
@@ -133,12 +133,12 @@
                             </div>
 
                             <div class="my-2">
-                                <label for="phone">Phone</label>
-                                <input id="phone"
+                                <label for="email">Email</label>
+                                <input id="email"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                       type="text"
-                                       name="phone"
-                                       placeholder="Phone Number"/><br>
+                                       type="email"
+                                       name="email"
+                                       placeholder="Email"/><br>
                             </div>
 
                             <div class="my-2">

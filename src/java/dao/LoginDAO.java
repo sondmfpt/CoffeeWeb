@@ -66,21 +66,20 @@ public class LoginDAO {
         }
     }
     
-    public void registration(String username, String password, String firstname, String lastname, String gender, String phone, LocalDate date) throws SQLException, ClassNotFoundException{
+    public void registration(String username, String password, String firstname, String lastname, String gender, String email, LocalDate date) throws SQLException, ClassNotFoundException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        User user = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO users(first_name, last_name, gender, phone, date_of_birth) "
+                String sql = "INSERT INTO users(first_name, last_name, gender, email, date_of_birth) "
                         + "VALUE (?, ?, ?, ?, ?) ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, firstname);
                 stm.setString(2, lastname);
                 stm.setString(3, gender);
-                stm.setString(4, phone);
+                stm.setString(4, email);
                 stm.setDate(5, java.sql.Date.valueOf(date));
                 stm.executeUpdate();
             }

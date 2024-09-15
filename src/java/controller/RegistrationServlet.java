@@ -33,7 +33,7 @@ public class RegistrationServlet extends HttpServlet {
             String firstname = request.getParameter("firstname");
             String lastname = request.getParameter("lastname");
             String gender = request.getParameter("gender");
-            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
             int day = Integer.parseInt(request.getParameter("date-day"));
             int month = Integer.parseInt(request.getParameter("date-month"));
             int year = Integer.parseInt(request.getParameter("date-year"));
@@ -41,12 +41,12 @@ public class RegistrationServlet extends HttpServlet {
             
             try{
                 LoginDAO lDao = new LoginDAO();
-                lDao.registration(username, password, firstname, lastname, gender, phone, date);
+                lDao.registration(username, password, firstname, lastname, gender, email, date);
             }finally{
                 
             }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
