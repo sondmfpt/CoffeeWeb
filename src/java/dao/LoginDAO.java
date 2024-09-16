@@ -65,6 +65,37 @@ public class LoginDAO {
             return user;
         }
     }
+    
+    public boolean isDupplicatedUsername(String username) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM accounts WHERE username = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return false;
+        }
+    }
+    
 
     public void saveToken(String email, String token) throws SQLException, ClassNotFoundException {
         Connection con = null;
