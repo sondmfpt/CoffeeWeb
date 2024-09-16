@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
@@ -58,6 +59,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        request.setAttribute("currentYear", currentYear);
+        
+        String status = request.getParameter("status");
+        if(status != null) request.setAttribute("LOGINSTATUS", status);
         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
