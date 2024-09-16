@@ -15,6 +15,7 @@ public class RegisErrors {
     String dupplicatedUsername;
     String notFormatUsername;
     List<String> notFormatPassword;
+    String dupplicatedEmail;
 
     public RegisErrors() {
         notFormatPassword = new ArrayList<>();
@@ -25,6 +26,15 @@ public class RegisErrors {
         this.notFormatUsername = notFormatUsername;
         this.notFormatPassword = notFormatPassword;
     }
+
+    public String getDupplicatedEmail() {
+        return dupplicatedEmail;
+    }
+
+    public void setDupplicatedEmail(String dupplicatedEmail) {
+        this.dupplicatedEmail = dupplicatedEmail;
+    }
+    
 
     public String getDupplicatedUsername() {
         return dupplicatedUsername;

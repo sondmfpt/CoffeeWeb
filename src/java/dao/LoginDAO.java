@@ -65,7 +65,7 @@ public class LoginDAO {
             return user;
         }
     }
-    
+
     public boolean isDupplicatedUsername(String username) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -95,19 +95,49 @@ public class LoginDAO {
             return false;
         }
     }
-    
 
-    public void saveToken(String email, String token) throws SQLException, ClassNotFoundException {
+    public boolean isDupplicatedEmail(String email) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO user_verification (email, token) VALUES (?, ?)";
+                String sql = "SELECT * FROM users WHERE email = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public void saveToken(String email, String token, int minus) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO user_verification (email, token, expiry_time) VALUES (?, ?, NOW() + INTERVAL ? MINUTE)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, token);
+                stm.setInt(3, minus);
                 stm.executeUpdate();
             }
         } finally {
@@ -172,6 +202,7 @@ public class LoginDAO {
         } finally {
             int maxUserId = getMaxAccountId();
             saveAccount(maxUserId, username, password);
+            removeToken(email);
         }
     }
 
@@ -207,6 +238,23 @@ public class LoginDAO {
                 stm.setString(1, username);
                 stm.setString(2, password);
                 stm.setInt(3, userId);
+                stm.executeUpdate();
+            }
+        } finally {
+            
+        }
+    }
+    
+    public void removeToken(String email) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM user_verification WHERE email = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
                 stm.executeUpdate();
             }
         } finally {

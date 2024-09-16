@@ -48,9 +48,9 @@ public class EmailSender {
                     + "<html>\r\n"
                     + "<body>\r\n"
                     + "\r\n"
-                    + "<a href="+ confirmationLink + ">link</a>"
+                    + "<h2>Bấm vào <a href="+ confirmationLink + ">link</a> này để xác thực tài khoản</h2>"
                     + "<body>"
-                    + "<html>", "text/html");
+                    + "<html>", "text/html;charset=UTF-8");
             Transport.send(msg);
         }catch(Exception e){
             e.printStackTrace();

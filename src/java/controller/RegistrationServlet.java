@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -28,7 +29,7 @@ import models.RegisErrors;
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
-    
+
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,6 +40,7 @@ public class RegistrationServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String email = request.getParameter("email");
 
         Pattern patternPw = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$");
         Pattern patternUn = Pattern.compile("^(?=.*[A-Za-z])[A-Za-z0-9_]{6,}$");
@@ -58,8 +60,12 @@ public class RegistrationServlet extends HttpServlet {
             errors.setNotFormatUsername("Username must have least 6 characters");
             isError = true;
         }
-        
-        if(isError){
+        if (lDao.isDupplicatedEmail(email)){
+            errors.setDupplicatedEmail("This email is used!");
+            isError = true;
+        }
+
+        if (isError) {
             request.setAttribute("REGIS_ERRORS", errors);
             request.setAttribute("currentYear", currentYear);
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
@@ -69,18 +75,27 @@ public class RegistrationServlet extends HttpServlet {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String gender = request.getParameter("gender");
-        String email = request.getParameter("email");
         int day = Integer.parseInt(request.getParameter("date-day"));
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
         LocalDate date = LocalDate.of(year, month, day);
 
-        response.getWriter().write("Vui lòng kiểm tra email để xác nhận đăng ký.");
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Verify</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Vui lòng kiểm tra email để xác nhận đăng ký.</h1>");
+            out.println("</body>");
+            out.println("</html>");
 
         try {
 
             String token = UUID.randomUUID().toString();
-            lDao.saveToken(email, token);
+            lDao.saveToken(email, token, 3);
 
             String confirmationLink = generateConfirmationLink(username, password, firstname, lastname, gender, email, date, token);
             EmailSender.sendEmail(email, confirmationLink);

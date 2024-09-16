@@ -48,6 +48,12 @@
                                         out</i>
                                 </div>
                             </c:if>
+                            
+                            <c:if test="${status.equals('regisSuccess')}">
+                                <div>
+                                    <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Register successfully!</i>
+                                </div>
+                            </c:if>
                             <div class="my-2">
                                 <label for="username_login">Username</label>
                                 <input id="username_login" class="border border-gray-300 rounded text-md p-2 my-1 w-full" type="text"
@@ -146,7 +152,10 @@
                                 </div>
                             </div>
 
-                            <div class="my-2">
+                            <div class="my-2 relative">
+                                <c:if test="${regisErrors.getDupplicatedEmail() != null}">
+                                    <div class="absolute text-xs bg-yellow-200 rounded p-3 right-0 top-0 translate-x-3/4">${regisErrors.getDupplicatedEmail()}</div>
+                                </c:if>
                                 <label for="email">Email</label>
                                 <input id="email"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
