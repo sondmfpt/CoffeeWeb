@@ -4,6 +4,9 @@
  */
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Son Duong
@@ -11,26 +14,15 @@ package models;
 public class RegisErrors {
     String dupplicatedUsername;
     String notFormatUsername;
-    String notFormatPassword;
+    List<String> notFormatPassword;
 
     public RegisErrors() {
+        notFormatPassword = new ArrayList<>();
     }
 
-    public RegisErrors(String dupplicatedUsername, String notFormatUsername, String notFormatPassword) {
+    public RegisErrors(String dupplicatedUsername, String notFormatUsername, List<String> notFormatPassword) {
         this.dupplicatedUsername = dupplicatedUsername;
         this.notFormatUsername = notFormatUsername;
-        this.notFormatPassword = notFormatPassword;
-    }
-
-    public void setDupplicatedUsername(String dupplicatedUsername) {
-        this.dupplicatedUsername = dupplicatedUsername;
-    }
-
-    public void setNotFormatUsername(String notFormatUsername) {
-        this.notFormatUsername = notFormatUsername;
-    }
-
-    public void setNotFormatPassword(String notFormatPassword) {
         this.notFormatPassword = notFormatPassword;
     }
 
@@ -38,13 +30,26 @@ public class RegisErrors {
         return dupplicatedUsername;
     }
 
+    public void setDupplicatedUsername(String dupplicatedUsername) {
+        this.dupplicatedUsername = dupplicatedUsername;
+    }
+
     public String getNotFormatUsername() {
         return notFormatUsername;
     }
 
-    public String getNotFormatPassword() {
+    public void setNotFormatUsername(String notFormatUsername) {
+        this.notFormatUsername = notFormatUsername;
+    }
+
+    public List<String> getNotFormatPassword() {
         return notFormatPassword;
     }
+
+    public void setNotFormatPassword(List<String> notFormatPassword) {
+        this.notFormatPassword = notFormatPassword;
+    }
+
     
     
 }

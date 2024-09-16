@@ -82,30 +82,34 @@
                         </div>
                         <form class="" action="./registration" method="POST">
 
-                            <div class="my-2">
+                            <div class="my-2 relative">
+                                <c:if test="${regisErrors.getDupplicatedUsername() != null}">
+                                    <div class="absolute text-xs bg-yellow-200 rounded p-3 right-0 top-0 translate-x-3/4">${regisErrors.getDupplicatedUsername()}!</div>
+                                </c:if>
+                                <c:if test="${regisErrors.getNotFormatUsername() != null}">
+                                    <div class="absolute text-xs bg-yellow-200 rounded p-3 right-0 top-0 translate-x-3/4">${regisErrors.getNotFormatUsername()}!</div>
+                                </c:if>
                                 <label for="username_regis">Username</label>
                                 <input id="username_regis"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                        type="text"
                                        name="username"
                                        placeholder="Username" required/><br>
-                                <c:if test="${regisErrors.getDupplicatedUsername() != null}">
-                                    ${regisErrors.getDupplicatedUsername()}
-                                </c:if>
-                                <c:if test="${regisErrors.getNotFormatUsername() != null}">
-                                    ${regisErrors.getNotFormatUsername()}
-                                </c:if>
                             </div>
-                            <div class="my-2">
+                            <div class="my-2 relative">
+                                <c:if test="${regisErrors.getNotFormatPassword() != null}">
+                                    <ul class="absolute text-xs bg-yellow-200 rounded p-3 right-0 top-0 translate-x-3/4">
+                                        <c:forEach var="error" items="${regisErrors.getNotFormatPassword()}">
+                                            <li>${error}</li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
                                 <label for="password_regis">Password</label>
                                 <input id="password_regis"
                                        class="border border-gray-300 rounded text-md p-2 my-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                        type="password"
                                        name="password"
                                        placeholder="Password" required/><br>
-                                <c:if test="${regisErrors.getNotFormatPassword() != null}">
-                                    ${regisErrors.getNotFormatPassword()}
-                                </c:if>
                             </div>
                             <div class="my-2">
                                 <div class="flex justify-between gap-3">
@@ -212,7 +216,7 @@
             document.getElementById("signUpToggle").addEventListener("click", function () {
                 window.location.replace('/SWP_Project/login');
             });
-            
+
             if (window.location.pathname === '/SWP_Project/registration') {
                 document.getElementById("loginForm").classList.remove("hidden");
                 document.getElementById("signUpForm").classList.add("hidden");

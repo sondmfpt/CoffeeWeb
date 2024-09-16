@@ -48,7 +48,10 @@ public class RegistrationServlet extends HttpServlet {
             isError = true;
         }
         if (!patternPw.matcher(password).matches()) {
-            errors.setNotFormatPassword("Password must have least 6 characters, least 1 upper case, least 1 number, least 1 special character");
+            errors.getNotFormatPassword().add("Password must have least 6 characters");
+            errors.getNotFormatPassword().add("Least 1 upper case");
+            errors.getNotFormatPassword().add("Least 1 number");
+            errors.getNotFormatPassword().add("Least 1 special character");
             isError = true;
         }
         if (!patternUn.matcher(username).matches()) {
