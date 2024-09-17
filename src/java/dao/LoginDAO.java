@@ -315,5 +315,32 @@ public class LoginDAO {
             return user;
         }
     }
+    
+    
+    public void resetPassword(int id, String password) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE accounts SET password = ? WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, password);
+                stm.setInt(2, id);
+                stm.executeUpdate();
 
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

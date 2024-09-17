@@ -54,6 +54,12 @@
                                     <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Register successfully!</i>
                                 </div>
                             </c:if>
+                            
+                            <c:if test="${status.equals('resetSuccess')}">
+                                <div>
+                                    <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Reset Password successfully!</i>
+                                </div>
+                            </c:if>
                             <div class="my-2">
                                 <label for="username_login">Username</label>
                                 <input id="username_login" class="border border-gray-300 rounded text-md p-2 my-1 w-full" type="text"
