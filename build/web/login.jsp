@@ -48,7 +48,7 @@
                                         out</i>
                                 </div>
                             </c:if>
-                            
+
                             <c:if test="${status.equals('regisSuccess')}">
                                 <div>
                                     <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Register successfully!</i>
@@ -67,7 +67,7 @@
                                        name="password"
                                        placeholder="Password" required/><br>
                             </div>
-                            <a class="block text-end text-blue-500 text-sm" href="#">Forgot your password?</a>
+                            <a class="block text-end text-blue-500 text-sm" href="./reset-password?status=enterAccount">Forgot your password?</a>
                             <input class="py-2 px-3 my-3 w-full bg-green-500 rounded cursor-pointer text-white" type="submit"
                                    value="Login"/>
                         </form>
@@ -107,7 +107,7 @@
                                     <ul class="absolute text-xs bg-yellow-200 rounded p-3 right-0 top-0 translate-x-3/4">
                                         <c:forEach var="error" items="${regisErrors.getNotFormatPassword()}">
                                             <li>${error}</li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </c:if>
                                 <label for="password_regis">Password</label>
