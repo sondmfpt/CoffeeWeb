@@ -4,28 +4,45 @@
  */
 package models;
 
+import java.util.Date;
+
 /**
  *
  * @author Son Duong
  */
 public class User {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String address;
-    private String role;
+
+    public int id;
+    public String firstName;
+    public String lastName;
+    public String gender;
+    public String phone;
+    public Date dob;
+    public String email;
+    public String address;
+    public String role;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String phone, String address, String role) {
+    public User(int userid, String firstName, String lastName, String email, String phone, String address, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
+        this.address = address;
+        this.role = role;
+    }
+
+    public User(int id, String firstName, String lastName, String gender, String phone, Date dob, String email, String address, String role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.phone = phone;
+        this.dob = dob;
+        this.email = email;
         this.address = address;
         this.role = role;
     }
@@ -34,57 +51,40 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public String getGender() {
+        return gender;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public Date getDob() {
+        return dob;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-    
-    
 }

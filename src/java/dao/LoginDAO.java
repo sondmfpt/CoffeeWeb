@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.Login;
 import models.User;
-import utils.DBHelper;
+import database.DBHelper;
 
 /**
  *
