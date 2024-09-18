@@ -99,16 +99,16 @@ public class ResetPasswordServlet extends HttpServlet {
             }
             if (check) {
                 response.sendRedirect("./reset-password?status=resetPassword" + error);
+            } else {
+                int id = (int) session.getAttribute("USER_ID");
+                lDao.resetPassword(id, newPw);
+                session.removeAttribute("USER_ID");
+                session.removeAttribute("USER_EMAIL");
+                session.removeAttribute("USER_PHONE");
+                session.removeAttribute("USER_FIRSTNAME");
+                session.removeAttribute("USER_LASTNAME");
+                response.sendRedirect("./login?status=resetSuccess");
             }
-            int id = (int) session.getAttribute("USER_ID");
-            lDao.resetPassword(id, newPw);
-            session.removeAttribute("USER_ID");
-            session.removeAttribute("USER_EMAIL");
-            session.removeAttribute("USER_PHONE");
-            session.removeAttribute("USER_FIRSTNAME");
-            session.removeAttribute("USER_LASTNAME");
-            response.sendRedirect("./login?status=resetSuccess");
-
         }
 
     }
