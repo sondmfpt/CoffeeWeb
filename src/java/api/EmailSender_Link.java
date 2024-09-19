@@ -13,7 +13,7 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-public class EmailSender {
+public class EmailSender_Link {
     public static void sendEmail(String recipient, String confirmationLink) {
         
         final String from = "duongminhson1601@gmail.com";
