@@ -225,14 +225,14 @@
         </div>
 
         <script>
-            document.getElementById("loginToggle").addEventListener("click", function () {
+            document.querySelector('#loginToggle').addEventListener("click", function () {
                 window.location.replace('/SWP_Project/registration');
             });
-            document.getElementById("signUpToggle").addEventListener("click", function () {
+            document.querySelector('#signUpToggle').addEventListener("click", function () {
                 window.location.replace('/SWP_Project/login');
             });
 
-            if (window.location.pathname === '/SWP_Project/registration') {
+            if (window.location.pathname === '/SWP_Project/login') {
                 document.getElementById("loginForm").classList.remove("hidden");
                 document.getElementById("signUpForm").classList.add("hidden");
 

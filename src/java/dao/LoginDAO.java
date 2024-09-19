@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import models.Accounts;
 import models.User;
-import utils.DBHelper;
+import database.DBHelper;
 
 /**
  *
@@ -324,7 +324,7 @@ public class LoginDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "UPDATE accounts SET password = ? WHERE id = ?";
+                String sql = "UPDATE accounts SET password = ? WHERE user_id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, password);
                 stm.setInt(2, id);
