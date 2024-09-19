@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <%
-        User u = (User) request.getAttribute("user");
+        User u = (User) session.getAttribute("USER");
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,9 +15,9 @@
         <p>Full name: <%=u.getFirstName()%> <%=u.getLastName()%></p>
         <p>Gender: <%=u.getGender()%></p>
         <p>Phone Number: <%if (u.getPhone() == null) {%>none<%}else{%><%=u.getPhone()%><%}%></p>
-        <p>Date of birth: <%if (u.getDob() == null) {%>none<%}else{%><%=u.getDob()%><%}%></p>
-        <p>email: <%if (u.getEmail() == null) {%>none<%}else{%><%=u.getEmail()%><%}%></p>
-        <p>address <%if (u.getAddress() == null) {%>none<%}else{%><%=u.getAddress()%><%}%></p>
+        <p>Date of birth: <%if (u.getDate() == null) {%>none<%}else{%><%=u.getDate()%><%}%></p>
+        <p>Email: <%if (u.getEmail() == null) {%>none<%}else{%><%=u.getEmail()%><%}%></p>
+        <p>Address: <%if (u.getAddress() == null) {%>none<%}else{%><%=u.getAddress()%><%}%></p>
         <p>Role: <%=u.getRole()%></p>
         <a href="updateProfile" class=""><div class="btn btn-orange">Update Profile</div></a>
         <%} else {%>

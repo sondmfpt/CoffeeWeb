@@ -19,7 +19,10 @@ public class UserProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("USER");
+            int id = user.getId();
+            
             UserDAO ud = new UserDAO();
             User u = ud.getUserWithId(id);
             request.setAttribute("user", u);
