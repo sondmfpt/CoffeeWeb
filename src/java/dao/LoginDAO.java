@@ -269,5 +269,78 @@ public class LoginDAO {
             }
         }
     }
+    
+    
+//    RESET PASSWORD
+    public User getUser(String username) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT u.* , r.role_name "
+                        + "FROM users u "
+                        + "JOIN accounts a ON u.id = a.user_id "
+                        + "JOIN role r ON r.id = u.role_id "
+                        + "WHERE a.username = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("phone");
+                    String gender = rs.getString("gender");
+                    Date date = rs.getDate("date_of_birth");
+                    String address = rs.getString("address");
+                    String role = rs.getString("role_name");
+                    user = new User(id, firstName, lastName, gender, phone, date, email, address, role); 
+                }
 
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return user;
+        }
+    }
+    
+    
+    public void resetPassword(int id, String password) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE accounts SET password = ? WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, password);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

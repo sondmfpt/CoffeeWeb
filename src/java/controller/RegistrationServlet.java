@@ -4,7 +4,7 @@
  */
 package controller;
 
-import api.EmailSender;
+import api.EmailSender_Link;
 import dao.LoginDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
-        Pattern patternPw = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$");
+        Pattern patternPw = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_])[A-Za-z\\d@$!%*?&_]{6,}$");
         Pattern patternUn = Pattern.compile("^(?=.*[A-Za-z])[A-Za-z0-9_]{6,}$");
 
         if (lDao.isDupplicatedUsername(username)) {
@@ -60,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
             errors.setNotFormatUsername("Username must have least 6 characters");
             isError = true;
         }
-        if (lDao.isDupplicatedEmail(email)){
+        if (lDao.isDupplicatedEmail(email)) {
             errors.setDupplicatedEmail("This email is used!");
             isError = true;
         }
@@ -70,38 +70,51 @@ public class RegistrationServlet extends HttpServlet {
             request.setAttribute("currentYear", currentYear);
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
-        }
+        } else {
 
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String gender = request.getParameter("gender");
-        int day = Integer.parseInt(request.getParameter("date-day"));
-        int month = Integer.parseInt(request.getParameter("date-month"));
-        int year = Integer.parseInt(request.getParameter("date-year"));
-        LocalDate date = LocalDate.of(year, month, day);
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
+            String gender = request.getParameter("gender");
+            int day = Integer.parseInt(request.getParameter("date-day"));
+            int month = Integer.parseInt(request.getParameter("date-month"));
+            int year = Integer.parseInt(request.getParameter("date-year"));
+            LocalDate date = LocalDate.of(year, month, day);
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Verify</title>");            
+            out.println("<title>Verify</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Vui lòng kiểm tra email để xác nhận đăng ký.</h1>");
             out.println("</body>");
             out.println("</html>");
 
-        try {
+            try {
 
-            String token = UUID.randomUUID().toString();
-            lDao.saveToken(email, token, 3);
+                String token = UUID.randomUUID().toString();
+                lDao.saveToken(email, token, 3);
 
-            String confirmationLink = generateConfirmationLink(username, password, firstname, lastname, gender, email, date, token);
-            EmailSender.sendEmail(email, confirmationLink);
+                String confirmationLink = generateConfirmationLink(username, password, firstname, lastname, gender, email, date, token);
+                EmailSender_Link.sendEmail(email, confirmationLink);
 
-        } finally {
+            } finally {
 
+            }
+
+            try {
+
+                String token = UUID.randomUUID().toString();
+                lDao.saveToken(email, token, 3);
+
+                String confirmationLink = generateConfirmationLink(username, password, firstname, lastname, gender, email, date, token);
+                EmailSender_Link.sendEmail(email, confirmationLink);
+
+            } finally {
+
+            }
         }
     }
 

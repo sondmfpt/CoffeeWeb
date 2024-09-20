@@ -48,9 +48,7 @@ public class LoginServlet extends HttpServlet {
             if (url == HOME) {
                 response.sendRedirect(url);
             } else {
-                request.setAttribute("LOGINSTATUS", "error");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.forward(request, response);
+                response.sendRedirect("./login?status=error");
             }
         }
 
