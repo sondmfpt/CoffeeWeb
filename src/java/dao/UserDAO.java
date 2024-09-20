@@ -45,22 +45,26 @@ public class UserDAO {
     }
 
     public void updateUserWithId(String firstName, String lastName, String gender, String phone, Date dob, String email, String address, int id) {
-        String query = "UPDATE users "
-                + "SET first_name = ?,"
-                + "last_name = ?"
-                + "gender = ?"
-                + "phone = ?"
-                + "date_of_birth = ?"
-                + "email = ?"
-                + "address = ?"
-                + "WHERE user_id = ?;";
+        String query = "UPDATE users " +
+                                "SET first_name = ?, " +
+                                "last_name = ?, " +
+                                "gender = ?, " +
+                                "phone = ?, " +
+                                "date_of_birth = ?, " +
+                                "email = ?, " +
+                                "address = ? " +
+                                "WHERE id = ?;";
         try {
             ps = con.prepareStatement(query);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
             ps.setString(3, gender);
             ps.setString(4, phone);
-            ps.setDate(5, new java.sql.Date(dob.getTime()));
+            if (dob != null) {
+                ps.setDate(5, new java.sql.Date(dob.getTime()));
+            } else {
+                ps.setDate(5, null);
+            }
             ps.setString(6, email);
             ps.setString(7, address);
             ps.setInt(8, id);
