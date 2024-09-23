@@ -8,17 +8,17 @@ package models;
  *
  * @author Son Duong
  */
-public class Login {
+public class Accounts {
     private int id;
     private String username;
     private String password;
     private boolean active;
     private int userId;
 
-    public Login() {
+    public Accounts() {
     }
 
-    public Login(int id, String username, String password, boolean active, int userId) {
+    public Accounts(int id, String username, String password, boolean active, int userId) {
         this.id = id;
         this.username = username;
         this.password = password;
