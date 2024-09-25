@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import models.Product;
 import models.ProductVariant;
+import models.Trend;
 import org.json.JSONObject;
 
 public class ProductDAO {
@@ -35,8 +36,9 @@ public class ProductDAO {
                     String productName = rs.getString("product_name");
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
+                    int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, description);
+                    product = new Product(id, productName, categoryName, thumbnailUrl, totalSold, description);
                 }
 
             }
@@ -53,7 +55,7 @@ public class ProductDAO {
             return product;
         }
     }
-    
+
     public void addListImgToProduct(Product product) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -101,8 +103,9 @@ public class ProductDAO {
                     String productName = rs.getString("product_name");
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
+                    int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, description));
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, totalSold, description));
                 }
 
             }
@@ -186,7 +189,6 @@ public class ProductDAO {
         }
     }
 
-    
     public void addProductVariant(int productId, JSONObject attribute, int originPrice, int salePrice) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -213,6 +215,85 @@ public class ProductDAO {
             if (con != null) {
                 con.close();
             }
+        }
+    }
+
+    public Trend getTrend(int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Trend trend = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT t.*, tp.product_id, tp.brief_information, p.product_name, p.thumbnail_url "
+                        + "FROM trends t "
+                        + "JOIN trend_product tp ON tp.trend_id = t.id "
+                        + "JOIN products p ON p.id = tp.product_id "
+                        + "WHERE t.id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt("product_id"));
+                    product.setName(rs.getString("product_name"));
+                    product.setThumbnailUrl(rs.getString("thumbnail_url"));
+
+                    String title = rs.getString("title");
+                    String subTitle = rs.getString("sub_title");
+                    String brief = rs.getString("brief_information");
+                    if (trend == null || id != trend.getId()) {
+                        trend = new Trend(id, title, subTitle);
+                    }
+                    trend.addProduct(product, brief);
+
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return trend;
+        }
+    }
+    
+    public List<Product> getBestSellingProduct() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM products ORDER BY total_sold DESC LIMIT 4";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt("id"));
+                    product.setName(rs.getString("product_name"));
+                    product.setThumbnailUrl(rs.getString("thumbnail_url"));
+                    products.add(product);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return products;
         }
     }
 }

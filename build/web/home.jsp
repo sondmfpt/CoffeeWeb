@@ -143,11 +143,18 @@
                 </div>
             </section>
 
+            <c:set var="trend" value="${TREND}"/>
+            <c:set var="productTrend1" value="${trend.getAllProduct().get(0)}"/>
+            <c:set var="productTrend2" value="${trend.getAllProduct().get(1)}"/>
             <section class="">
                 <div class="bg-coffee-200 text-black">
                     <div class="container mx-auto pt-10 pb-20">
                         <div class="w-full h-20"></div>
                         <!-- CONTENT -->
+                        <div class="text-center">
+                            <h1 class="text-8xl font-bold">${trend.getTitle()}</h1>
+                            <h2 class="text-4xl text-coffee-500">${trend.getSubTitle()}</h2>
+                        </div>
                         <!-- CONTENT-TOP -->
                         <div class="grid grid-cols-2 gap-3 mt-16">
                             <div class="col-span-1 ml-10">
@@ -157,14 +164,12 @@
                                     class="absolute w-[300px] h-[300px] border-2 border-black transform skew-x-[20deg] rotate-45">
                                 </div>
                                 <div class="w-[400px] h-[400px] overflow-hidden rotate-[-6deg]">
-                                    <img class="object-cover w-full h-full object-left-top" src="./img/2.png" alt="">
+                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/${productTrend1.getKey().getThumbnailUrl()}" alt="">
                                 </div>
                             </div>
                             <div class="col-span-1 mt-10">
-                                <h1 class="text-7xl font-bold">Coffee Heaven</h1>
-                                <p class="my-10 text-coffee-700">Lorem Ipsim Is Simply Dummy Text Of The Printing And
-                                    Typesetting Industry. Lorem Ipsum
-                                    Has Been The Industrys Standard Dummy Text Ever Since The 1500s.</p>
+                                <h1 class="text-7xl font-bold">${productTrend1.getKey().getName()}</h1>
+                                <p class="my-10 text-coffee-700">${productTrend1.getValue()}</p>
                                 <button class="py-2 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
                                     View All
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
@@ -175,10 +180,8 @@
                         <!-- CONTENT-BOTTOM -->
                         <div class="grid grid-cols-2 gap-3 mt-44">
                             <div class="col-span-1 mt-10 mr-20 text-right">
-                                <h1 class="text-7xl font-bold">Jean's Coffee</h1>
-                                <p class="my-10 text-coffee-700">Lorem Ipsim Is Simply Dummy Text Of The Printing And
-                                    Typesetting Industry. Lorem Ipsum
-                                    Has Been The Industrys Standard Dummy Text Ever Since The 1500s.</p>
+                                <h1 class="text-7xl font-bold">${productTrend2.getKey().getName()}</h1>
+                                <p class="my-10 text-coffee-700">${productTrend2.getValue()}</p>
                                 <button class="py-2 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
                                     View All
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
@@ -192,7 +195,7 @@
                                     class="absolute w-[300px] h-[300px] border-2 border-black transform skew-y-[10deg] rotate-45">
                                 </div>
                                 <div class="w-[400px] h-[400px] overflow-hidden rotate-[3deg]">
-                                    <img class="object-cover w-full h-full object-left-top" src="./img/3.png" alt="">
+                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/${productTrend2.getKey().getThumbnailUrl()}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -200,6 +203,7 @@
                 </div>
             </section>
 
+            <c:set var="bestSellings" value="${BESTSELLING}"/>
             <section class="h-screen">
                 <div class="h-full bg-coffee-500 text-black">
                     <div class="container mx-auto pt-10 pb-20 text-center">
@@ -210,65 +214,26 @@
                                 Has Been The Industrys Standard Dummy Text Ever Since The 1500s.</p>
                         </div>
                         <div class="grid grid-cols-4 gap-5">
-                            <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
-                                <div class="relative flex flex-col items-center">
-                                    <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
-                                    <div class="w-[250px] h-[250px] p-5 z-10">
-                                        <img class="object-cover w-full h-full border-8 border-coffee-500"
-                                             src="./img/ca-phe-capuchino-1.jpg" alt="">
+                            <c:forEach var="pro" items="${bestSellings}">
+                                <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
+                                    <div class="relative flex flex-col items-center">
+                                        <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
+                                        <div class="w-[250px] h-[250px] p-5 z-10">
+                                            <img class="object-cover w-full h-full border-8 border-coffee-500"
+                                                 src="./img/${pro.getThumbnailUrl()}" alt="">
+                                        </div>
+                                        <div class="text-3xl font-bold pb-3">${pro.getName()}</div>
                                     </div>
-                                    <div class="text-3xl font-bold pb-3">Cappuchino</div>
-                                </div>
-                                <div class="bg-[#c7ad8e] border-t-2 border-t-black">
-                                    <div class="text-3xl py-3">Order Now</div>
-                                </div>
-                            </div>
-
-                            <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
-                                <div class="relative flex flex-col items-center">
-                                    <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
-                                    <div class="w-[250px] h-[250px] p-5 z-10">
-                                        <img class="object-cover w-full h-full border-8 border-coffee-500"
-                                             src="./img/ca-phe-capuchino-1.jpg" alt="">
+                                    <div class="bg-[#c7ad8e] border-t-2 border-t-black">
+                                        <div class="text-3xl py-3">Order Now</div>
                                     </div>
-                                    <div class="text-3xl font-bold pb-3">Cappuchino</div>
                                 </div>
-                                <div class="bg-[#c7ad8e] border-t-2 border-t-black">
-                                    <div class="text-3xl py-3">Order Now</div>
-                                </div>
-                            </div>
-
-                            <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
-                                <div class="relative flex flex-col items-center">
-                                    <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
-                                    <div class="w-[250px] h-[250px] p-5 z-10">
-                                        <img class="object-cover w-full h-full border-8 border-coffee-500"
-                                             src="./img/ca-phe-capuchino-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-3xl font-bold pb-3">Cappuchino</div>
-                                </div>
-                                <div class="bg-[#c7ad8e] border-t-2 border-t-black">
-                                    <div class="text-3xl py-3">Order Now</div>
-                                </div>
-                            </div>
-
-                            <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
-                                <div class="relative flex flex-col items-center">
-                                    <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
-                                    <div class="w-[250px] h-[250px] p-5 z-10">
-                                        <img class="object-cover w-full h-full border-8 border-coffee-500"
-                                             src="./img/ca-phe-capuchino-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-3xl font-bold pb-3">Cappuchino</div>
-                                </div>
-                                <div class="bg-[#c7ad8e] border-t-2 border-t-black">
-                                    <div class="text-3xl py-3">Order Now</div>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
             </section>
+
 
             <section class="h-screen">
                 <div class="h-full bg-coffee-200 text-black py-20">
@@ -278,82 +243,66 @@
                         </div>
 
                         <!-- SLIDER -->
-                        <div id="default-carousel" class="relative w-full" data-carousel="slide">
-                            <!-- Carousel wrapper -->
-                            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                                <!-- Item 1 -->
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="./img/barista-prepare-coffee-working-order-concept-PBZ6VQ6-768x343-1.jpg"
-                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                         alt="...">
+                        <div class="container mx-auto mt-10">
+                            <!-- Slider Container -->
+                            <div class="relative flex transition overflow-hidden w-full h-[26rem] rounded">
+                                <!-- Slide Images -->
+                                <div id="slider" class="flex ease-in-out duration-500">
+                                    <div class="slide min-w-full">
+                                        <img src="./img/z2414481606361_e0187cf03a309dbfb1afe862d24a116b.jpg" alt="Image 1" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="slide min-w-full">
+                                        <img src="./img/z2414482145717_2ab282fe361bbfa497d7a4dcb678fee0.jpg" alt="Image 2" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="slide min-w-full">
+                                        <img src="./img/z2839027460835_06af8c891450c731e6a56e024c1905b4.jpg" alt="Image 3" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="slide min-w-full">
+                                        <img src="./img/fresh-coffee-with-cinnamon-QR8W4GN-960x604-1.jpg" alt="Image 4" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="slide min-w-full">
+                                        <img src="./img/barista-prepare-coffee-working-order-concept-PBZ6VQ6-768x343-1.jpg" alt="Image 5" class="w-full h-full object-cover">
+                                    </div>
                                 </div>
-                                <!-- Item 2 -->
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="./img/z2839027460835_06af8c891450c731e6a56e024c1905b4.jpg"
-                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                         alt="...">
-                                </div>
-                                <!-- Item 3 -->
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="./img/z2414481606361_e0187cf03a309dbfb1afe862d24a116b.jpg"
-                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                         alt="...">
-                                </div>
-                                <!-- Item 4 -->
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="./img/z2414482145717_2ab282fe361bbfa497d7a4dcb678fee0.jpg"
-                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                         alt="...">
-                                </div>
-                                <!-- Item 5 -->
-                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                    <img src="./img/fresh-coffee-with-cinnamon-QR8W4GN-960x604-1.jpg"
-                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                         alt="...">
-                                </div>
+
+                                <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800/[0.1] text-white px-6 h-full">
+                                    &#10094;
+                                </button>
+                                <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800/[0.1] text-white px-6 h-full">
+                                    &#10095;
+                                </button>
                             </div>
-                            <!-- Slider indicators -->
-                            <div
-                                class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                                        data-carousel-slide-to="0"></button>
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
-                                        data-carousel-slide-to="1"></button>
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
-                                        data-carousel-slide-to="2"></button>
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
-                                        data-carousel-slide-to="3"></button>
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5"
-                                        data-carousel-slide-to="4"></button>
-                            </div>
-                            <!-- Slider controls -->
-                            <button type="button"
-                                    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                                    data-carousel-prev>
-                                <span
-                                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2" d="M5 1 1 5l4 4"/>
-                                    </svg>
-                                    <span class="sr-only">Previous</span>
-                                </span>
-                            </button>
-                            <button type="button"
-                                    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                                    data-carousel-next>
-                                <span
-                                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2" d="m1 9 4-4-4-4"/>
-                                    </svg>
-                                    <span class="sr-only">Next</span>
-                                </span>
-                            </button>
                         </div>
+
+                        <script>
+                            const slider = document.getElementById('slider');
+                            const slides = document.querySelectorAll('.slide');
+                            const prevButton = document.getElementById('prev');
+                            const nextButton = document.getElementById('next');
+
+                            let currentIndex = 0;
+
+                            function showSlide(index) {
+                                var transform = "translateX(-" + (index * 100) + "%)";
+                                console.log(transform);
+                                slider.style.transform = (transform);
+                            }
+
+                            prevButton.addEventListener('click', () => {
+                                currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+                                showSlide(currentIndex);
+                            });
+
+                            nextButton.addEventListener('click', () => {
+                                currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+                                showSlide(currentIndex);
+                            });
+
+                            setInterval(() => {
+                                currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+                                showSlide(currentIndex);
+                            }, 5000);
+                        </script>
 
                         <div class="text-center mt-10 text-xl">
                             <a class="group inline-block font-bold"
@@ -462,19 +411,19 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
         <script>
-            window.onscroll = function () {
-                toggleNavbar()
-            };
+                            window.onscroll = function () {
+                                toggleNavbar()
+                            };
 
-            function toggleNavbar() {
-                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                    document.getElementById("navbar").classList.remove("hidden");
-                    document.getElementById("navbar").classList.remove("z-[-1]");
-                } else {
-                    document.getElementById("navbar").classList.add("hidden");
-                    document.getElementById("navbar").classList.add("z-[-1]");
-                }
-            }
+                            function toggleNavbar() {
+                                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                                    document.getElementById("navbar").classList.remove("hidden");
+                                    document.getElementById("navbar").classList.remove("z-[-1]");
+                                } else {
+                                    document.getElementById("navbar").classList.add("hidden");
+                                    document.getElementById("navbar").classList.add("z-[-1]");
+                                }
+                            }
         </script>
     </body>
 </html>
