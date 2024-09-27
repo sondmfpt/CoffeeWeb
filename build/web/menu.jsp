@@ -1,6 +1,6 @@
 <%-- 
     Document   : menu
-    Created on : Sep 12, 2024, 11:17:48 PM
+    Created on : Sep 27, 2024, 1:47:15 PM
     Author     : Son Duong
 --%>
 
@@ -10,16 +10,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Menu Page</title>
+        <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="./output.css" rel="stylesheet">
     </head>
     <body class="font-serif scroll-smooth">
+        <c:set var="user" value="${USER}"/>
         <div class="flex flex-col bg-coffee-200">
             <!-- NAVBAR SCROLL-->
-            <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden">
+            <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
                 <div class="flex justify-around items-center h-full">
-                    <div class="text-4xl text-white font-bold">Caffeine</div>
+                    <a href="./home" class="text-4xl text-white font-bold cursor-pointer">Caffeine</a>
                     <div class="">
                         <ul class="flex flex-row">
                             <li class="mx-4 cursor-pointer hover:text-coffee-700">Home</li>
@@ -29,7 +30,30 @@
                         </ul>
                     </div>
                     <div class="flex flex-row">
-                        <div class="cursor-pointer hover:text-coffee-700">Sign in</div>
+                        <c:choose>
+                            <c:when test="${user == null}">
+                                <a href="./login" class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">Sign
+                                    in
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="relative group">
+                                    <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                        <i class="fa-solid fa-user text-black"></i>
+                                    </div>
+                                    <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown">
+                                        <div class="text-black">
+                                            <div class="text-xl bg-coffee-500 rounded-t">
+                                                <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
+                                            </div>
+                                            <div class="p-2 hover:bg-coffee-200 rounded-b">
+                                                <a href="./login" class="block w-full h-full">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="border-r-2 border-white mx-4"></div>
                         <div class="cursor-pointer hover:text-coffee-700"><i class="fa-solid fa-magnifying-glass"></i></div>
                     </div>
@@ -41,7 +65,7 @@
                 <!-- NAVBAR STATIC-->
                 <div class="w-full border-2 border-black my-4 z-50 text-black">
                     <div class="flex justify-between m-3 items-center">
-                        <div class="text-4xl font-bold">Caffeine</div>
+                        <a href="./home" class="text-4xl text-black font-bold cursor-pointer">Caffeine</a>
                         <div class="">
                             <ul class="flex flex-row">
                                 <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
@@ -51,8 +75,7 @@
                                     Menu
                                 </li>
                                 <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
-                                    About
-                                    Us
+                                    About Us
                                 </li>
                                 <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
                                     Facilities
@@ -60,11 +83,35 @@
                             </ul>
                         </div>
                         <div class="flex flex-row">
-                            <div class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">Sign in
-                            </div>
+                            <c:choose>
+                                <c:when test="${user == null}">
+                                    <a href="./login" class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">Sign
+                                        in
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="relative group">
+                                        <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                            <i class="fa-solid fa-user text-black"></i>
+                                        </div>
+                                        <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown
+                                             ">
+                                            <div class="text-black">
+                                                <div class="text-xl bg-coffee-500 rounded-t">
+                                                    <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
+                                                </div>
+                                                <div class="p-2 hover:bg-coffee-200 rounded-b">
+                                                    <a href="./login" class="block w-full h-full">Logout</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                             <div class="border-r-2 border-black mx-4"></div>
-                            <div class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200"><i
-                                    class="fa-solid fa-magnifying-glass"></i></div>
+                            <div class="cursor-pointer flex items-center hover:text-coffee-700 transition ease-in-out duration-200"><i
+                                    class="fa-solid fa-magnifying-glass"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -139,7 +186,7 @@
                                     <div
                                         class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                         <div>
-                                            <img class="rounded-t" src="./img/Thiet-ke-chua-co-ten-4-300x300.jpg"
+                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
                                                  alt="">
                                         </div>
                                         <div class="text-2xl mt-2">
@@ -153,7 +200,7 @@
                                     <div
                                         class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                         <div>
-                                            <img class="rounded-t" src="./img/Thiet-ke-chua-co-ten-4-300x300.jpg"
+                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
                                                  alt="">
                                         </div>
                                         <div class="text-2xl mt-2">
@@ -167,7 +214,7 @@
                                     <div
                                         class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                         <div>
-                                            <img class="rounded-t" src="./img/Thiet-ke-chua-co-ten-4-300x300.jpg"
+                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
                                                  alt="">
                                         </div>
                                         <div class="text-2xl mt-2">
@@ -181,7 +228,7 @@
                                     <div
                                         class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                         <div>
-                                            <img class="rounded-t" src="./img/Thiet-ke-chua-co-ten-4-300x300.jpg"
+                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
                                                  alt="">
                                         </div>
                                         <div class="text-2xl mt-2">
@@ -195,7 +242,7 @@
                                     <div
                                         class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                         <div>
-                                            <img class="rounded-t" src="./img/Thiet-ke-chua-co-ten-4-300x300.jpg"
+                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
                                                  alt="">
                                         </div>
                                         <div class="text-2xl mt-2">
@@ -249,7 +296,7 @@
                         <div class="col-span-1"></div>
                         <div class="col-span-3 py-20 border-x-2 border-x-coffee-500">
                             <div class="w-11/12 mx-auto border-4 border-white">
-                                <img src="./img/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
+                                <img src="../static/img/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
                             </div>
                             <div class="m-4 text-xl">
                                 <div>Enjoy Better And Better</div>
