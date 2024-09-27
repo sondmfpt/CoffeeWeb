@@ -36,8 +36,9 @@ public class ProductDAO {
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
                     int price = rs.getInt("price");
+                    int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, price, description);
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description);
                 }
 
             }
@@ -102,9 +103,10 @@ public class ProductDAO {
                     String productName = rs.getString("product_name");
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
-                    String description = rs.getString("description");
                     int price = rs.getInt("price");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, description));
+                    int totalSold = rs.getInt("total_sold");
+                    String description = rs.getString("description");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
                 }
 
             }

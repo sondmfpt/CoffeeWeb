@@ -17,6 +17,7 @@ public class Product {
     private String category;
     private String thumbnailUrl;
     private int price;
+    private int totalSold;
     private String description;
     private List<String> listImage;
 
@@ -25,12 +26,13 @@ public class Product {
         listImage = new ArrayList<>();
     }
 
-    public Product(int id, String name, String category, String thumbnailUrl, int price, String description) {
+    public Product(int id, String name, String category, String thumbnailUrl, int price, int totalSold, String description) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.thumbnailUrl = thumbnailUrl;
         this.price = price;
+        this.totalSold = totalSold;
         this.description = description;
         this.listImage = new ArrayList<>();
     }
@@ -83,6 +85,15 @@ public class Product {
         this.price = price;
     }
 
+    public int getTotalSold() {
+        return totalSold;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
+    }
+    
+
     public List<String> getListImage() {
         return listImage;
     }
@@ -90,8 +101,6 @@ public class Product {
     public void setListImage(List<String> listImage) {
         this.listImage = listImage;
     }
-    
-    
     
     public void addImage(String url){
         this.listImage.add(url);
