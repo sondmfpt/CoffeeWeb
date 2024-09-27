@@ -794,6 +794,7 @@ video {
   height: 100vh;
 }
 
+<<<<<<< HEAD
 .w-11\/12 {
   width: 91.666667%;
 }
@@ -806,16 +807,21 @@ video {
   width: 2.25rem;
 }
 
+=======
+>>>>>>> main
 .w-\[30\%\] {
   width: 30%;
 }
 
 .w-full {
   width: 100%;
+<<<<<<< HEAD
 }
 
 .min-w-40 {
   min-width: 10rem;
+=======
+>>>>>>> main
 }
 
 .max-w-5xl {
@@ -1235,6 +1241,7 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+<<<<<<< HEAD
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1315,6 +1322,8 @@ video {
   color: rgb(158 130 108 / var(--tw-text-opacity));
 }
 
+=======
+>>>>>>> main
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
