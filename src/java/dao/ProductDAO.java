@@ -35,8 +35,9 @@ public class ProductDAO {
                     String productName = rs.getString("product_name");
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
+                    int price = rs.getInt("price");
                     String description = rs.getString("description");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, description);
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, description);
                 }
 
             }
@@ -53,7 +54,7 @@ public class ProductDAO {
             return product;
         }
     }
-    
+
     public void addListImgToProduct(Product product) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -102,7 +103,8 @@ public class ProductDAO {
                     String categoryName = rs.getString("category_name");
                     String thumbnailUrl = rs.getString("thumbnail_url");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, description));
+                    int price = rs.getInt("price");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, description));
                 }
 
             }
@@ -156,20 +158,21 @@ public class ProductDAO {
         }
     }
 
-    public void addProduct(String productName, int categoryId, String thumbnailUrl, String description) throws ClassNotFoundException, SQLException {
+    public void addProduct(String productName, int categoryId, String thumbnailUrl, int price, String description) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO products (product_name, category_id, thumbnail_url, description) "
-                        + "VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO products (product_name, category_id, thumbnail_url, price, description) "
+                        + "VALUES (?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryId);
                 stm.setString(3, thumbnailUrl);
-                stm.setString(4, description);
+                stm.setInt(4, price);
+                stm.setString(5, description);
                 stm.executeUpdate();
 
             }
@@ -186,7 +189,6 @@ public class ProductDAO {
         }
     }
 
-    
     public void addProductVariant(int productId, JSONObject attribute, int originPrice, int salePrice) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
