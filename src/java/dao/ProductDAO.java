@@ -28,7 +28,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE p.id = AND p.status = 1?";
+                        + "WHERE p.id = ? AND p.status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
