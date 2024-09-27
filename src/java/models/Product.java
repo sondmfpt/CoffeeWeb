@@ -16,8 +16,9 @@ public class Product {
     private String name;
     private String category;
     private String thumbnailUrl;
-    private String description;
+    private int price;
     private int totalSold;
+    private String description;
     private List<String> listImage;
 
     public Product() {
@@ -25,11 +26,12 @@ public class Product {
         listImage = new ArrayList<>();
     }
 
-    public Product(int id, String name, String category, String thumbnailUrl, int totalSold, String description) {
+    public Product(int id, String name, String category, String thumbnailUrl, int price, int totalSold, String description) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.thumbnailUrl = thumbnailUrl;
+        this.price = price;
         this.totalSold = totalSold;
         this.description = description;
         this.listImage = new ArrayList<>();
@@ -84,15 +86,22 @@ public class Product {
     }
     
     
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    } 
+
+    public int getPrice() {
+        return price;
     }
-    
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public void addImage(String url){
         this.listImage.add(url);
     }
