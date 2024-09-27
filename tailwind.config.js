@@ -54,10 +54,10 @@ module.exports = {
       animation: {
         showDown: 'fadeIn .25s ease-out, moveInDown10 .25s ease-out',
         showUp: 'fadeIn .25s ease-out, moveInUp10 .25s ease-out',
-        moveInDownFull: 'moveInDownFull .5s ease-out',
-        moveInUpFull: 'moveInUpFull .5s ease-out',
-        moveInLeftFull: 'moveInLeftFull .5s ease-out',
-        moveInRightFull: 'moveInRightFull .5s ease-out',
+        moveInDownFull: 'fadeIn .5s ease-out, moveInDownFull .5s ease-out',
+        moveInUpFull: 'fadeIn .5s ease-out, moveInUpFull .5s ease-out',
+        moveInLeftFull: 'fadeIn .5s ease-out, moveInLeftFull .5s ease-out',
+        moveInRightFull: 'fadeIn .5s ease-out, moveInRightFull .5s ease-out',
       }
     },
   },

@@ -121,7 +121,7 @@
                             <!-- CONTENT LEFT -->
                             <div class="col-span-5">
                                 <div class="mt-5">
-                                    <h1 class="text-6xl font-bold leading-relaxed animate-moveInRightFull">Discover The Art Of Perfect Coffee</h1>
+                                    <h1 class="text-6xl font-bold leading-relaxed animate-[fadeIn_.25s_ease-out_,_moveInRightFull_.5s_ease-out]">Discover The Art Of Perfect Coffee</h1>
                                 </div>
                                 <div class="my-8 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out]">
                                     <p>Experience The Rich And Bold Flavors Of Our Exquisite Coffees Blends, Crafted To
@@ -137,15 +137,15 @@
                                     </button>
                                 </div>
                                 <div class="flex justify-between my-16">
-                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.1s]">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out_.1s]">
                                         <h3 class="text-3xl font-bold">50+</h3>
                                         <p class="text-sm uppercase">Item of coffee</p>
                                     </div>
-                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.2s]">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out_.2s]">
                                         <h3 class="text-3xl font-bold">20+</h3>
                                         <p class="text-sm uppercase">Order Running</p>
                                     </div>
-                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.3s]">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out_.3s]">
                                         <h3 class="text-3xl font-bold">2k+</h3>
                                         <p class="text-sm uppercase">Happy Customer</p>
                                     </div>
@@ -299,7 +299,6 @@
 
                             function showSlide(index) {
                                 var transform = "translateX(-" + (index * 100) + "%)";
-                                console.log(transform);
                                 slider.style.transform = (transform);
                             }
 
