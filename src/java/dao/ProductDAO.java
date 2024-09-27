@@ -272,7 +272,7 @@ public class ProductDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT * FROM products ORDER BY total_sold DESC LIMIT 4";
+                String sql = "SELECT * FROM products WHERE status = 1 ORDER BY total_sold DESC LIMIT 4";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
