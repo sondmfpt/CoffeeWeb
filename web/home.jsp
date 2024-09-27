@@ -18,7 +18,7 @@
         <c:set var="user" value="${USER}"/>
         <div class="flex flex-col">
             <!-- NAVBAR -->
-            <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden">
+            <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
                 <div class="flex justify-around items-center h-full">
                     <a href="./home" class="text-4xl text-white font-bold cursor-pointer">Caffeine</a>
                     <div class="">
@@ -37,8 +37,20 @@
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
-                                    <i class="fa-solid fa-user text-black"></i>
+                                <div class="relative group">
+                                    <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                        <i class="fa-solid fa-user text-black"></i>
+                                    </div>
+                                    <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown">
+                                        <div class="text-black">
+                                            <div class="text-xl bg-coffee-500 rounded-t">
+                                                <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
+                                            </div>
+                                            <div class="p-2 hover:bg-coffee-200 rounded-b">
+                                                <a href="./login" class="block w-full h-full">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </c:otherwise>
                         </c:choose>
@@ -79,8 +91,21 @@
                                             </a>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
-                                                <i class="fa-solid fa-user text-black"></i>
+                                            <div class="relative group">
+                                                <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                                    <i class="fa-solid fa-user text-black"></i>
+                                                </div>
+                                                <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown
+                                                     ">
+                                                    <div class="text-black">
+                                                        <div class="text-xl bg-coffee-500 rounded-t">
+                                                            <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
+                                                        </div>
+                                                        <div class="p-2 hover:bg-coffee-200 rounded-b">
+                                                            <a href="./login" class="block w-full h-full">Logout</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
@@ -96,31 +121,31 @@
                             <!-- CONTENT LEFT -->
                             <div class="col-span-5">
                                 <div class="mt-5">
-                                    <h1 class="text-6xl font-bold leading-relaxed">Discover The Art Of Perfect Coffee</h1>
+                                    <h1 class="text-6xl font-bold leading-relaxed animate-moveInRightFull">Discover The Art Of Perfect Coffee</h1>
                                 </div>
-                                <div class="my-8">
+                                <div class="my-8 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out]">
                                     <p>Experience The Rich And Bold Flavors Of Our Exquisite Coffees Blends, Crafted To
                                         Awaken
                                         Your Senses And Start Your Day Right</p>
                                 </div>
                                 <div class="my-8">
-                                    <button class="py-2 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200">
+                                    <button class="py-2 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Order Now <i
                                             class="fa-solid fa-arrow-right ml-2"></i></button>
-                                    <button class="py-2 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200">
+                                    <button class="py-2 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Explore More
                                     </button>
                                 </div>
                                 <div class="flex justify-between my-16">
-                                    <div class="flex flex-col justify-center items-center gap-2">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.1s]">
                                         <h3 class="text-3xl font-bold">50+</h3>
                                         <p class="text-sm uppercase">Item of coffee</p>
                                     </div>
-                                    <div class="flex flex-col justify-center items-center gap-2">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.2s]">
                                         <h3 class="text-3xl font-bold">20+</h3>
                                         <p class="text-sm uppercase">Order Running</p>
                                     </div>
-                                    <div class="flex flex-col justify-center items-center gap-2">
+                                    <div class="flex flex-col justify-center items-center gap-2 animate-[moveInUpFull_.5s_ease-out_.3s]">
                                         <h3 class="text-3xl font-bold">2k+</h3>
                                         <p class="text-sm uppercase">Happy Customer</p>
                                     </div>
@@ -129,12 +154,12 @@
 
                             <!-- CONTENT RIGHT -->
                             <div class="absolute right-0 top-30 z-0">
-                                <h1 class="text-[#271d14] text-[180px] font-bold tracking-tighter leading-none py-5">
+                                <h1 class="text-[#271d14] text-[180px] font-bold tracking-tighter leading-none py-5 animate-[moveInLeftFull_.75s_ease-out_.1s]">
                                     Caffeine</h1>
-                                <h1 class="text-[#271d14] text-[180px] font-bold  tracking-tighter leading-none py-5">
+                                <h1 class="text-[#271d14] text-[180px] font-bold  tracking-tighter leading-none py-5 animate-[moveInLeftFull_.75s_ease-out_.2s]">
                                     Caffeine</h1>
                             </div>
-                            <div class="col-span-7 ml-7 z-10">
+                            <div class="col-span-7 ml-7 z-10 animate-moveInLeftFull">
                                 <img class="" src="./img/—Pngtree—flying%20cup%20of%20coffee%20with_5057949.png"
                                      alt="Coffee Cup">
                             </div>
@@ -248,21 +273,11 @@
                             <div class="relative flex transition overflow-hidden w-full h-[26rem] rounded">
                                 <!-- Slide Images -->
                                 <div id="slider" class="flex ease-in-out duration-500">
-                                    <div class="slide min-w-full">
-                                        <img src="./img/z2414481606361_e0187cf03a309dbfb1afe862d24a116b.jpg" alt="Image 1" class="w-full h-full object-cover">
-                                    </div>
-                                    <div class="slide min-w-full">
-                                        <img src="./img/z2414482145717_2ab282fe361bbfa497d7a4dcb678fee0.jpg" alt="Image 2" class="w-full h-full object-cover">
-                                    </div>
-                                    <div class="slide min-w-full">
-                                        <img src="./img/z2839027460835_06af8c891450c731e6a56e024c1905b4.jpg" alt="Image 3" class="w-full h-full object-cover">
-                                    </div>
-                                    <div class="slide min-w-full">
-                                        <img src="./img/fresh-coffee-with-cinnamon-QR8W4GN-960x604-1.jpg" alt="Image 4" class="w-full h-full object-cover">
-                                    </div>
-                                    <div class="slide min-w-full">
-                                        <img src="./img/barista-prepare-coffee-working-order-concept-PBZ6VQ6-768x343-1.jpg" alt="Image 5" class="w-full h-full object-cover">
-                                    </div>
+                                    <c:forEach var="galery" items="${GALERIES}">
+                                        <div class="slide min-w-full">
+                                            <img src="./img/${galery}" alt="Image 1" class="w-full h-full object-cover">
+                                        </div>
+                                    </c:forEach>
                                 </div>
 
                                 <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800/[0.1] text-white px-6 h-full">

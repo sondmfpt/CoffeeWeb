@@ -5,6 +5,7 @@
 package controller;
 
 import dao.LoginDAO;
+import dao.OtherDAO;
 import dao.ProductDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -32,7 +33,9 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
+        OtherDAO oDao = new OtherDAO();
         List<Product> bestSelling = null;
+        List<String> galeries = null;
         Trend trend = null;
 
         try {
@@ -41,6 +44,9 @@ public class HomeServlet extends HttpServlet {
 
             bestSelling = pDao.getBestSellingProduct();
             request.setAttribute("BESTSELLING", bestSelling);
+
+            galeries = oDao.getHomeGalery();
+            request.setAttribute("GALERIES", galeries);
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
