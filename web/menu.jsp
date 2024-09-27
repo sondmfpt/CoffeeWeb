@@ -17,6 +17,7 @@
     <body class="font-serif scroll-smooth">
         <c:set var="user" value="${USER}"/>
         <c:set var="products" value="${PRODUCTS}"/>
+        <c:set var="categories" value="${CATEGORIES}"/>
         <div class="flex flex-col bg-coffee-200">
             <!-- NAVBAR SCROLL-->
             <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
@@ -130,18 +131,14 @@
                             </div>
                             <hr class="my-3 mx-2 border-t-[1px] border-t-black">
                             <div class="">
-                                <ul class="flex flex-col gap-2">
-                                    <li class="ml-4 hover:translate-x-1 ease-in-out duration-200 cursor-pointer">Cà phê đặc
-                                        sản
-                                    </li>
-                                    <li class="ml-4 hover:translate-x-1 ease-in-out duration-200 cursor-pointer active--category">
-                                        Cà phê phin
-                                    </li>
-                                    <li class="ml-4 hover:translate-x-1 ease-in-out duration-200 cursor-pointer">Espresso</li>
-                                    <li class="ml-4 hover:translate-x-1 ease-in-out duration-200 cursor-pointer">Cà phê thủ
-                                        công
-                                    </li>
-                                </ul>
+                                <div class="flex flex-col gap-2">
+                                    <c:forEach var="category" items="${categories}">
+                                        <div class="ml-4">
+                                            <input class="cursor-pointer" id="category${category.getId()}" type="radio" value="${category.getId()}" name="category">
+                                            <label class="cursor-pointer hover:text-coffee-500" for="category${category.getId()}">${category.getName()}</label>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
 
@@ -182,28 +179,27 @@
 
                             <!-- PRODUCT LIST -->
                             <div class="my-5">
-                                <div class="grid grid-cols-4 gap-3">
-
+                                <div id="product-list" class="grid grid-cols-4 gap-3">
                                     <c:forEach var="product" items="${products}">
                                         <div
-                                            class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
+                                            class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                             <div>
                                                 <img class="rounded-t" src="./img/${product.getThumbnailUrl()}"
                                                      alt="">
                                             </div>
-                                            <div class="text-2xl mt-2">
-                                                <p>${product.getName()}</p>
-                                            </div>
-                                            <div class="mb-2">
-                                                <p>120.000đ</p>
-                                            </div>
-                                            <div>
-                                                <p>${product.getTotalSold()}</p>
+                                            <div class="p-2">
+                                                <div class="text-xl">
+                                                    <p>${product.getName()}</p>
+                                                </div>
+                                                <div class="text-lg text-coffee-700">
+                                                    <p>${product.getPrice()}</p>
+                                                </div>
+                                                <div class="text-sm text-slate-400">
+                                                    Đã bán: <span>${product.getTotalSold()}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </c:forEach>
-
-
                                 </div>
                                 <div class="flex items-center justify-center my-3">
                                     <button class="h-9 w-9 mx-3 bg-white flex items-center justify-center">1</button>
@@ -328,6 +324,58 @@
                     document.getElementById("navbar").classList.add("z-[-1]");
                 }
             }
+        </script>
+
+        <!--AJAX-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get all radio buttons with name "Address"
+                const radios = document.querySelectorAll('input[name="category"]');
+
+                radios.forEach(function (radio) {
+                    radio.addEventListener('change', function () {
+                        const selectedAddress = this.value;
+                        // Create a new XMLHttpRequest object
+                        const xhr = new XMLHttpRequest();
+
+                        // Configure it: GET-request to your Spring Boot endpoint
+                        xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress), true);
+                        // Set up the callback to handle the response
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                const products = JSON.parse(xhr.responseText);
+                                console.log(products);
+                                const productList = document.getElementById('product-list');
+                                productList.innerHTML = '';
+
+                                products.forEach(function (product) {
+                                    const productItem = document.createElement('div');
+                                    productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
+                                    productItem.innerHTML =
+                                            '<div>' +
+                                                '<img class="rounded-t" src="./img/' + product.thumbnailUrl + '" alt="">' +
+                                            '</div>' +
+                                            '<div class="p-2">' +
+                                                '<div class="text-xl">' +
+                                                    '<p>' + product.name + '</p>' +
+                                                '</div>' +
+                                                '<div class="text-lg text-coffee-700">' +
+                                                    '<p>' + product.price + '</p>' +
+                                                '</div>' +
+                                                '<div class="text-sm text-slate-400">' +
+                                                    'Đã bán: <span>' + product.totalSold + '</span>' +
+                                                '</div>' +
+                                            '</div>';
+                                    productList.appendChild(productItem);
+                                });
+                            }
+                        };
+
+                        // Send the request
+                        xhr.send();
+                    });
+                });
+            });
         </script>
     </body>
 </html>
