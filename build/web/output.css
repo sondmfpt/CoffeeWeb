@@ -854,6 +854,7 @@ video {
   height: 100vh;
 }
 
+<<<<<<< HEAD
 .w-11\/12 {
   width: 91.666667%;
 }
@@ -870,10 +871,13 @@ video {
   width: 250px;
 }
 
+=======
+>>>>>>> main
 .w-\[30\%\] {
   width: 30%;
 }
 
+<<<<<<< HEAD
 .w-\[300px\] {
   width: 300px;
 }
@@ -896,6 +900,10 @@ video {
 
 .max-w-0 {
   max-width: 0px;
+=======
+.w-full {
+  width: 100%;
+>>>>>>> main
 }
 
 .max-w-5xl {
@@ -1722,6 +1730,7 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+<<<<<<< HEAD
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1808,6 +1817,8 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+=======
+>>>>>>> main
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;

@@ -28,7 +28,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE p.id = ?";
+                        + "WHERE p.id = AND p.status = 1?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
@@ -94,7 +94,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE c.id = ?";
+                        + "WHERE c.id = ? AND p.status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, categoryId);
                 rs = stm.executeQuery();
@@ -132,7 +132,7 @@ public class ProductDAO {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT * FROM product_variants "
-                        + "WHERE product_id = ?";
+                        + "WHERE product_id = ? AND status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, productId);
                 rs = stm.executeQuery();
