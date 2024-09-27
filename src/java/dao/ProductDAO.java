@@ -17,6 +17,45 @@ import org.json.JSONObject;
 
 public class ProductDAO {
 
+    
+    public List<Product> getAllProduct() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT p.*, c.category_name FROM products p "
+                        + "JOIN categories c ON p.category_id = c.id "
+                        + "WHERE p.status = 1";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String productName = rs.getString("product_name");
+                    String categoryName = rs.getString("category_name");
+                    String thumbnailUrl = rs.getString("thumbnail_url");
+                    String description = rs.getString("description");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, description));
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return products;
+        }
+    }
+    
+    
     public Product getProduct(int id) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -27,7 +66,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE p.id = ?";
+                        + "WHERE p.id = ? AND p.status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
@@ -92,7 +131,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE c.id = ?";
+                        + "WHERE c.id = ? AND p.status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, categoryId);
                 rs = stm.executeQuery();
@@ -129,7 +168,7 @@ public class ProductDAO {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT * FROM product_variants "
-                        + "WHERE product_id = ?";
+                        + "WHERE product_id = ? WHERE status = 1";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, productId);
                 rs = stm.executeQuery();

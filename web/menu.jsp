@@ -16,6 +16,7 @@
     </head>
     <body class="font-serif scroll-smooth">
         <c:set var="user" value="${USER}"/>
+        <c:set var="products" value="${PRODUCTS}"/>
         <div class="flex flex-col bg-coffee-200">
             <!-- NAVBAR SCROLL-->
             <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
@@ -183,75 +184,22 @@
                             <div class="my-5">
                                 <div class="grid grid-cols-4 gap-3">
 
-                                    <div
-                                        class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                        <div>
-                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
-                                                 alt="">
+                                    <c:forEach var="product" items="${products}">
+                                        <div
+                                            class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
+                                            <div>
+                                                <img class="rounded-t" src="./img/${product.getThumbnailUrl()}"
+                                                     alt="">
+                                            </div>
+                                            <div class="text-2xl mt-2">
+                                                <p>${product.getName()}</p>
+                                            </div>
+                                            <div class="mb-2">
+                                                <p>120.000đ</p>
+                                            </div>
                                         </div>
-                                        <div class="text-2xl mt-2">
-                                            <p>Caffee pha phin</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p>120.000đ</p>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
 
-                                    <div
-                                        class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                        <div>
-                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
-                                                 alt="">
-                                        </div>
-                                        <div class="text-2xl mt-2">
-                                            <p>Caffee pha phin</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p>120.000đ</p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                        <div>
-                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
-                                                 alt="">
-                                        </div>
-                                        <div class="text-2xl mt-2">
-                                            <p>Caffee pha phin</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p>120.000đ</p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                        <div>
-                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
-                                                 alt="">
-                                        </div>
-                                        <div class="text-2xl mt-2">
-                                            <p>Caffee pha phin</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p>120.000đ</p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="col-span-1 bg-white text-center rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                        <div>
-                                            <img class="rounded-t" src="../static/img/Thiet-ke-chua-co-ten-4-300x300.jpg"
-                                                 alt="">
-                                        </div>
-                                        <div class="text-2xl mt-2">
-                                            <p>Caffee pha phin</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <p>120.000đ</p>
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <div class="flex items-center justify-center my-3">
