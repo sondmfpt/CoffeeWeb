@@ -197,6 +197,9 @@
                                             <div class="mb-2">
                                                 <p>120.000đ</p>
                                             </div>
+                                            <div>
+                                                <p>${product.getTotalSold()}</p>
+                                            </div>
                                         </div>
                                     </c:forEach>
 
