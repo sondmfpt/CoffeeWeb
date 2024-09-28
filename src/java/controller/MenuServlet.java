@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import models.Category;
 import models.Product;
 
@@ -30,10 +31,35 @@ import models.Product;
 @WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
 public class MenuServlet extends HttpServlet {
 
+    private List<Product> sortProductByPrice(List<Product> products, boolean isIncrease) {
+        if (!isIncrease) {
+            return products.stream()
+                    .sorted((p1, p2) -> Integer.compare(p2.getPrice(), p1.getPrice()))
+                    .collect(Collectors.toList());
+        } else {
+            return products.stream()
+                    .sorted((p1, p2) -> Integer.compare(p1.getPrice(), p2.getPrice()))
+                    .collect(Collectors.toList());
+        }
+    }
+    
+    private List<Product> sortProductByTotalSold(List<Product> products){
+        return products.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getTotalSold(), p1.getTotalSold()))
+                .collect(Collectors.toList());
+    }
+    
+    private List<Product> sortProductByCreatedAt(List<Product> products){
+        return products.stream()
+                .sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()))
+                .collect(Collectors.toList());
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
         String categoryId = request.getParameter("categoryId");
+        String orderValue = request.getParameter("orderValue");
         List<Product> products = new ArrayList<>();
 
         try {
@@ -44,6 +70,13 @@ public class MenuServlet extends HttpServlet {
                 for (String id : listCategoryId) {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
                 }
+            }
+            
+            if(orderValue.equals("new")){
+                products = sortProductByCreatedAt(products);
+            }
+            if(orderValue.equals("sold")){
+                products = sortProductByTotalSold(products);
             }
 
         } finally {
@@ -60,6 +93,9 @@ public class MenuServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("ORDERTYPE", "");
+        
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
         List<Category> categories = null;

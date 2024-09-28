@@ -149,12 +149,21 @@
                                 <div class="flex justify-between items-center px-7 py-4">
                                     <div class="flex gap-3 items-center">
                                         <h3>Sắp xếp theo</h3>
-                                        <button class="h-8 w-30 bg-white px-3 py-1 rounded active--order">Phổ biến</button>
-                                        <button class="h-8 w-30 bg-white px-3 py-1 rounded">Mới nhất</button>
-                                        <button class="h-8 w-30 bg-white px-3 py-1 rounded">Bán chạy</button>
-                                        <select class="h-8 px-3 py-1 rounded" name="" id="">
-                                            <option value="">Giá: Thấp đến cao</option>
-                                            <option value="">Giá: Cao đến thấp</option>
+                                        <div class="">
+                                            <label for="oderType_relative" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Liên quan</label>
+                                            <input id="oderType_relative" type="radio" name="orderType" value="" class="hidden">
+                                        </div>
+                                        <div class="">
+                                            <label for="oderType_new" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Mới nhất</label>
+                                            <input id="oderType_new" type="radio" name="orderType" value="new" class="hidden">
+                                        </div>
+                                        <div class="">
+                                            <label for="oderType_bestSell" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Bán chạy</label>
+                                            <input id="oderType_bestSell" type="radio" name="orderType" value="sold" class="hidden">
+                                        </div>
+                                        <select class="h-8 px-3 py-1 rounded" name="orderType" id="">
+                                            <option value="ASC">Giá: Thấp đến cao</option>
+                                            <option value="DESC">Giá: Cao đến thấp</option>
                                         </select>
                                     </div>
                                     <div class="flex gap-3 items-center">
@@ -331,51 +340,80 @@
             document.addEventListener('DOMContentLoaded', function () {
                 // Get all radio buttons with name "Address"
                 const radios = document.querySelectorAll('input[name="category"]');
+                const orderType = document.querySelectorAll('input[name="orderType"]');
 
                 radios.forEach(function (radio) {
                     radio.addEventListener('change', function () {
                         var selectedAddress = [];
-                        radios.forEach(function (radio){
-                           if(radio.checked == true) selectedAddress.push(radio.value);
+                        var orderValue = "";
+                        radios.forEach(function (radio) {
+                            if (radio.checked == true)
+                                selectedAddress.push(radio.value);
                         });
-                        // Create a new XMLHttpRequest object
-                        const xhr = new XMLHttpRequest();
-                        // Configure it: GET-request to your Spring Boot endpoint
-                        xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress), true);
-                        // Set up the callback to handle the response
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                const products = JSON.parse(xhr.responseText);
-                                const productList = document.getElementById('product-list');
-                                productList.innerHTML = '';
 
-                                products.forEach(function (product) {
-                                    const productItem = document.createElement('div');
-                                    productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
-                                    productItem.innerHTML =
-                                            '<div>' +
-                                                '<img class="rounded-t" src="./img/' + product.thumbnailUrl + '" alt="">' +
-                                            '</div>' +
-                                            '<div class="p-2">' +
-                                                '<div class="text-xl">' +
-                                                    '<p>' + product.name + '</p>' +
-                                                '</div>' +
-                                                '<div class="text-lg text-coffee-700">' +
-                                                    '<p>' + product.price + '</p>' +
-                                                '</div>' +
-                                                '<div class="text-sm text-slate-400">' +
-                                                    'Đã bán: <span>' + product.totalSold + '</span>' +
-                                                '</div>' +
-                                            '</div>';
-                                    productList.appendChild(productItem);
-                                });
-                            }
-                        };
-
-                        // Send the request
-                        xhr.send();
+                        orderType.forEach(function (ot) {
+                            if (ot.checked == true)
+                                orderValue = ot.value;
+                        });
+                        callMenu(selectedAddress, orderValue);
                     });
                 });
+                
+                orderType.forEach(function (ot) {
+                    ot.addEventListener('change', function () {
+                        var selectedAddress = [];
+                        var orderValue = "";
+                        radios.forEach(function (radio) {
+                            if (radio.checked == true)
+                                selectedAddress.push(radio.value);
+                        });
+
+                        orderType.forEach(function (ot) {
+                            if (ot.checked == true)
+                                orderValue = ot.value;
+                        });
+                        callMenu(selectedAddress, orderValue);
+                    });
+                });
+                
+                function callMenu(selectedAddress, orderValue){
+                    // Create a new XMLHttpRequest object
+                    const xhr = new XMLHttpRequest();
+                    // Configure it: GET-request to your Spring Boot endpoint
+                    xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress) + '&orderValue=' + encodeURIComponent(orderValue), true);
+                    // Set up the callback to handle the response
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            const products = JSON.parse(xhr.responseText);
+                            const productList = document.getElementById('product-list');
+                            productList.innerHTML = '';
+
+                            products.forEach(function (product) {
+                                const productItem = document.createElement('div');
+                                productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
+                                productItem.innerHTML =
+                                        '<div>' +
+                                        '<img class="rounded-t" src="./img/' + product.thumbnailUrl + '" alt="">' +
+                                        '</div>' +
+                                        '<div class="p-2">' +
+                                        '<div class="text-xl">' +
+                                        '<p>' + product.name + '</p>' +
+                                        '</div>' +
+                                        '<div class="text-lg text-coffee-700">' +
+                                        '<p>' + product.price + '</p>' +
+                                        '</div>' +
+                                        '<div class="text-sm text-slate-400">' +
+                                        'Đã bán: <span>' + product.totalSold + '</span>' +
+                                        '</div>' +
+                                        '</div>';
+                                productList.appendChild(productItem);
+                            });
+                        }
+                    };
+
+                    // Send the request
+                    xhr.send();
+                }
             });
         </script>
     </body>
