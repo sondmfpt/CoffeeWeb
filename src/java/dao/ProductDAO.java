@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import models.Product;
 import models.ProductVariant;
@@ -38,7 +39,8 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description);
+                    Date createdAt = rs.getDate("created_at");
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt);
                 }
 
             }
@@ -106,7 +108,8 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
+                    Date createdAt = rs.getDate("created_at");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt));
                 }
 
             }
