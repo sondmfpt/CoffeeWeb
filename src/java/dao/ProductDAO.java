@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import models.Category;
 import models.Product;
@@ -18,7 +19,6 @@ import org.json.JSONObject;
 
 public class ProductDAO {
 
-    
     public List<Product> getAllProduct() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -40,7 +40,8 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
+                    Date createdAt = rs.getDate("created_at");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt));
                 }
 
             }
@@ -57,7 +58,7 @@ public class ProductDAO {
             return products;
         }
     }
-    
+
     public List<Category> getAllCategories() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -89,8 +90,7 @@ public class ProductDAO {
             return categories;
         }
     }
-    
-    
+
     public Product getProduct(int id) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -113,7 +113,8 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description);
+                    Date createdAt = rs.getDate("created_at");
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt);
                 }
 
             }
@@ -181,7 +182,8 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
+                    Date createdAt = rs.getDate("created_at");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt));
                 }
 
             }
@@ -198,7 +200,7 @@ public class ProductDAO {
             return products;
         }
     }
-    
+
     public List<Product> getProductWithPagination(int page) throws ClassNotFoundException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -227,7 +229,9 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
-                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
+                    Date createdAt = rs.getDate("created_at");
+
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt));
                 }
             }
         } catch (SQLException e) {
