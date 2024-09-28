@@ -198,6 +198,55 @@ public class ProductDAO {
             return products;
         }
     }
+    
+    public List<Product> getProductWithPagination(int page) throws ClassNotFoundException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        List<Product> products = new ArrayList<>();
+        int ROWS_PER_PAGE = 5;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // Tính toán OFFSET để lấy số lượng sinh viên cho trang hiện tại
+                int offset = (page - 1) * ROWS_PER_PAGE;
+
+                String sql = "SELECT p.*, c.category_name FROM products p "
+                        + "JOIN categories c ON p.category_id = c.id "
+                        + "LIMIT ?, ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, offset);
+                pstmt.setInt(2, ROWS_PER_PAGE);
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String productName = rs.getString("product_name");
+                    String categoryName = rs.getString("category_name");
+                    String thumbnailUrl = rs.getString("thumbnail_url");
+                    int price = rs.getInt("price");
+                    int totalSold = rs.getInt("total_sold");
+                    String description = rs.getString("description");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return products;
+    }
 
     public List<ProductVariant> getListVariantByProductId(int productId) throws ClassNotFoundException, SQLException {
         Connection con = null;

@@ -134,7 +134,7 @@
                                 <div class="flex flex-col gap-2">
                                     <c:forEach var="category" items="${categories}">
                                         <div class="ml-4">
-                                            <input class="cursor-pointer" id="category${category.getId()}" type="radio" value="${category.getId()}" name="category">
+                                            <input class="cursor-pointer" id="category${category.getId()}" type="checkbox" value="${category.getId()}" name="category">
                                             <label class="cursor-pointer hover:text-coffee-500" for="category${category.getId()}">${category.getName()}</label>
                                         </div>
                                     </c:forEach>
@@ -334,17 +334,18 @@
 
                 radios.forEach(function (radio) {
                     radio.addEventListener('change', function () {
-                        const selectedAddress = this.value;
+                        var selectedAddress = [];
+                        radios.forEach(function (radio){
+                           if(radio.checked == true) selectedAddress.push(radio.value);
+                        });
                         // Create a new XMLHttpRequest object
                         const xhr = new XMLHttpRequest();
-
                         // Configure it: GET-request to your Spring Boot endpoint
                         xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress), true);
                         // Set up the callback to handle the response
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === 4 && xhr.status === 200) {
                                 const products = JSON.parse(xhr.responseText);
-                                console.log(products);
                                 const productList = document.getElementById('product-list');
                                 productList.innerHTML = '';
 

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,21 +33,28 @@ public class MenuServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        List<Product> products = null;
-        
-        try{
-            products = pDao.getListProductByCategoryId(categoryId);
-            
-        }finally{
+        String categoryId = request.getParameter("categoryId");
+        List<Product> products = new ArrayList<>();
+
+        try {
+            if (categoryId == "") {
+                products = pDao.getAllProduct();
+            } else {
+                String[] listCategoryId = categoryId.split(",");
+                for (String id : listCategoryId) {
+                    products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
+                }
+            }
+
+        } finally {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            
+
             PrintWriter out = response.getWriter();
             out.write(new Gson().toJson(products));
             out.flush();
         }
-        
+
     }
 
     @Override
