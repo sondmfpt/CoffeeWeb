@@ -4,7 +4,7 @@
 
 @layer utilities {
     .active--order {
-        @apply bg-coffee-200 !important;
+        @apply bg-coffee-500 !important;
     }
 
     .active--category {

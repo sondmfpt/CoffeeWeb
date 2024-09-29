@@ -31,6 +31,8 @@ import models.Product;
 @WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
 public class MenuServlet extends HttpServlet {
 
+    private final int ROWS_PER_PAGE = 5;
+
     private List<Product> sortProductByPrice(List<Product> products, boolean isIncrease) {
         if (!isIncrease) {
             return products.stream()
@@ -42,16 +44,23 @@ public class MenuServlet extends HttpServlet {
                     .collect(Collectors.toList());
         }
     }
-    
-    private List<Product> sortProductByTotalSold(List<Product> products){
+
+    private List<Product> sortProductByTotalSold(List<Product> products) {
         return products.stream()
                 .sorted((p1, p2) -> Integer.compare(p2.getTotalSold(), p1.getTotalSold()))
                 .collect(Collectors.toList());
     }
-    
-    private List<Product> sortProductByCreatedAt(List<Product> products){
+
+    private List<Product> sortProductByCreatedAt(List<Product> products) {
         return products.stream()
                 .sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> getProductFollowingPage(List<Product> products, int page) {
+        return products.stream()
+                .skip((page - 1) * ROWS_PER_PAGE) // Bỏ qua 2 phần tử đầu
+                .limit(ROWS_PER_PAGE) // Lấy 5 phần tử tiếp theo
                 .collect(Collectors.toList());
     }
 
@@ -60,6 +69,7 @@ public class MenuServlet extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         String categoryId = request.getParameter("categoryId");
         String orderValue = request.getParameter("orderValue");
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         List<Product> products = new ArrayList<>();
 
         try {
@@ -71,13 +81,15 @@ public class MenuServlet extends HttpServlet {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
                 }
             }
-            
-            if(orderValue.equals("new")){
+
+            if (orderValue.equals("new")) {
                 products = sortProductByCreatedAt(products);
             }
-            if(orderValue.equals("sold")){
+            if (orderValue.equals("sold")) {
                 products = sortProductByTotalSold(products);
             }
+
+            products = getProductFollowingPage(products, pageNum);
 
         } finally {
             response.setContentType("application/json");
@@ -95,13 +107,16 @@ public class MenuServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("ORDERTYPE", "");
-        
+
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
         List<Category> categories = null;
 
         try {
             products = pDao.getAllProduct();
+            int totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
+            request.setAttribute("TOTALPAGE", totalPage);
+            products = getProductFollowingPage(products, 1);
             request.setAttribute("PRODUCTS", products);
 
             categories = pDao.getAllCategories();

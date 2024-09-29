@@ -145,20 +145,20 @@
                         <!-- RIGHT -->
                         <div class="col-span-9">
                             <!-- ORDER LIST -->
-                            <div class="bg-coffee-500 rounded">
+                            <div class="bg-coffee-300 rounded">
                                 <div class="flex justify-between items-center px-7 py-4">
                                     <div class="flex gap-3 items-center">
                                         <h3>Sắp xếp theo</h3>
                                         <div class="">
-                                            <label for="oderType_relative" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Liên quan</label>
+                                            <label for="oderType_relative" class="h-8 w-30 bg-white px-3 py-2 rounded cursor-pointer active--order hover:bg-coffee-200">Liên quan</label>
                                             <input id="oderType_relative" type="radio" name="orderType" value="" class="hidden">
                                         </div>
                                         <div class="">
-                                            <label for="oderType_new" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Mới nhất</label>
+                                            <label for="oderType_new" class="h-8 w-30 bg-white px-3 py-2 rounded cursor-pointer hover:bg-coffee-200">Mới nhất</label>
                                             <input id="oderType_new" type="radio" name="orderType" value="new" class="hidden">
                                         </div>
                                         <div class="">
-                                            <label for="oderType_bestSell" class="h-8 w-30 bg-white px-3 py-2 rounded active--order cursor-pointer">Bán chạy</label>
+                                            <label for="oderType_bestSell" class="h-8 w-30 bg-white px-3 py-2 rounded cursor-pointer hover:bg-coffee-200">Bán chạy</label>
                                             <input id="oderType_bestSell" type="radio" name="orderType" value="sold" class="hidden">
                                         </div>
                                         <select class="h-8 px-3 py-1 rounded" name="orderType" id="">
@@ -166,35 +166,24 @@
                                             <option value="DESC">Giá: Cao đến thấp</option>
                                         </select>
                                     </div>
-                                    <div class="flex gap-3 items-center">
-                                        <p>
-                                            <span>1</span>
-                                            /
-                                            <span>9</span>
-                                        </p>
-                                        <div class="flex">
-                                            <div
-                                                class="flex justify-center items-center w-8 h-8 bg-white text-xs rounded-sm">
-                                                <i class="fa-solid fa-chevron-left"></i>
-                                            </div>
-                                            <div
-                                                class="flex justify-center items-center w-8 h-8 bg-slate-500 text-xs rounded-sm">
-                                                <i class="fa-solid fa-chevron-right"></i>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
                             <!-- PRODUCT LIST -->
-                            <div class="my-5">
+                            <div class="my-5 font-sans">
                                 <div id="product-list" class="grid grid-cols-4 gap-3">
                                     <c:forEach var="product" items="${products}">
                                         <div
                                             class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                             <div>
-                                                <img class="rounded-t" src="./img/${product.getThumbnailUrl()}"
-                                                     alt="">
+                                                <c:choose>
+                                                    <c:when test="${empty product.getThumbnailUrl()}">
+                                                        <img class="rounded-t" src="./img/invalid-image.png" alt="">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img class="rounded-t" src="./img/${product.getThumbnailUrl()}" alt="">
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div class="p-2">
                                                 <div class="text-xl">
@@ -211,11 +200,13 @@
                                     </c:forEach>
                                 </div>
                                 <div class="flex items-center justify-center my-3">
-                                    <button class="h-9 w-9 mx-3 bg-white flex items-center justify-center">1</button>
-                                    <button class="h-9 w-9 mx-3 flex items-center justify-center">2</button>
-                                    <button class="h-9 w-9 mx-3 flex items-center justify-center">3</button>
-                                    <button class="h-9 w-9 mx-3 flex items-center justify-center">4</button>
-                                    <button class="h-9 w-9 mx-3 flex items-center justify-center">5</button>
+                                    <c:forEach begin="1" end="${TOTALPAGE}" step="${1}" var="i">
+                                        <div>
+                                            <label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100 ${i == 1 ? "bg-white" : ""}" for="page-button-${i}">${i}</label>
+                                            <input type="radio" id="page-button-${i}" name="page" value="${i}" class="hidden">
+                                        </div>
+                                    </c:forEach>
+
                                 </div>
                             </div>
                         </div>
@@ -341,46 +332,99 @@
                 // Get all radio buttons with name "Address"
                 const radios = document.querySelectorAll('input[name="category"]');
                 const orderType = document.querySelectorAll('input[name="orderType"]');
+                const pages = document.querySelectorAll('input[name="page"]');
 
                 radios.forEach(function (radio) {
                     radio.addEventListener('change', function () {
                         var selectedAddress = [];
                         var orderValue = "";
+                        var pageNum = 1;
                         radios.forEach(function (radio) {
                             if (radio.checked == true)
                                 selectedAddress.push(radio.value);
                         });
 
                         orderType.forEach(function (ot) {
-                            if (ot.checked == true)
+                            if (ot.checked == true) {
                                 orderValue = ot.value;
+                            }
                         });
-                        callMenu(selectedAddress, orderValue);
+
+                        pages.forEach(function (page) {
+                            if (page.checked == true) {
+                                pageNum = page.value;
+                            }
+                        });
+                        callMenu(selectedAddress, orderValue, pageNum);
                     });
                 });
-                
+
                 orderType.forEach(function (ot) {
                     ot.addEventListener('change', function () {
                         var selectedAddress = [];
                         var orderValue = "";
+                        var pageNum = 1;
                         radios.forEach(function (radio) {
                             if (radio.checked == true)
                                 selectedAddress.push(radio.value);
                         });
 
                         orderType.forEach(function (ot) {
-                            if (ot.checked == true)
+                            if (ot.checked == true) {
                                 orderValue = ot.value;
+                                ot.previousElementSibling.classList.add('active--order');
+                            } else {
+                                ot.previousElementSibling.classList.remove('active--order');
+                            }
                         });
-                        callMenu(selectedAddress, orderValue);
+
+                        pages.forEach(function (page) {
+                            if (page.checked == true) {
+                                pageNum = page.value;
+                            }
+                        });
+
+                        callMenu(selectedAddress, orderValue, pageNum);
                     });
                 });
-                
-                function callMenu(selectedAddress, orderValue){
+
+                pages.forEach(function (page) {
+                    page.addEventListener('change', function () {
+                        var selectedAddress = [];
+                        var orderValue = "";
+                        var pageNum = 1;
+                        radios.forEach(function (radio) {
+                            if (radio.checked == true)
+                                selectedAddress.push(radio.value);
+                        });
+
+                        orderType.forEach(function (ot) {
+                            if (ot.checked == true) {
+                                orderValue = ot.value;
+                            }
+                        });
+
+                        pages.forEach(function (page) {
+                            if (page.checked == true) {
+                                pageNum = page.value;
+                                page.previousElementSibling.classList.add('bg-white');
+                            } else {
+                                page.previousElementSibling.classList.remove('bg-white');
+                            }
+                        });
+                        callMenu(selectedAddress, orderValue, pageNum);
+                    });
+                });
+
+                function callMenu(selectedAddress, orderValue, pageNum) {
+                    console.log(pageNum);
                     // Create a new XMLHttpRequest object
                     const xhr = new XMLHttpRequest();
                     // Configure it: GET-request to your Spring Boot endpoint
-                    xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress) + '&orderValue=' + encodeURIComponent(orderValue), true);
+                    xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
+                            + '&orderValue=' + encodeURIComponent(orderValue)
+                            + '&pageNum=' + encodeURIComponent(pageNum)
+                            , true);
                     // Set up the callback to handle the response
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -390,10 +434,16 @@
 
                             products.forEach(function (product) {
                                 const productItem = document.createElement('div');
+                                var thumbnailUrl = "";
+                                if(product.thumbnailUrl == null){
+                                    thumbnailUrl = "invalid-image.png";
+                                }else {
+                                    thumbnailUrl = product.thumbnailUrl;
+                                }
                                 productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
                                 productItem.innerHTML =
                                         '<div>' +
-                                        '<img class="rounded-t" src="./img/' + product.thumbnailUrl + '" alt="">' +
+                                        '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
                                         '</div>' +
                                         '<div class="p-2">' +
                                         '<div class="text-xl">' +
