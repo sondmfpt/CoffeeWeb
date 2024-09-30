@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import models.Category;
 import models.Product;
+import models.ProductResponse;
+import org.json.JSONObject;
 
 /**
  *
@@ -32,6 +34,7 @@ import models.Product;
 public class MenuServlet extends HttpServlet {
 
     private final int ROWS_PER_PAGE = 5;
+    private int totalPage = 0;
 
     private List<Product> sortProductByPrice(List<Product> products, boolean isIncrease) {
         if (!isIncrease) {
@@ -63,7 +66,7 @@ public class MenuServlet extends HttpServlet {
                 .limit(ROWS_PER_PAGE) // Lấy 5 phần tử tiếp theo
                 .collect(Collectors.toList());
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
@@ -71,6 +74,7 @@ public class MenuServlet extends HttpServlet {
         String orderValue = request.getParameter("orderValue");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         List<Product> products = new ArrayList<>();
+        ProductResponse productResponse = null;
 
         try {
             if (categoryId == "") {
@@ -88,15 +92,25 @@ public class MenuServlet extends HttpServlet {
             if (orderValue.equals("sold")) {
                 products = sortProductByTotalSold(products);
             }
+            if (orderValue.equals("ASC")) {
+                products = sortProductByPrice(products, true);
+            }
+            if (orderValue.equals("DESC")) {
+                products = sortProductByPrice(products, false);
+            }
+            
+            totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
 
             products = getProductFollowingPage(products, pageNum);
+            productResponse = new ProductResponse(products, pageNum, totalPage);
 
         } finally {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
             PrintWriter out = response.getWriter();
-            out.write(new Gson().toJson(products));
+            String jsonResponse = new Gson().toJson(productResponse);
+            out.write(jsonResponse);
             out.flush();
         }
 
@@ -114,7 +128,7 @@ public class MenuServlet extends HttpServlet {
 
         try {
             products = pDao.getAllProduct();
-            int totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
+            totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
             request.setAttribute("TOTALPAGE", totalPage);
             products = getProductFollowingPage(products, 1);
             request.setAttribute("PRODUCTS", products);

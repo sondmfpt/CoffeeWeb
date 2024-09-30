@@ -161,9 +161,10 @@
                                             <label for="oderType_bestSell" class="h-8 w-30 bg-white px-3 py-2 rounded cursor-pointer hover:bg-coffee-200">Bán chạy</label>
                                             <input id="oderType_bestSell" type="radio" name="orderType" value="sold" class="hidden">
                                         </div>
-                                        <select class="h-8 px-3 py-1 rounded" name="orderType" id="">
-                                            <option value="ASC">Giá: Thấp đến cao</option>
-                                            <option value="DESC">Giá: Cao đến thấp</option>
+                                        <select class="h-8 px-3 py-1 rounded" name="orderType">
+                                            <option value="" disabled selected hidden>Giá</option>
+                                            <option value="ASC" class="bg-white">Giá: Thấp đến cao</option>
+                                            <option value="DESC" class="bg-white">Giá: Cao đến thấp</option>
                                         </select>
                                     </div>
                                 </div>
@@ -187,7 +188,7 @@
                                             </div>
                                             <div class="p-2">
                                                 <div class="text-xl">
-                                                    <p>${product.getName()}</p>
+                                                    <p class="line-clamp-2">${product.getName()}</p>
                                                 </div>
                                                 <div class="text-lg text-coffee-700">
                                                     <p>${product.getPrice()}</p>
@@ -199,11 +200,11 @@
                                         </div>
                                     </c:forEach>
                                 </div>
-                                <div class="flex items-center justify-center my-3">
+                                <div id="page-button" class="flex items-center justify-center my-3">
                                     <c:forEach begin="1" end="${TOTALPAGE}" step="${1}" var="i">
                                         <div>
                                             <label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100 ${i == 1 ? "bg-white" : ""}" for="page-button-${i}">${i}</label>
-                                            <input type="radio" id="page-button-${i}" name="page" value="${i}" class="hidden">
+                                            <input type="radio" id="page-button-${i}" name="page" value="${i}" onchange="pageButtonClick()" class="hidden">
                                         </div>
                                     </c:forEach>
 
@@ -243,7 +244,7 @@
                         <div class="col-span-1"></div>
                         <div class="col-span-3 py-20 border-x-2 border-x-coffee-500">
                             <div class="w-11/12 mx-auto border-4 border-white">
-                                <img src="../static/img/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
+                                <img src="./img/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
                             </div>
                             <div class="m-4 text-xl">
                                 <div>Enjoy Better And Better</div>
@@ -309,6 +310,9 @@
                 </div>
             </section>
         </div>
+        <script>
+
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
         <script>
             window.onscroll = function () {
@@ -328,143 +332,207 @@
 
         <!--AJAX-->
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Get all radio buttons with name "Address"
-                const radios = document.querySelectorAll('input[name="category"]');
-                const orderType = document.querySelectorAll('input[name="orderType"]');
-                const pages = document.querySelectorAll('input[name="page"]');
+            const radios = document.querySelectorAll('input[name="category"]');
+            const orderType = document.querySelectorAll('input[name="orderType"]');
+            const orderByPrice = document.querySelector('select[name="orderType"]');
+            var pages = document.querySelectorAll('input[name="page"]');
 
-                radios.forEach(function (radio) {
-                    radio.addEventListener('change', function () {
-                        var selectedAddress = [];
-                        var orderValue = "";
-                        var pageNum = 1;
-                        radios.forEach(function (radio) {
-                            if (radio.checked == true)
-                                selectedAddress.push(radio.value);
-                        });
+            radios.forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    var selectedAddress = [];
+                    var orderValue = "";
+                    var pageNum = 1;
+                    radios.forEach(function (radio) {
+                        if (radio.checked == true)
+                            selectedAddress.push(radio.value);
+                    });
 
+                    if (orderByPrice.value == '') {
                         orderType.forEach(function (ot) {
                             if (ot.checked == true) {
                                 orderValue = ot.value;
                             }
                         });
+                    } else {
+                        orderValue = orderByPrice.value;
+                    }
 
-                        pages.forEach(function (page) {
-                            if (page.checked == true) {
-                                pageNum = page.value;
-                            }
-                        });
-                        callMenu(selectedAddress, orderValue, pageNum);
-                    });
+                    for (var i = 0; i < pages.length; i++) {
+                        if (i == 0) {
+                            pages[i].checked = true;
+                            pages[i].previousElementSibling.classList.add('bg-white');
+                        } else {
+                            pages[i].checked = false;
+                            pages[i].previousElementSibling.classList.remove('bg-white');
+                        }
+                    }
+                    callMenu(selectedAddress, orderValue, pageNum);
                 });
+            });
+
+            orderType.forEach(function (ot) {
+                ot.addEventListener('change', function () {
+                    var selectedAddress = [];
+                    var orderValue = "";
+                    var pageNum = 1;
+                    radios.forEach(function (radio) {
+                        if (radio.checked == true)
+                            selectedAddress.push(radio.value);
+                    });
+
+                    orderType.forEach(function (ot) {
+                        if (ot.checked == true) {
+                            orderValue = ot.value;
+                            ot.previousElementSibling.classList.add('active--order');
+                        } else {
+                            ot.previousElementSibling.classList.remove('active--order');
+                        }
+                    });
+
+                    for (var i = 0; i < pages.length; i++) {
+                        if (i == 0) {
+                            pages[i].checked = true;
+                            pages[i].previousElementSibling.classList.add('bg-white');
+                        } else {
+                            pages[i].checked = false;
+                            pages[i].previousElementSibling.classList.remove('bg-white');
+                        }
+                    }
+
+                    orderByPrice.value = '';
+                    orderByPrice.classList.remove('bg-coffee-500');
+
+                    callMenu(selectedAddress, orderValue, pageNum);
+                });
+            });
+
+            orderByPrice.addEventListener('change', function () {
+                var selectedAddress = [];
+                var orderValue = "";
+                var pageNum = 1;
+                radios.forEach(function (radio) {
+                    if (radio.checked == true)
+                        selectedAddress.push(radio.value);
+                });
+
 
                 orderType.forEach(function (ot) {
-                    ot.addEventListener('change', function () {
-                        var selectedAddress = [];
-                        var orderValue = "";
-                        var pageNum = 1;
-                        radios.forEach(function (radio) {
-                            if (radio.checked == true)
-                                selectedAddress.push(radio.value);
-                        });
-
-                        orderType.forEach(function (ot) {
-                            if (ot.checked == true) {
-                                orderValue = ot.value;
-                                ot.previousElementSibling.classList.add('active--order');
-                            } else {
-                                ot.previousElementSibling.classList.remove('active--order');
-                            }
-                        });
-
-                        pages.forEach(function (page) {
-                            if (page.checked == true) {
-                                pageNum = page.value;
-                            }
-                        });
-
-                        callMenu(selectedAddress, orderValue, pageNum);
-                    });
+                    ot.checked = false;
+                    ot.previousElementSibling.classList.remove('active--order');
                 });
+
+                for (var i = 0; i < pages.length; i++) {
+                    if (i == 0) {
+                        pages[i].checked = true;
+                        pages[i].previousElementSibling.classList.add('bg-white');
+                    } else {
+                        pages[i].checked = false;
+                        pages[i].previousElementSibling.classList.remove('bg-white');
+                    }
+                }
+
+                orderValue = orderByPrice.value;
+                orderByPrice.classList.add('bg-coffee-500');
+
+                callMenu(selectedAddress, orderValue, pageNum);
+            });
+
+
+            function pageButtonClick() {
+                pages = document.querySelectorAll('input[name="page"]');
+                var selectedAddress = [];
+                var orderValue = "";
+                var pageNum = 1;
+                radios.forEach(function (radio) {
+                    if (radio.checked == true)
+                        selectedAddress.push(radio.value);
+                });
+
+                if (orderByPrice.value == '') {
+                    orderType.forEach(function (ot) {
+                        if (ot.checked == true) {
+                            orderValue = ot.value;
+                        }
+                    });
+                } else {
+                    orderValue = orderByPrice.value;
+                }
 
                 pages.forEach(function (page) {
-                    page.addEventListener('change', function () {
-                        var selectedAddress = [];
-                        var orderValue = "";
-                        var pageNum = 1;
-                        radios.forEach(function (radio) {
-                            if (radio.checked == true)
-                                selectedAddress.push(radio.value);
-                        });
-
-                        orderType.forEach(function (ot) {
-                            if (ot.checked == true) {
-                                orderValue = ot.value;
-                            }
-                        });
-
-                        pages.forEach(function (page) {
-                            if (page.checked == true) {
-                                pageNum = page.value;
-                                page.previousElementSibling.classList.add('bg-white');
-                            } else {
-                                page.previousElementSibling.classList.remove('bg-white');
-                            }
-                        });
-                        callMenu(selectedAddress, orderValue, pageNum);
-                    });
+                    if (page.checked == true) {
+                        pageNum = page.value;
+                        page.previousElementSibling.classList.add('bg-white');
+                    } else {
+                        page.previousElementSibling.classList.remove('bg-white');
+                    }
                 });
+                callMenu(selectedAddress, orderValue, pageNum);
+            }
 
-                function callMenu(selectedAddress, orderValue, pageNum) {
-                    console.log(pageNum);
-                    // Create a new XMLHttpRequest object
-                    const xhr = new XMLHttpRequest();
-                    // Configure it: GET-request to your Spring Boot endpoint
-                    xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
-                            + '&orderValue=' + encodeURIComponent(orderValue)
-                            + '&pageNum=' + encodeURIComponent(pageNum)
-                            , true);
-                    // Set up the callback to handle the response
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            const products = JSON.parse(xhr.responseText);
-                            const productList = document.getElementById('product-list');
-                            productList.innerHTML = '';
+            function callMenu(selectedAddress, orderValue, pageNum) {
+                const xhr = new XMLHttpRequest();
 
-                            products.forEach(function (product) {
-                                const productItem = document.createElement('div');
-                                var thumbnailUrl = "";
-                                if(product.thumbnailUrl == null){
-                                    thumbnailUrl = "invalid-image.png";
-                                }else {
-                                    thumbnailUrl = product.thumbnailUrl;
-                                }
-                                productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
-                                productItem.innerHTML =
-                                        '<div>' +
-                                        '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
-                                        '</div>' +
-                                        '<div class="p-2">' +
-                                        '<div class="text-xl">' +
-                                        '<p>' + product.name + '</p>' +
-                                        '</div>' +
-                                        '<div class="text-lg text-coffee-700">' +
-                                        '<p>' + product.price + '</p>' +
-                                        '</div>' +
-                                        '<div class="text-sm text-slate-400">' +
-                                        'Đã bán: <span>' + product.totalSold + '</span>' +
-                                        '</div>' +
-                                        '</div>';
-                                productList.appendChild(productItem);
-                            });
+                xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
+                        + '&orderValue=' + encodeURIComponent(orderValue)
+                        + '&pageNum=' + encodeURIComponent(pageNum)
+                        , true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const productResponse = JSON.parse(xhr.responseText);
+                        var products = productResponse.products;
+                        const productList = document.getElementById('product-list');
+                        productList.innerHTML = '';
+                        var totalPage = productResponse.totalPage;
+                        var prePage = productResponse.prePage;
+
+                        products.forEach(function (product) {
+                            const productItem = document.createElement('div');
+                            var thumbnailUrl = "";
+                            if (product.thumbnailUrl == null) {
+                                thumbnailUrl = "invalid-image.png";
+                            } else {
+                                thumbnailUrl = product.thumbnailUrl;
+                            }
+                            productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
+                            productItem.innerHTML =
+                                    '<div>' +
+                                    '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
+                                    '</div>' +
+                                    '<div class="p-2">' +
+                                    '<div class="text-xl">' +
+                                    '<p>' + product.name + '</p>' +
+                                    '</div>' +
+                                    '<div class="text-lg text-coffee-700">' +
+                                    '<p>' + product.price + '</p>' +
+                                    '</div>' +
+                                    '<div class="text-sm text-slate-400">' +
+                                    'Đã bán: <span>' + product.totalSold + '</span>' +
+                                    '</div>' +
+                                    '</div>';
+                            productList.appendChild(productItem);
+                        });
+                        const pageButtons = document.getElementById('page-button');
+                        pageButtons.innerHTML = '';
+                        for (var i = 1; i <= totalPage; i++) {
+                            var pageButton = document.createElement('div');
+                            if (i == prePage) {
+                                pageButton.innerHTML =
+                                        '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded bg-white hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
+                                        '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" checked class="hidden">'
+                            } else {
+                                pageButton.innerHTML =
+                                        '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
+                                        '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" class="hidden">'
+                            }
+                            pageButtons.appendChild(pageButton);
                         }
-                    };
+                    }
+                };
 
-                    // Send the request
-                    xhr.send();
-                }
-            });
+                // Send the request
+                xhr.send();
+            }
         </script>
     </body>
 </html>
