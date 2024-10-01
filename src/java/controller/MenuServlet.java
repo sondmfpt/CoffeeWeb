@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 @WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
 public class MenuServlet extends HttpServlet {
 
-    private final int ROWS_PER_PAGE = 5;
+    private int ROWS_PER_PAGE = 5;
     private int totalPage = 0;
 
     private List<Product> sortProductByPrice(List<Product> products, boolean isIncrease) {
@@ -73,6 +74,7 @@ public class MenuServlet extends HttpServlet {
         String categoryId = request.getParameter("categoryId");
         String orderValue = request.getParameter("orderValue");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+        ROWS_PER_PAGE = Integer.parseInt(request.getParameter("numPerPage"));
         List<Product> products = new ArrayList<>();
         ProductResponse productResponse = null;
 
@@ -125,6 +127,7 @@ public class MenuServlet extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
         List<Category> categories = null;
+        List<String> information = new ArrayList<>(Arrays.asList("Image", "Name", "Price", "Description", "Sold", "Date"));
 
         try {
             products = pDao.getAllProduct();
@@ -135,6 +138,8 @@ public class MenuServlet extends HttpServlet {
 
             categories = pDao.getAllCategories();
             request.setAttribute("CATEGORIES", categories);
+            
+            request.setAttribute("INFORMATION", information);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MenuServlet.class.getName()).log(Level.SEVERE, null, ex);

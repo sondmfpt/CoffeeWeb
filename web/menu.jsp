@@ -125,19 +125,39 @@
                     <div class="grid grid-cols-12 gap-6">
                         <!-- LEFT -->
                         <div class="col-span-3">
-                            <div class="flex gap-4 items-center">
-                                <i class="fa-solid fa-bars"></i>
-                                <h2 class="text-2xl font-bold">Tất cả danh mục</h2>
+                            <div class="mb-7">
+                                <div class="flex gap-4 items-center">
+                                    <i class="fa-solid fa-bars"></i>
+                                    <h2 class="text-2xl font-bold">Tất cả danh mục</h2>
+                                </div>
+                                <hr class="my-3 mx-2 border-t-[1px] border-t-black">
+                                <div class="">
+                                    <div class="flex flex-col gap-2">
+                                        <c:forEach var="category" items="${categories}">
+                                            <div class="ml-4">
+                                                <input class="cursor-pointer" id="category${category.getId()}" type="checkbox" value="${category.getId()}" name="category">
+                                                <label class="cursor-pointer hover:text-coffee-500" for="category${category.getId()}">${category.getName()}</label>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                             </div>
-                            <hr class="my-3 mx-2 border-t-[1px] border-t-black">
-                            <div class="">
-                                <div class="flex flex-col gap-2">
-                                    <c:forEach var="category" items="${categories}">
-                                        <div class="ml-4">
-                                            <input class="cursor-pointer" id="category${category.getId()}" type="checkbox" value="${category.getId()}" name="category">
-                                            <label class="cursor-pointer hover:text-coffee-500" for="category${category.getId()}">${category.getName()}</label>
-                                        </div>
-                                    </c:forEach>
+                            <c:set var="information" value="${INFORMATION}"/>
+                            <div>
+                                <div class="flex gap-4 items-center">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <h2 class="text-2xl font-bold">Thông tin sản phẩm</h2>
+                                </div>
+                                <hr class="my-3 mx-2 border-t-[1px] border-t-black">
+                                <div class="">
+                                    <div class="flex flex-col gap-2">
+                                        <c:forEach var="information" items="${information}">
+                                            <div class="ml-4">
+                                                <input class="cursor-pointer" id="${information}" type="checkbox" value="${information}" name="information">
+                                                <label class="cursor-pointer hover:text-coffee-500" for="${information}">${information}</label>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +187,12 @@
                                             <option value="DESC" class="bg-white">Giá: Cao đến thấp</option>
                                         </select>
                                     </div>
+                                    <div>
+                                        <div>
+                                            <input type="number" name="numPerPage" class="w-12 text-right" value="5">
+                                            <span>/ Page</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -176,7 +202,7 @@
                                     <c:forEach var="product" items="${products}">
                                         <div
                                             class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
-                                            <div>
+                                            <div id="product-Image">
                                                 <c:choose>
                                                     <c:when test="${empty product.getThumbnailUrl()}">
                                                         <img class="rounded-t" src="./img/invalid-image.png" alt="">
@@ -187,14 +213,22 @@
                                                 </c:choose>
                                             </div>
                                             <div class="p-2">
-                                                <div class="text-xl">
+                                                <div id="product-Name" class="text-xl">
                                                     <p class="line-clamp-2">${product.getName()}</p>
                                                 </div>
-                                                <div class="text-lg text-coffee-700">
+                                                <div id="product-Price" class="text-lg text-coffee-700">
                                                     <p>${product.getPrice()}</p>
                                                 </div>
-                                                <div class="text-sm text-slate-400">
-                                                    Đã bán: <span>${product.getTotalSold()}</span>
+                                                <div id="product-Description" class="mb-2">
+                                                    <p class="line-clamp-2">${product.getDescription()}</p>
+                                                </div>
+                                                <div class="flex justify-between text-sm text-slate-400">
+                                                    <p id="product-Sold">
+                                                        Đã bán: <span>${product.getTotalSold()}</span>
+                                                    </p>
+                                                    <p id="product-Date">
+                                                        ${product.getCreatedAt()}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -330,11 +364,33 @@
             }
         </script>
 
+        <script>
+            const informations = document.querySelectorAll('input[name="information"]');
+
+            informations.forEach(function (infor) {
+                infor.addEventListener('change', function () {
+                    const productListItems = document.querySelectorAll('#product-list>div');
+                    informations.forEach(function (inf) {
+                        var checkedInfor = "#product-" + inf.value;
+                        productListItems.forEach(function (pro) {
+                            if (inf.checked == true) {
+                                pro.querySelector(checkedInfor).classList.remove("hidden");
+                            } else {
+                                pro.querySelector(checkedInfor).classList.add("hidden");
+                            }
+                        });
+                    })
+                });
+            });
+        </script>
+
+
         <!--AJAX-->
         <script>
             const radios = document.querySelectorAll('input[name="category"]');
             const orderType = document.querySelectorAll('input[name="orderType"]');
             const orderByPrice = document.querySelector('select[name="orderType"]');
+            const numberPerPage = document.querySelector('input[name="numPerPage"]');
             var pages = document.querySelectorAll('input[name="page"]');
 
             radios.forEach(function (radio) {
@@ -342,6 +398,7 @@
                     var selectedAddress = [];
                     var orderValue = "";
                     var pageNum = 1;
+                    var numPerPage = 5;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
                             selectedAddress.push(radio.value);
@@ -366,7 +423,9 @@
                             pages[i].previousElementSibling.classList.remove('bg-white');
                         }
                     }
-                    callMenu(selectedAddress, orderValue, pageNum);
+
+                    numPerPage = numberPerPage.value;
+                    callMenu(selectedAddress, orderValue, pageNum, numPerPage);
                 });
             });
 
@@ -375,6 +434,7 @@
                     var selectedAddress = [];
                     var orderValue = "";
                     var pageNum = 1;
+                    var numPerPage = 5;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
                             selectedAddress.push(radio.value);
@@ -402,7 +462,9 @@
                     orderByPrice.value = '';
                     orderByPrice.classList.remove('bg-coffee-500');
 
-                    callMenu(selectedAddress, orderValue, pageNum);
+                    numPerPage = numberPerPage.value;
+
+                    callMenu(selectedAddress, orderValue, pageNum, numPerPage);
                 });
             });
 
@@ -410,6 +472,7 @@
                 var selectedAddress = [];
                 var orderValue = "";
                 var pageNum = 1;
+                var numPerPage = 5;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
                         selectedAddress.push(radio.value);
@@ -434,7 +497,44 @@
                 orderValue = orderByPrice.value;
                 orderByPrice.classList.add('bg-coffee-500');
 
-                callMenu(selectedAddress, orderValue, pageNum);
+                numPerPage = numberPerPage.value;
+
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+            });
+
+
+            numberPerPage.addEventListener('change', function () {
+                var selectedAddress = [];
+                var orderValue = "";
+                var pageNum = 1;
+                var numPerPage = 5;
+                radios.forEach(function (radio) {
+                    if (radio.checked == true)
+                        selectedAddress.push(radio.value);
+                });
+
+                if (orderByPrice.value == '') {
+                    orderType.forEach(function (ot) {
+                        if (ot.checked == true) {
+                            orderValue = ot.value;
+                        }
+                    });
+                } else {
+                    orderValue = orderByPrice.value;
+                }
+
+                for (var i = 0; i < pages.length; i++) {
+                    if (i == 0) {
+                        pages[i].checked = true;
+                        pages[i].previousElementSibling.classList.add('bg-white');
+                    } else {
+                        pages[i].checked = false;
+                        pages[i].previousElementSibling.classList.remove('bg-white');
+                    }
+                }
+
+                numPerPage = numberPerPage.value;
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
             });
 
 
@@ -466,15 +566,19 @@
                         page.previousElementSibling.classList.remove('bg-white');
                     }
                 });
-                callMenu(selectedAddress, orderValue, pageNum);
+
+                numPerPage = numberPerPage.value;
+
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
             }
 
-            function callMenu(selectedAddress, orderValue, pageNum) {
+            function callMenu(selectedAddress, orderValue, pageNum, numPerPage) {
                 const xhr = new XMLHttpRequest();
 
                 xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
                         + '&orderValue=' + encodeURIComponent(orderValue)
                         + '&pageNum=' + encodeURIComponent(pageNum)
+                        + '&numPerPage=' + encodeURIComponent(numPerPage)
                         , true);
 
                 xhr.onreadystatechange = function () {
@@ -496,18 +600,22 @@
                             }
                             productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
                             productItem.innerHTML =
-                                    '<div>' +
+                                    '<div id="product-Image">' +
                                     '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
                                     '</div>' +
                                     '<div class="p-2">' +
-                                    '<div class="text-xl">' +
-                                    '<p>' + product.name + '</p>' +
+                                    '<div id="product-Name" class="text-xl">' +
+                                    '<p class="line-clamp-2">' + product.name + '</p>' +
                                     '</div>' +
-                                    '<div class="text-lg text-coffee-700">' +
+                                    '<div id="product-Price" class="text-lg text-coffee-700">' +
                                     '<p>' + product.price + '</p>' +
                                     '</div>' +
-                                    '<div class="text-sm text-slate-400">' +
-                                    'Đã bán: <span>' + product.totalSold + '</span>' +
+                                    '<div id="product-Description" class="mb-2">' +
+                                    '<p class="line-clamp-2">' + product.description + '</p>' +
+                                    '</div>' +
+                                    '<div class="flex justify-between text-sm text-slate-400">' +
+                                    '<p id="product-Sold">Đã bán: <span>' + product.totalSold + '</span></p>' +
+                                    '<p id="product-Date">' + product.createdAt + '</p>' +
                                     '</div>' +
                                     '</div>';
                             productList.appendChild(productItem);
