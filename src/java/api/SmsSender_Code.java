@@ -23,7 +23,7 @@ public class SmsSender_Code {
     private static final String API_KEY = "c18eeb86edf5a7b33e4d261a6bb29090-9c023f83-9fb6-469f-9289-956cc9add2db";  // Replace with your Infobip API key
 
 
-    public static void sendSms(String from, String to, String messageText) {
+    public static void sendSms(String from, String to, String code) {
         try {
             // Create the request body
             JSONObject message = new JSONObject();
@@ -31,6 +31,7 @@ public class SmsSender_Code {
             message.put("destinations", new JSONObject[]{
                 new JSONObject().put("to", to)
             });
+            String messageText = "Mã của bạn là: " + code;
             message.put("text", messageText);
 
             JSONObject requestBody = new JSONObject();
