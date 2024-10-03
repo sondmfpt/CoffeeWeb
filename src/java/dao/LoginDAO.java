@@ -181,6 +181,31 @@ public class LoginDAO {
         }
         return false;
     }
+    
+    public void saveGuestUser(String sessionId) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO guest_user (session_id) VALUES (?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, sessionId);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 
     public void registration(String username, String password, String firstname, String lastname, String gender, String email, LocalDate date) throws SQLException, ClassNotFoundException {
         Connection con = null;

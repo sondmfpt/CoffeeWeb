@@ -26,14 +26,11 @@ import models.User;
 public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, ClassNotFoundException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("USER");
-        if (user == null) {
-            response.sendRedirect("./login");
-        }
-
-        System.out.println(user.getRole());
+        LoginDAO lDao = new LoginDAO();
+        lDao.saveGuestUser(session.getId());
+        System.out.println(session.getId());
 
         RequestDispatcher rd = request.getRequestDispatcher("index.html");
         rd.forward(request, response);
@@ -51,7 +48,13 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -65,7 +68,13 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
