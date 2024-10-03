@@ -5,6 +5,7 @@
 package controller;
 
 import api.EmailSender_Code;
+import api.SmsSender_Code;
 import dao.LoginDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -68,7 +69,12 @@ public class ResetPasswordServlet extends HttpServlet {
                 response.sendRedirect("./reset-password?status=enterCode_email");
             }
             if (optionReset.equals("phone")) {
-                //
+                String phone = (String) session.getAttribute("USER_PHONE_REAL");
+                phone = phone.replaceFirst("0", "+84");
+                String code = randomCode();
+                session.setAttribute("CODERESET", code);
+                SmsSender_Code.sendSms("Admin", phone, code);
+                response.sendRedirect("./reset-password?status=enterCode_phone");
             }
         }
         if (status.contains("enterCode")) {

@@ -7,9 +7,23 @@
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/HomeServlet.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/User.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/ProductVariant.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/AccountDAO.java</file>
+>>>>>>> main
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/ProductDAO.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/ConfirmServlet.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/api/EmailSender_Code.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/login.jsp</file>
+<<<<<<< HEAD
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/LoginServlet.java</file>
+=======
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/LoginDAO.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/resetPassword.jsp</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/ResetPasswordServlet.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/Accounts.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/api/SmsSender_Code.java</file>
+>>>>>>> main
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/Product.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/home.jsp</file>
         </group>

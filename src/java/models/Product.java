@@ -5,6 +5,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,13 +21,14 @@ public class Product {
     private int totalSold;
     private String description;
     private List<String> listImage;
+    private Date createdAt;
 
     public Product() {
         description = "";
         listImage = new ArrayList<>();
     }
 
-    public Product(int id, String name, String category, String thumbnailUrl, int price, int totalSold, String description) {
+    public Product(int id, String name, String category, String thumbnailUrl, int price, int totalSold, String description, Date createdAt) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -34,6 +36,7 @@ public class Product {
         this.price = price;
         this.totalSold = totalSold;
         this.description = description;
+        this.createdAt = createdAt;
         this.listImage = new ArrayList<>();
     }
 
@@ -105,5 +108,15 @@ public class Product {
     public void addImage(String url){
         this.listImage.add(url);
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    
     
 }
