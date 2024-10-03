@@ -57,6 +57,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.removeAttribute("USER");
+        
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         request.setAttribute("currentYear", currentYear);
         

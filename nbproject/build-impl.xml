@@ -1003,7 +1003,6 @@ is divided into following sections:
         <copy file="${file.reference.mysql-connector-j-9.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.json-20240303.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
-
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
     </target>
