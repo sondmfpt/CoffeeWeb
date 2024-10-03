@@ -38,9 +38,9 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="relative group">
-                                    <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                    <a href="./profile" class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
                                         <i class="fa-solid fa-user text-black"></i>
-                                    </div>
+                                    </a>
                                     <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown">
                                         <div class="text-black">
                                             <div class="text-xl bg-coffee-500 rounded-t">
@@ -92,9 +92,9 @@
                                         </c:when>
                                         <c:otherwise>
                                             <div class="relative group">
-                                                <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                                <a href="./profile" class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
                                                     <i class="fa-solid fa-user text-black"></i>
-                                                </div>
+                                                </a>
                                                 <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown
                                                      ">
                                                     <div class="text-black">

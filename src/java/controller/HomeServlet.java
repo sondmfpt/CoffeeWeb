@@ -32,6 +32,8 @@ public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        HttpSession session = request.getSession();
+        LoginDAO lDao = new LoginDAO();
         ProductDAO pDao = new ProductDAO();
         OtherDAO oDao = new OtherDAO();
         List<Product> bestSelling = null;
@@ -47,6 +49,8 @@ public class HomeServlet extends HttpServlet {
 
             galeries = oDao.getHomeGalery();
             request.setAttribute("GALERIES", galeries);
+            
+            
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
