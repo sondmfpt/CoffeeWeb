@@ -153,7 +153,7 @@
                                     <div class="flex flex-col gap-2">
                                         <c:forEach var="information" items="${information}">
                                             <div class="ml-4">
-                                                <input class="cursor-pointer" id="${information}" type="checkbox" value="${information}" name="information">
+                                                <input class="cursor-pointer" id="${information}" type="checkbox" value="${information}" name="information" onchange="informationEvent()">
                                                 <label class="cursor-pointer hover:text-coffee-500" for="${information}">${information}</label>
                                             </div>
                                         </c:forEach>
@@ -189,7 +189,7 @@
                                     </div>
                                     <div>
                                         <div>
-                                            <input type="number" name="numPerPage" class="w-12 text-right" value="5">
+                                            <input type="number" name="numPerPage" class="w-12 text-right" value="5" min="1">
                                             <span>/ Page</span>
                                         </div>
                                     </div>
@@ -200,8 +200,8 @@
                             <div class="my-5 font-sans">
                                 <div id="product-list" class="grid grid-cols-4 gap-3">
                                     <c:forEach var="product" items="${products}">
-                                        <div
-                                            class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
+                                        <a href="./product-detail?productId=${product.getId()}"
+                                           class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
                                             <div id="product-Image">
                                                 <c:choose>
                                                     <c:when test="${empty product.getThumbnailUrl()}">
@@ -231,7 +231,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </c:forEach>
                                 </div>
                                 <div id="page-button" class="flex items-center justify-center my-3">
@@ -366,22 +366,26 @@
 
         <script>
             const informations = document.querySelectorAll('input[name="information"]');
-
-            informations.forEach(function (infor) {
-                infor.addEventListener('change', function () {
-                    const productListItems = document.querySelectorAll('#product-list>div');
-                    informations.forEach(function (inf) {
-                        var checkedInfor = "#product-" + inf.value;
-                        productListItems.forEach(function (pro) {
-                            if (inf.checked == true) {
-                                pro.querySelector(checkedInfor).classList.remove("hidden");
-                            } else {
-                                pro.querySelector(checkedInfor).classList.add("hidden");
-                            }
-                        });
-                    })
-                });
-            });
+            function informationEvent() {
+                var hasChecked = false;
+                const productListItems = document.querySelectorAll('#product-list>a');
+                informations.forEach(function (inf) {
+                    var checkedInfor = "#product-" + inf.value;
+                    productListItems.forEach(function (pro) {
+                        if (inf.checked == true) {
+                            hasChecked = true;
+                            pro.querySelector(checkedInfor).classList.remove("hidden");
+                        } else {
+                            pro.querySelector(checkedInfor).classList.add("hidden");
+                        }
+                    });
+                })
+                if (!hasChecked) {
+                    productListItems.forEach(function (pro) {
+                        pro.querySelector(checkedInfor).classList.remove("hidden");
+                    });
+                }
+            }
         </script>
 
 
@@ -502,7 +506,6 @@
                 callMenu(selectedAddress, orderValue, pageNum, numPerPage);
             });
 
-
             numberPerPage.addEventListener('change', function () {
                 var selectedAddress = [];
                 var orderValue = "";
@@ -536,7 +539,6 @@
                 numPerPage = numberPerPage.value;
                 callMenu(selectedAddress, orderValue, pageNum, numPerPage);
             });
-
 
             function pageButtonClick() {
                 pages = document.querySelectorAll('input[name="page"]');
@@ -589,37 +591,57 @@
                         productList.innerHTML = '';
                         var totalPage = productResponse.totalPage;
                         var prePage = productResponse.prePage;
+                        var totalNumProduct = productResponse.totalNumberProduct;
 
-                        products.forEach(function (product) {
-                            const productItem = document.createElement('div');
-                            var thumbnailUrl = "";
-                            if (product.thumbnailUrl == null) {
-                                thumbnailUrl = "invalid-image.png";
-                            } else {
-                                thumbnailUrl = product.thumbnailUrl;
-                            }
-                            productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
-                            productItem.innerHTML =
-                                    '<div id="product-Image">' +
-                                    '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
-                                    '</div>' +
-                                    '<div class="p-2">' +
-                                    '<div id="product-Name" class="text-xl">' +
-                                    '<p class="line-clamp-2">' + product.name + '</p>' +
-                                    '</div>' +
-                                    '<div id="product-Price" class="text-lg text-coffee-700">' +
-                                    '<p>' + product.price + '</p>' +
-                                    '</div>' +
-                                    '<div id="product-Description" class="mb-2">' +
-                                    '<p class="line-clamp-2">' + product.description + '</p>' +
-                                    '</div>' +
-                                    '<div class="flex justify-between text-sm text-slate-400">' +
-                                    '<p id="product-Sold">Đã bán: <span>' + product.totalSold + '</span></p>' +
-                                    '<p id="product-Date">' + product.createdAt + '</p>' +
-                                    '</div>' +
-                                    '</div>';
-                            productList.appendChild(productItem);
-                        });
+                        //Set max and value of number product per page
+                        numberPerPage.setAttribute("max", totalNumProduct);
+                        if (totalNumProduct < 5) {
+                            numberPerPage.setAttribute("value", totalNumProduct);
+                        } else {
+                            numberPerPage.setAttribute("value", 5);
+                        }
+                        //Show product list
+                        if (products.length == 0) {
+                            const announcement = document.createElement('h1');
+                            announcement.classList.add('col-span-4', 'text-center', 'text-3xl', 'font-bold');
+                            announcement.innerHTML = "Không có sản phẩm nào!";
+                            productList.appendChild(announcement);
+
+                        } else {
+                            products.forEach(function (product) {
+                                const productItem = document.createElement('a');
+                                var thumbnailUrl = "";
+                                if (product.thumbnailUrl == null) {
+                                    thumbnailUrl = "invalid-image.png";
+                                } else {
+                                    thumbnailUrl = product.thumbnailUrl;
+                                }
+                                productItem.href = ('./product-detail?productId=' + product.id);
+                                productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
+                                productItem.innerHTML =
+                                        '<div id="product-Image">' +
+                                        '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
+                                        '</div>' +
+                                        '<div class="p-2">' +
+                                        '<div id="product-Name" class="text-xl">' +
+                                        '<p class="line-clamp-2">' + product.name + '</p>' +
+                                        '</div>' +
+                                        '<div id="product-Price" class="text-lg text-coffee-700">' +
+                                        '<p>' + product.price + '</p>' +
+                                        '</div>' +
+                                        '<div id="product-Description" class="mb-2">' +
+                                        '<p class="line-clamp-2">' + product.description + '</p>' +
+                                        '</div>' +
+                                        '<div class="flex justify-between text-sm text-slate-400">' +
+                                        '<p id="product-Sold">Đã bán: <span>' + product.totalSold + '</span></p>' +
+                                        '<p id="product-Date">' + product.createdAt + '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                productList.appendChild(productItem);
+                            });
+                        }
+
+                        //Change number of page
                         const pageButtons = document.getElementById('page-button');
                         pageButtons.innerHTML = '';
                         for (var i = 1; i <= totalPage; i++) {
@@ -635,6 +657,8 @@
                             }
                             pageButtons.appendChild(pageButton);
                         }
+
+                        informationEvent();
                     }
                 };
 

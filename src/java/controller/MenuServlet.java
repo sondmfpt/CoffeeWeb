@@ -87,6 +87,7 @@ public class MenuServlet extends HttpServlet {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
                 }
             }
+            int totalNumberProduct = products.size();
 
             if (orderValue.equals("new")) {
                 products = sortProductByCreatedAt(products);
@@ -105,6 +106,7 @@ public class MenuServlet extends HttpServlet {
 
             products = getProductFollowingPage(products, pageNum);
             productResponse = new ProductResponse(products, pageNum, totalPage);
+            productResponse.setTotalNumberProduct(totalNumberProduct);
 
         } finally {
             response.setContentType("application/json");
@@ -123,6 +125,8 @@ public class MenuServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("ORDERTYPE", "");
+        
+        ROWS_PER_PAGE = 5;
 
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
