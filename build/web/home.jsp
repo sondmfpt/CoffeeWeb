@@ -55,7 +55,7 @@
                             </c:otherwise>
                         </c:choose>
                         <div class="border-r-2 border-white mx-4"></div>
-                        <div class="cursor-pointer hover:text-coffee-700"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <div class="cursor-pointer hover:text-coffee-700"><i class="fa-solid fa-cart-shopping"></i></div>
                     </div>
                 </div>
             </div>
@@ -110,8 +110,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <div class="border-r-2 border-white mx-4"></div>
-                                    <div class="cursor-pointer flex items-center hover:text-coffee-700 transition ease-in-out duration-200"><i
-                                            class="fa-solid fa-magnifying-glass"></i>
+                                    <div class="cursor-pointer flex items-center hover:text-coffee-700 transition ease-in-out duration-200">
+                                        <i class="fa-solid fa-cart-shopping"></i>
                                     </div>
                                 </div>
                             </div>
