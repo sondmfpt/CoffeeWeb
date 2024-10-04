@@ -20,7 +20,7 @@
         <c:set var="categories" value="${CATEGORIES}"/>
         <div class="flex flex-col bg-coffee-200">
             <!-- NAVBAR SCROLL-->
-            <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
+            <div id="navbar" class="bg-black w-full md:h-[8%] lg:h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
                 <div class="flex justify-around items-center h-full">
                     <a href="./home" class="text-4xl text-white font-bold cursor-pointer">Caffeine</a>
                     <div class="">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="grid grid-cols-12 gap-6">
                         <!-- LEFT -->
-                        <div class="col-span-3">
+                        <div class="col-span-3 md:hidden lg:block">
                             <div class="mb-7">
                                 <div class="flex gap-4 items-center">
                                     <i class="fa-solid fa-bars"></i>
@@ -163,12 +163,12 @@
                         </div>
 
                         <!-- RIGHT -->
-                        <div class="col-span-9">
+                        <div class="md:col-span-12 lg:col-span-9">
                             <!-- ORDER LIST -->
                             <div class="bg-coffee-300 rounded">
                                 <div class="flex justify-between items-center px-7 py-4">
-                                    <div class="flex gap-3 items-center">
-                                        <h3>Sắp xếp theo</h3>
+                                    <div class="flex flex-wrap gap-3 items-center">
+                                        <h3 class="">Sắp xếp theo</h3>
                                         <div class="">
                                             <label for="oderType_relative" class="h-8 w-30 bg-white px-3 py-2 rounded cursor-pointer active--order hover:bg-coffee-200">Liên quan</label>
                                             <input id="oderType_relative" type="radio" name="orderType" value="" class="hidden">
@@ -198,7 +198,7 @@
 
                             <!-- PRODUCT LIST -->
                             <div class="my-5 font-sans">
-                                <div id="product-list" class="grid grid-cols-4 gap-3">
+                                <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                                     <c:forEach var="product" items="${products}">
                                         <a href="./product-detail?productId=${product.getId()}"
                                            class="col-span-1 bg-white rounded hover:-translate-y-1 transition ease-in-out duration-200 cursor-pointer">
