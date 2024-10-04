@@ -10,6 +10,7 @@ import dao.ProductDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +33,6 @@ public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
-        HttpSession session = request.getSession();
-        LoginDAO lDao = new LoginDAO();
         ProductDAO pDao = new ProductDAO();
         OtherDAO oDao = new OtherDAO();
         List<Product> bestSelling = null;
@@ -49,13 +48,40 @@ public class HomeServlet extends HttpServlet {
 
             galeries = oDao.getHomeGalery();
             request.setAttribute("GALERIES", galeries);
-            
-            
+
+            saveUser(request, response);
 
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
+
+    }
+
+    private void saveUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+        HttpSession session = request.getSession();
+        LoginDAO lDao = new LoginDAO();
+        Cookie[] cookies = request.getCookies();
+        String trackingId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("TrackingID")) {
+                    trackingId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (trackingId == null) {
+            trackingId = java.util.UUID.randomUUID().toString();
+            Cookie newCookie = new Cookie("TrackingID", trackingId);
+            newCookie.setMaxAge(60 * 60 * 24 * 365);
+            response.addCookie(newCookie);
+            lDao.saveGuestUser(trackingId);
+        }
+
+        session.setAttribute("TRACKINGID", trackingId);
 
     }
 
