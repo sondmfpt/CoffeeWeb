@@ -186,6 +186,9 @@
                                             <option value="ASC" class="bg-white">Giá: Thấp đến cao</option>
                                             <option value="DESC" class="bg-white">Giá: Cao đến thấp</option>
                                         </select>
+                                        <div>
+                                            <input name="searchProduct" type="text" placeholder="Tìm kiếm" class="w-10 rounded p-2" oninput="SearchEvent()">
+                                        </div>
                                     </div>
                                     <div>
                                         <div>
@@ -406,6 +409,7 @@
                     var orderValue = "";
                     var pageNum = 1;
                     var numPerPage = 5;
+                    var searchValue = document.querySelector('input[name="searchProduct"]').value;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
                             selectedAddress.push(radio.value);
@@ -432,7 +436,7 @@
                     }
 
                     numPerPage = numberPerPage.value;
-                    callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+                    callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
                 });
             });
 
@@ -442,6 +446,7 @@
                     var orderValue = "";
                     var pageNum = 1;
                     var numPerPage = 5;
+                    var searchValue = document.querySelector('input[name="searchProduct"]').value;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
                             selectedAddress.push(radio.value);
@@ -471,7 +476,7 @@
 
                     numPerPage = numberPerPage.value;
 
-                    callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+                    callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
                 });
             });
 
@@ -480,6 +485,7 @@
                 var orderValue = "";
                 var pageNum = 1;
                 var numPerPage = 5;
+                var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
                         selectedAddress.push(radio.value);
@@ -506,7 +512,7 @@
 
                 numPerPage = numberPerPage.value;
 
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
             });
 
             numberPerPage.addEventListener('change', function () {
@@ -514,6 +520,7 @@
                 var orderValue = "";
                 var pageNum = 1;
                 var numPerPage = 5;
+                var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
                         selectedAddress.push(radio.value);
@@ -540,7 +547,7 @@
                 }
 
                 numPerPage = numberPerPage.value;
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
             });
 
             function pageButtonClick() {
@@ -548,6 +555,7 @@
                 var selectedAddress = [];
                 var orderValue = "";
                 var pageNum = 1;
+                var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
                         selectedAddress.push(radio.value);
@@ -574,16 +582,55 @@
 
                 numPerPage = numberPerPage.value;
 
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage);
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
             }
 
-            function callMenu(selectedAddress, orderValue, pageNum, numPerPage) {
+            function SearchEvent() {
+                var selectedAddress = [];
+                var orderValue = "";
+                var pageNum = 1;
+                var numPerPage = 5;
+
+                radios.forEach(function (radio) {
+                    if (radio.checked == true)
+                        selectedAddress.push(radio.value);
+                });
+
+                if (orderByPrice.value == '') {
+                    orderType.forEach(function (ot) {
+                        if (ot.checked == true) {
+                            orderValue = ot.value;
+                        }
+                    });
+                } else {
+                    orderValue = orderByPrice.value;
+                }
+
+                for (var i = 0; i < pages.length; i++) {
+                    if (i == 0) {
+                        pages[i].checked = true;
+                        pages[i].previousElementSibling.classList.add('bg-white');
+                    } else {
+                        pages[i].checked = false;
+                        pages[i].previousElementSibling.classList.remove('bg-white');
+                    }
+                }
+
+                numPerPage = numberPerPage.value;
+
+                var searchValue = document.querySelector('input[name="searchProduct"]').value;
+
+                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+            }
+
+            function callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue) {
                 const xhr = new XMLHttpRequest();
 
                 xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
                         + '&orderValue=' + encodeURIComponent(orderValue)
                         + '&pageNum=' + encodeURIComponent(pageNum)
                         + '&numPerPage=' + encodeURIComponent(numPerPage)
+                        + '&searchValue=' + encodeURIComponent(searchValue)
                         , true);
 
                 xhr.onreadystatechange = function () {
@@ -595,6 +642,7 @@
                         var totalPage = productResponse.totalPage;
                         var prePage = productResponse.prePage;
                         var totalNumProduct = productResponse.totalNumberProduct;
+
 
                         //Set max and value of number product per page
                         numberPerPage.setAttribute("max", totalNumProduct);

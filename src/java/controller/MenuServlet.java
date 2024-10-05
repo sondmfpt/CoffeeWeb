@@ -67,7 +67,19 @@ public class MenuServlet extends HttpServlet {
                 .limit(ROWS_PER_PAGE) // Lấy 5 phần tử tiếp theo
                 .collect(Collectors.toList());
     }
-    
+
+    private List<Product> getProductBySearching(List<Product> products, String searchValue) {
+        if (searchValue == null || searchValue.equals("")) {
+            return products; 
+        }
+
+        String lowerCaseSearchValue = searchValue.toLowerCase(); 
+
+        return products.stream()
+                .filter(pro -> pro.getName().toLowerCase().contains(lowerCaseSearchValue)) 
+                .collect(Collectors.toList());
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
@@ -75,6 +87,7 @@ public class MenuServlet extends HttpServlet {
         String orderValue = request.getParameter("orderValue");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         ROWS_PER_PAGE = Integer.parseInt(request.getParameter("numPerPage"));
+        String searchValue = request.getParameter("searchValue");
         List<Product> products = new ArrayList<>();
         ProductResponse productResponse = null;
 
@@ -87,6 +100,11 @@ public class MenuServlet extends HttpServlet {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
                 }
             }
+            
+            products = getProductBySearching(products, searchValue);
+            
+            ROWS_PER_PAGE = products.size() < 5 ? products.size() : 5;
+            
             int totalNumberProduct = products.size();
 
             if (orderValue.equals("new")) {
@@ -101,12 +119,15 @@ public class MenuServlet extends HttpServlet {
             if (orderValue.equals("DESC")) {
                 products = sortProductByPrice(products, false);
             }
-            
+
             totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
+            
+            
 
             products = getProductFollowingPage(products, pageNum);
             productResponse = new ProductResponse(products, pageNum, totalPage);
             productResponse.setTotalNumberProduct(totalNumberProduct);
+
 
         } finally {
             response.setContentType("application/json");
@@ -125,7 +146,7 @@ public class MenuServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("ORDERTYPE", "");
-        
+
         ROWS_PER_PAGE = 5;
 
         ProductDAO pDao = new ProductDAO();
@@ -142,7 +163,7 @@ public class MenuServlet extends HttpServlet {
 
             categories = pDao.getAllCategories();
             request.setAttribute("CATEGORIES", categories);
-            
+
             request.setAttribute("INFORMATION", information);
 
         } catch (ClassNotFoundException ex) {
