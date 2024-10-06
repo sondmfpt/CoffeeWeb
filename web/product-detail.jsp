@@ -62,61 +62,129 @@
                     </div>
                 </div>
 
-                <!--HEADER-->
                 <div class="container mx-auto">
-                    <!-- NAVBAR STATIC-->
-                    <div class="w-full border-2 border-black my-4 z-50 text-black">
-                        <div class="flex justify-between m-3 items-center">
-                            <a href="./home" class="text-4xl text-black font-bold cursor-pointer">Caffeine</a>
-                            <div class="">
-                                <ul class="flex flex-row">
-                                    <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
-                                        Home
-                                    </li>
-                                    <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
-                                        Menu
-                                    </li>
-                                    <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
-                                        About Us
-                                    </li>
-                                    <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
-                                        Facilities
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="flex flex-row">
-                                <c:choose>
-                                    <c:when test="${user == null}">
-                                        <a href="./login" class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">Sign
-                                            in
-                                        </a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="relative group">
-                                            <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
-                                                <i class="fa-solid fa-user text-black"></i>
-                                            </div>
-                                            <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown
-                                                 ">
-                                                <div class="text-black">
-                                                    <div class="text-xl bg-coffee-500 rounded-t">
-                                                        <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
-                                                    </div>
-                                                    <div class="p-2 hover:bg-coffee-200 rounded-b">
-                                                        <a href="./login" class="block w-full h-full">Logout</a>
+
+                    <div class="mx-auto">
+                        <!-- NAVBAR STATIC-->
+                        <div class="w-full border-2 border-black my-4 z-50 text-black">
+                            <div class="flex justify-between m-3 items-center">
+                                <a href="./home" class="text-4xl text-black font-bold cursor-pointer">Caffeine</a>
+                                <div class="">
+                                    <ul class="flex flex-row">
+                                        <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
+                                            Home
+                                        </li>
+                                        <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
+                                            Menu
+                                        </li>
+                                        <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
+                                            About Us
+                                        </li>
+                                        <li class="mx-4 cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">
+                                            Facilities
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="flex flex-row">
+                                    <c:choose>
+                                        <c:when test="${user == null}">
+                                            <a href="./login" class="cursor-pointer hover:text-coffee-700 transition ease-in-out duration-200">Sign
+                                                in
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="relative group">
+                                                <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center cursor-pointer">
+                                                    <i class="fa-solid fa-user text-black"></i>
+                                                </div>
+                                                <div class="absolute min-w-40 bg-white right-0 z-20 rounded hidden group-hover:block animate-showDown
+                                                     ">
+                                                    <div class="text-black">
+                                                        <div class="text-xl bg-coffee-500 rounded-t">
+                                                            <h1 class="p-2"> ${user.getLastName()} ${user.getFirstName()}</h1>
+                                                        </div>
+                                                        <div class="p-2 hover:bg-coffee-200 rounded-b">
+                                                            <a href="./login" class="block w-full h-full">Logout</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                                <div class="border-r-2 border-black mx-4"></div>
-                                <div class="cursor-pointer flex items-center hover:text-coffee-700 transition ease-in-out duration-200"><i
-                                        class="fa-solid fa-magnifying-glass"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="border-r-2 border-black mx-4"></div>
+                                    <div class="cursor-pointer flex items-center hover:text-coffee-700 transition ease-in-out duration-200"><i
+                                            class="fa-solid fa-magnifying-glass"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!--CONTENT-->
+                    <div id="content" class="mx-[10%] text-black mb-5">
+                        <div class="flex flex-col md:flex-row items-center justify-center">
+
+                            <div class="md:w-1/2 flex flex-col justify-center gap-2">
+                                <img src="https://3croastery.com/wp-content/uploads/2021/12/Thiet-ke-chua-co-ten-4.jpg" alt="Lac Duong Coffee" class="shadow-lg rounded-md">
+                                <div class="flex gap-3 item-center overflow-x-scroll">
+                                    <img class="w-20 h-20 bg-red-800 rounded">
+                                    <img class="w-20 h-20 bg-red-800 rounded">
+                                    <img class="w-20 h-20 bg-red-800 rounded">
+                                    <img class="w-20 h-20 bg-red-800 rounded">                                    
+                                    <img class="w-20 h-20 bg-red-800 rounded">                                    
+                                </div>
+                            </div>
+
+                            <div class="md:w-2/3 p-6">
+                                <h1 class="text-2xl font-bold mb-4">Cà Phê Arabica Lạc Dương</h1>
+                                <p class="text-xl font-semibold text-red-500 mb-4">130.000VND - 325.000VND</p>
+
+                                <div class="mb-4 flex gap-4 items-center">
+                                    <label for="weight" class="block text-lg font-medium text-gray-700">Khối lượng</label>
+                                    <select id="weight" class="w-1/2 px-3 py-2 block mt-1 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option>Chọn một tùy chọn</option>
+                                        <option>250g</option>
+                                        <option>500g</option>
+                                        <option>1kg</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4 flex gap-4 items-center">
+                                    <label for="grind" class="block text-lg font-medium text-gray-700">Kích cỡ xay</label>
+                                    <select id="grind" class="w-1/2 px-3 py-2 block mt-1 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option>Chọn một tùy chọn</option>
+                                        <option>Whole Beans</option>
+                                        <option>Espresso</option>
+                                        <option>French Press</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex gap-4 items-center">
+                                    <label class="block text-lg font-medium text-gray-700">Số lượng</label>
+                                    <div class="flex items-center">
+                                        <div class="flex item-center px-3 h-8 bg-white border border-gray-300 cursor-pointer">-</div>
+                                        <input type="number" name="numberOption" value="1" class="w-9 h-8 text-center text-lg no-spinner border-y border-gray-300">
+                                        <div class="flex item-center px-3 h-8 bg-white border border-gray-300 cursor-pointer">+</div>
+                                    </div>
+                                </div>
+
+                                <hr class="border-black my-2">
+                                <button class="min-w-1/3 px-3 py-3 bg-black border border-black text-white rounded-lg">
+                                    Thêm vào giỏ hàng
+                                </button>
+                                <button class="w-1/3 px-3 py-3 border border-black rounded-lg">
+                                    Mua ngay
+                                </button>
+                                <hr class="border-black my-2">
+
+                                <p class="text-sm text-gray-600 mt-4">
+                                    Mã: N/A <br>
+                                    Danh mục: Cà phê, Cà phê đặc sản, Cà phê pha cold brew, Cà phê pha espresso
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!--FOOTER-->
@@ -213,21 +281,21 @@
                 </section>
 
             </div>
-            
-            <script>
-            window.onscroll = function () {
-                toggleNavbar()
-            };
 
-            function toggleNavbar() {
-                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                    document.getElementById("navbar").classList.remove("hidden");
-                    document.getElementById("navbar").classList.remove("z-[-1]");
-                } else {
-                    document.getElementById("navbar").classList.add("hidden");
-                    document.getElementById("navbar").classList.add("z-[-1]");
+            <script>
+                window.onscroll = function () {
+                    toggleNavbar()
+                };
+
+                function toggleNavbar() {
+                    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                        document.getElementById("navbar").classList.remove("hidden");
+                        document.getElementById("navbar").classList.remove("z-[-1]");
+                    } else {
+                        document.getElementById("navbar").classList.add("hidden");
+                        document.getElementById("navbar").classList.add("z-[-1]");
+                    }
                 }
-            }
-        </script>
+            </script>
     </body>
 </html>
