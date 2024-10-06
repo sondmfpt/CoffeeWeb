@@ -182,16 +182,26 @@ public class LoginDAO {
         return false;
     }
     
+<<<<<<< HEAD
     public void saveGuestUser(String sessionId) throws SQLException, ClassNotFoundException {
+=======
+    public void saveGuestUser(String trackingId) throws SQLException, ClassNotFoundException {
+>>>>>>> main
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
+<<<<<<< HEAD
                 String sql = "INSERT INTO guest_user (session_id) VALUES (?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, sessionId);
+=======
+                String sql = "INSERT INTO guest_user (tracking_id) VALUES (?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, trackingId);
+>>>>>>> main
                 stm.executeUpdate();
             }
         } finally {

@@ -13,6 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:redirect url="./login" />
+        <c:redirect url="./home" />
     </body>
 </html>

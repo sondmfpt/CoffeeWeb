@@ -72,6 +72,23 @@ public class Product {
         this.thumbnailUrl = thumbnailUrl;
     }
 
+    public int getTotalSold() {
+        return totalSold;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
+    }
+
+    public List<String> getListImage() {
+        return listImage;
+    }
+
+    public void setListImage(List<String> listImage) {
+        this.listImage = listImage;
+    }
+    
+    
     public String getDescription() {
         return description;
     }
@@ -88,23 +105,6 @@ public class Product {
         this.price = price;
     }
 
-    public int getTotalSold() {
-        return totalSold;
-    }
-
-    public void setTotalSold(int totalSold) {
-        this.totalSold = totalSold;
-    }
-    
-
-    public List<String> getListImage() {
-        return listImage;
-    }
-
-    public void setListImage(List<String> listImage) {
-        this.listImage = listImage;
-    }
-    
     public void addImage(String url){
         this.listImage.add(url);
     }
