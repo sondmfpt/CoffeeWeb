@@ -644,18 +644,19 @@
                         var prePage = productResponse.prePage;
                         var totalNumProduct = productResponse.totalNumberProduct;
                         var rowPerPage = productResponse.rowPerPage;
-                        
+
                         console.log(rowPerPage);
-                        
+
                         //Set max and value of number product per page
                         numberPerPage.setAttribute("max", totalNumProduct);
-                        numberPerPage.setAttribute("value", rowPerPage);
+                        numberPerPage.value = rowPerPage;
                         //Show product list
                         if (products.length == 0) {
                             const announcement = document.createElement('h1');
                             announcement.classList.add('col-span-4', 'text-center', 'text-3xl', 'font-bold');
                             announcement.innerHTML = "Không có sản phẩm nào!";
                             productList.appendChild(announcement);
+                            numberPerPage.value = 1;
 
                         } else {
                             products.forEach(function (product) {

@@ -46,9 +46,8 @@ public class LoginDAO {
                     String phone = rs.getString("phone");
                     String gender = rs.getString("gender");
                     Date date = rs.getDate("date_of_birth");
-                    String address = rs.getString("address");
                     String role = rs.getString("role_name");
-                    user = new User(id, firstName, lastName, gender, phone, date, email, address, role);
+                    user = new User(id, firstName, lastName, gender, phone, date, email, role);
                 }
 
             }
@@ -321,9 +320,8 @@ public class LoginDAO {
                     String phone = rs.getString("phone");
                     String gender = rs.getString("gender");
                     Date date = rs.getDate("date_of_birth");
-                    String address = rs.getString("address");
                     String role = rs.getString("role_name");
-                    user = new User(id, firstName, lastName, gender, phone, date, email, address, role); 
+                    user = new User(id, firstName, lastName, gender, phone, date, email, role); 
                 }
 
             }

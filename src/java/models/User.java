@@ -18,13 +18,12 @@ public class User {
     private String phone;
     private Date date;
     private String email;
-    private String address;
     private String role;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String gender, String phone, Date date, String email, String address, String role) {
+    public User(int id, String firstName, String lastName, String gender, String phone, Date date, String email, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,7 +31,6 @@ public class User {
         this.phone = phone;
         this.date = date;
         this.email = email;
-        this.address = address;
         this.role = role;
     }
 
@@ -92,13 +90,6 @@ public class User {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getRole() {
         return role;

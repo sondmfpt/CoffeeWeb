@@ -34,7 +34,6 @@ public class UserDAO {
                         rs.getString("phone"),
                         rs.getDate("date_of_birth"),
                         rs.getString("email"),
-                        rs.getString("address"),
                         rs.getString("role_name")
                 );
             }
@@ -44,7 +43,7 @@ public class UserDAO {
         return null;
     }
 
-    public void updateUserWithId(String firstName, String lastName, String gender, String phone, Date dob, String email, String address, int id) {
+    public void updateUserWithId(String firstName, String lastName, String gender, String phone, Date dob, String email, int id) {
         String query = "UPDATE users " +
                                 "SET first_name = ?, " +
                                 "last_name = ?, " +
@@ -52,7 +51,6 @@ public class UserDAO {
                                 "phone = ?, " +
                                 "date_of_birth = ?, " +
                                 "email = ?, " +
-                                "address = ? " +
                                 "WHERE id = ?;";
         try {
             ps = con.prepareStatement(query);
@@ -66,8 +64,7 @@ public class UserDAO {
                 ps.setDate(5, null);
             }
             ps.setString(6, email);
-            ps.setString(7, address);
-            ps.setInt(8, id);
+            ps.setInt(7, id);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(); // Handle exceptions appropriately in your application
