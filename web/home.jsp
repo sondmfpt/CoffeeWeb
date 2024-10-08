@@ -129,12 +129,12 @@
                                         Your Senses And Start Your Day Right</p>
                                 </div>
                                 <div class="my-8">
-                                    <button class="py-2 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
+                                    <a href="./menu" class="py-3 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Order Now <i
-                                            class="fa-solid fa-arrow-right ml-2"></i></button>
-                                    <button class="py-2 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
+                                            class="fa-solid fa-arrow-right ml-2"></i></a>
+                                            <a href="./about-us" class="py-3 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Explore More
-                                    </button>
+                                    </a>
                                 </div>
                                 <div class="flex justify-between my-16">
                                     <div class="flex flex-col justify-center items-center gap-2 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out_.1s]">
