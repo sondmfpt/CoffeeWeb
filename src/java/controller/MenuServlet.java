@@ -70,13 +70,13 @@ public class MenuServlet extends HttpServlet {
 
     private List<Product> getProductBySearching(List<Product> products, String searchValue) {
         if (searchValue == null || searchValue.equals("")) {
-            return products; 
+            return products;
         }
 
-        String lowerCaseSearchValue = searchValue.toLowerCase(); 
+        String lowerCaseSearchValue = searchValue.toLowerCase();
 
         return products.stream()
-                .filter(pro -> pro.getName().toLowerCase().contains(lowerCaseSearchValue)) 
+                .filter(pro -> pro.getName().toLowerCase().contains(lowerCaseSearchValue))
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +90,7 @@ public class MenuServlet extends HttpServlet {
         String searchValue = request.getParameter("searchValue");
         List<Product> products = new ArrayList<>();
         ProductResponse productResponse = null;
-
+        int totalNumberProduct = 0;
         try {
             if (categoryId == "") {
                 products = pDao.getAllProduct();
@@ -100,34 +100,37 @@ public class MenuServlet extends HttpServlet {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
                 }
             }
-            
-            products = getProductBySearching(products, searchValue);
-            
-            ROWS_PER_PAGE = products.size() < 5 ? products.size() : 5;
-            
-            int totalNumberProduct = products.size();
+            if (products.size() == 0) {
+                pageNum = 0;
+                totalPage = 0;
+            } else {
 
-            if (orderValue.equals("new")) {
-                products = sortProductByCreatedAt(products);
-            }
-            if (orderValue.equals("sold")) {
-                products = sortProductByTotalSold(products);
-            }
-            if (orderValue.equals("ASC")) {
-                products = sortProductByPrice(products, true);
-            }
-            if (orderValue.equals("DESC")) {
-                products = sortProductByPrice(products, false);
-            }
+                products = getProductBySearching(products, searchValue);
 
-            totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
-            
-            
+                ROWS_PER_PAGE = products.size() < ROWS_PER_PAGE ? products.size() : ROWS_PER_PAGE;
 
-            products = getProductFollowingPage(products, pageNum);
+                totalNumberProduct = products.size();
+
+                if (orderValue.equals("new")) {
+                    products = sortProductByCreatedAt(products);
+                }
+                if (orderValue.equals("sold")) {
+                    products = sortProductByTotalSold(products);
+                }
+                if (orderValue.equals("ASC")) {
+                    products = sortProductByPrice(products, true);
+                }
+                if (orderValue.equals("DESC")) {
+                    products = sortProductByPrice(products, false);
+                }
+
+                totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
+                products = getProductFollowingPage(products, pageNum);
+            }
+            System.out.println(ROWS_PER_PAGE);
             productResponse = new ProductResponse(products, pageNum, totalPage);
             productResponse.setTotalNumberProduct(totalNumberProduct);
-
+            productResponse.setRowPerPage(ROWS_PER_PAGE);
 
         } finally {
             response.setContentType("application/json");

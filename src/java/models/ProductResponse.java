@@ -16,6 +16,7 @@ public class ProductResponse {
     private int totalPage;
     private int prePage;
     private int totalNumberProduct;
+    private int rowPerPage;
 
     public ProductResponse() {
         products = new ArrayList<>();
@@ -57,6 +58,14 @@ public class ProductResponse {
 
     public void setTotalNumberProduct(int totalNumberProduct) {
         this.totalNumberProduct = totalNumberProduct;
+    }
+
+    public int getRowPerPage() {
+        return rowPerPage;
+    }
+
+    public void setRowPerPage(int rowPerPage) {
+        this.rowPerPage = rowPerPage;
     }
     
     

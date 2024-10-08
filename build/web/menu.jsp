@@ -626,6 +626,7 @@
             function callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue) {
                 const xhr = new XMLHttpRequest();
 
+
                 xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
                         + '&orderValue=' + encodeURIComponent(orderValue)
                         + '&pageNum=' + encodeURIComponent(pageNum)
@@ -642,15 +643,13 @@
                         var totalPage = productResponse.totalPage;
                         var prePage = productResponse.prePage;
                         var totalNumProduct = productResponse.totalNumberProduct;
-
-
+                        var rowPerPage = productResponse.rowPerPage;
+                        
+                        console.log(rowPerPage);
+                        
                         //Set max and value of number product per page
                         numberPerPage.setAttribute("max", totalNumProduct);
-                        if (totalNumProduct < 5) {
-                            numberPerPage.setAttribute("value", totalNumProduct);
-                        } else {
-                            numberPerPage.setAttribute("value", 5);
-                        }
+                        numberPerPage.setAttribute("value", rowPerPage);
                         //Show product list
                         if (products.length == 0) {
                             const announcement = document.createElement('h1');
