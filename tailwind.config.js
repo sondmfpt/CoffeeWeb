@@ -6,11 +6,13 @@ module.exports = {
       colors: {
         'coffee': {
           200: '#eee1c4',
+          300: '#FFE0B5',
           500: '#dcb386',
-          700: '#9e826c' //hover
+          700: '#AF8260' //hover
         }
       },
       fontFamily: {
+        'sans': "'Roboto Mono', sans",
         'serif': "'Abril Fatface', serif"
       },
       keyframes: {

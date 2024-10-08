@@ -55,9 +55,8 @@ public class UpdateProfileServlet extends HttpServlet {
                 e.printStackTrace();
             }
             String email = request.getParameter("email");
-            String address = request.getParameter("address");
             UserDAO ud = new UserDAO();
-            ud.updateUserWithId(firstName, lastName, gender, phone, dob, email, address, user.getId());
+            ud.updateUserWithId(firstName, lastName, gender, phone, dob, email, user.getId());
             user = ud.getUserWithId(user.getId());
             session.setAttribute("USER", user);
             response.sendRedirect("profile");
