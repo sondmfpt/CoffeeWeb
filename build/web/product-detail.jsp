@@ -13,6 +13,16 @@
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="./output.css" rel="stylesheet">
+        <script src="https://cdn.tiny.cloud/1/z47v9wd05qdjuz0trbntcnu6p9rv3qyozy8s68xlf939i2o3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#editor',
+                plugins: 'image link lists',
+                toolbar: 'bold italic underline | alignleft aligncenter alignright | bullist numlist | link image',
+                menubar: false,
+                branding: false
+            });
+        </script>
     </head>
     <body>
         <c:set var="user" value="${USER}"/>
@@ -197,13 +207,40 @@
                                 </div>
                             </div>
                             <!--DESCRIPTION-->
-                            <div class="">
-                                
+                            <div class="my-5">
+                                <div>
+
+                                </div>
                             </div>
-                            
+
                             <!--FEEDBACK-->
-                            <div>
-                                
+                            <div class="flex flex-col gap-3">
+                                <div class="relative flex gap-3">
+                                    <div class="rounded-full w-16 h-16 bg-red-800">
+                                        <img src="">
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <strong>admin</strong>
+                                            - 
+                                            <span>16/01/2004</span>
+                                        </div>
+                                        <div>comment</div>
+                                        <div class="flex mt-5 gap-5">
+                                            <div class="w-48 h-48 bg-red-800"></div>
+                                            <div class="w-48 h-48 bg-red-800"></div>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-0 right-0">
+                                        <div class="flex gap-0">
+                                            <i class="fa-solid fa-star text-yellow-400"></i>
+                                            <i class="fa-solid fa-star text-yellow-400"></i>
+                                            <i class="fa-solid fa-star text-yellow-400"></i>
+                                            <i class="fa-solid fa-star text-yellow-400"></i>
+                                            <i class="fa-regular fa-star text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
