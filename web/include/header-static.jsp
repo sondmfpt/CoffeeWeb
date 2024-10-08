@@ -66,13 +66,12 @@
         </div>
         <script>
             var pathName = window.location.pathname;
-            if (pathName.includes("menu")) {
-                document.getElementById('header-static').classList.add('border-black', 'text-black');
-
-                document.getElementById('hr').classList.add('border-black');
-            } else {
+            if (pathName.includes("home")) {
                 document.getElementById('header-static').classList.add('border-white', 'text-white');
                 document.getElementById('hr').classList.add('border-white');
+            } else {
+                document.getElementById('header-static').classList.add('border-black', 'text-black');
+                document.getElementById('hr').classList.add('border-black');
             }
         </script>
     </body>
