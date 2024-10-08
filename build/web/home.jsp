@@ -129,12 +129,12 @@
                                         Your Senses And Start Your Day Right</p>
                                 </div>
                                 <div class="my-8">
-                                    <button class="py-2 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
+                                    <a href="./menu" class="py-3 px-3 border-2 border-white bg-white text-black mr-5 hover:text-white hover:bg-black hover:border-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Order Now <i
-                                            class="fa-solid fa-arrow-right ml-2"></i></button>
-                                    <button class="py-2 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
+                                            class="fa-solid fa-arrow-right ml-2"></i></a>
+                                    <a href="./about-us" class="py-3 px-3 border-2 border-white hover:text-black hover:bg-white transition ease-in-out duration-200 animate-[fadeIn_1s_ease-out]">
                                         Explore More
-                                    </button>
+                                    </a>
                                 </div>
                                 <div class="flex justify-between my-16">
                                     <div class="flex flex-col justify-center items-center gap-2 animate-[fadeIn_.25s_ease-out_,_moveInUpFull_.5s_ease-out_.1s]">
@@ -195,10 +195,10 @@
                             <div class="col-span-1 mt-10">
                                 <h1 class="text-7xl font-bold">${productTrend1.getKey().getName()}</h1>
                                 <p class="my-10 text-coffee-700">${productTrend1.getValue()}</p>
-                                <button class="py-2 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
+                                <a href="./product-detail?productId=${productTrend1.getKey().getId()}" class="py-3 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
                                     View All
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -207,10 +207,10 @@
                             <div class="col-span-1 mt-10 mr-20 text-right">
                                 <h1 class="text-7xl font-bold">${productTrend2.getKey().getName()}</h1>
                                 <p class="my-10 text-coffee-700">${productTrend2.getValue()}</p>
-                                <button class="py-2 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
+                                <a href="./product-detail?productId=${productTrend2.getKey().getId()}" class="py-3 px-3 bg-black text-white mt-5 hover:text-black hover:bg-white hover:border-white transition ease-in-out duration-200">
                                     View All
                                     <i class="fa-solid fa-arrow-right ml-2"></i>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-span-1 flex justify-center">
                                 <div
@@ -240,7 +240,7 @@
                         </div>
                         <div class="grid grid-cols-4 gap-5">
                             <c:forEach var="pro" items="${bestSellings}">
-                                <div class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
+                                <a href="./product-detail?productId=${pro.getId()}" class="col-span-1 border-2 border-black items-center hover:-translate-y-2 transition ease-in-out duration-200 cursor-pointer">
                                     <div class="relative flex flex-col items-center">
                                         <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
                                         <div class="w-[250px] h-[250px] p-5 z-10">
@@ -252,7 +252,7 @@
                                     <div class="bg-[#c7ad8e] border-t-2 border-t-black">
                                         <div class="text-3xl py-3">Order Now</div>
                                     </div>
-                                </div>
+                                </a>
                             </c:forEach>
                         </div>
                     </div>
