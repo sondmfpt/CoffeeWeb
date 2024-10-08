@@ -122,8 +122,9 @@
 
                     <!--CONTENT-->
                     <div id="content" class="mx-[10%] text-black mb-5">
-                        <div class="flex flex-col md:flex-row items-center justify-center">
 
+                        <!--PRODUCT-->
+                        <div class="flex flex-col md:flex-row items-center justify-center py-10">
                             <div class="md:w-1/2 flex flex-col justify-center gap-2">
                                 <img src="https://3croastery.com/wp-content/uploads/2021/12/Thiet-ke-chua-co-ten-4.jpg" alt="Lac Duong Coffee" class="shadow-lg rounded-md">
                                 <div class="flex gap-3 item-center overflow-x-scroll">
@@ -182,6 +183,29 @@
                                     Danh mục: Cà phê, Cà phê đặc sản, Cà phê pha cold brew, Cà phê pha espresso
                                 </p>
                             </div>
+                        </div>
+
+                        <hr class="border-black py-5">
+
+                        <div class="">
+                            <div class="flex gap-6 uppercase font-bold text-2xl justify-center">
+                                <div>
+                                    <h1>Mô tả</h1>
+                                </div>
+                                <div>
+                                    <h1>Đánh giá (0)</h1>
+                                </div>
+                            </div>
+                            <!--DESCRIPTION-->
+                            <div class="">
+                                
+                            </div>
+                            
+                            <!--FEEDBACK-->
+                            <div>
+                                
+                            </div>
+
                         </div>
                     </div>
 
