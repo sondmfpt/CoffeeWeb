@@ -142,4 +142,58 @@ public class UserDAO {
             return users;
         }
     }
+    
+    public List<User> getAllUserPagination(int page, int rowPerPage) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int ROWS_PER_PAGE = rowPerPage;
+        int offset = (page - 1) * ROWS_PER_PAGE;
+        List<User> users = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT u.*, a.active, a.username, r.role_name "
+                        + "FROM users u "
+                        + "JOIN accounts a ON u.id = a.user_id "
+                        + "JOIN role r ON u.role_id = r.id "
+                        + "LIMIT ?, ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, ROWS_PER_PAGE);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String username = rs.getString("username");
+                    String firstname = rs.getString("first_name");
+                    String lastname = rs.getString("last_name");
+                    if(lastname == null) lastname = "";
+                    String gender = rs.getString("gender");
+                    String phone = rs.getString("phone");
+                    Date dateofbirth = rs.getDate("date_of_birth");
+                    String email = rs.getString("email");
+                    String role = rs.getString("role_name");
+                    Boolean active = rs.getBoolean("active");
+                    Date createdAt = rs.getDate("created_at");
+                    User user = new User(id, firstname, lastname, gender, phone, dateofbirth, email, role);
+                    user.setUsername(username);
+                    user.setActive(active);
+                    user.setCreatedAt(createdAt);
+                    users.add(user);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return users;
+        }
+    }
 }
