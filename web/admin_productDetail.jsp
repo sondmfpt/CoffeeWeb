@@ -38,16 +38,15 @@
                     <div class="my-5 flex justify-between items-center">
                         <input name="searchUser" class="rounded px-3 py-2 w-48 border border-gray-300" type="text" placeholder="Tìm kiếm người dùng">
                         <div class="flex gap-1">
-                            <button class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-left"></i></button>
-                            <button class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-left"></i></button>
-                            <input type="number" class="text-center w-14 rounded border border-gray-300 no-spinner" value="1">
+                            <button onclick="changePage('start')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-left"></i></button>
+                            <button onclick="changePage('pre')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-left"></i></button>
+                            <input onchange="numPageChange()" id="numPage" type="number" class="text-center w-14 rounded border border-gray-300 no-spinner" value="1" max="5">
                             <div class="h-9 flex gap-1 items-center">
                                 trên 
-                                <span>${TOTALPAGE}</span>
+                                <span id="totalPage">${TOTALPAGE}</span>
                             </div>
-
-                            <button class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-right"></i></button>
-                            <button class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-right"></i></button>
+                            <button onclick="changePage('next')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-right"></i></button>
+                            <button onclick="changePage('end')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-right"></i></button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -81,5 +80,25 @@
                 </div>
             </div>
         </div>
+        <script>
+            var numPage = document.getElementById('numPage');
+            var totalPage = +document.getElementById('totalPage').textContent;
+            function changePage(type) {
+                switch (type) {
+                    case 'start':
+                        numPage.value = 1;
+                        break;
+                    case 'pre':
+                        numPage.value = +numPage.value - 1;
+                        break;
+                    case 'next':
+                        numPage.value = +numPage.value + 1;
+                        break;
+                    case 'end':
+                        numPage.value = totalPage;
+                        break;
+                }
+            }
+        </script>
     </body>
 </html>
