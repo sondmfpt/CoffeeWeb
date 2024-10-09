@@ -53,13 +53,13 @@
                         <table class="min-w-full border-collapse border border-gray-300 text-left">
                             <thead class="bg-gray-200">
                                 <tr>
-                                    <th class="py-2 px-4 border-b">Tên người dùng</th>
-                                    <th class="py-2 px-4 border-b">Tên</th>
-                                    <th class="py-2 px-4 border-b">Email</th>
-                                    <th class="py-2 px-4 border-b">Số điện thoại</th>
-                                    <th class="py-2 px-4 border-b">Vai trò</th>
-                                    <th class="py-2 px-4 border-b">Ngày tạo</th>
-                                    <th class="py-2 px-4 border-b">Trạng thái</th>
+                                    <th onclick="orderEvent('username')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">Tên người dùng</th>
+                                    <th onclick="orderEvent('name')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">Tên</th>
+                                    <th onclick="" class="py-2 px-4 border-b">Email</th>
+                                    <th onclick="" class="py-2 px-4 border-b">Số điện thoại</th>
+                                    <th onclick="orderEvent('role')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">Vai trò</th>
+                                    <th onclick="orderEvent('date')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">Ngày tạo</th>
+                                    <th onclick="orderEvent('status')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,6 +98,50 @@
                         numPage.value = totalPage;
                         break;
                 }
+            }
+        </script>
+        <script>
+            var order = {
+                'type': 'none',
+                'value': 'default'
+            };
+
+            function orderEvent(typeOrder) {
+                if(typeOrder == order.type){
+                    order.value = toggleOrder(order.value);
+                }else {
+                    order.type = typeOrder;
+                    order.value = 'default';
+                }
+                callUserList(order);
+            }
+            
+            function toggleOrder(typeOrder) {
+                switch (typeOrder) {
+                    case 'default':
+                        return 'asc';
+                    case 'asc':
+                        return 'desc';
+                    case 'desc':
+                        return 'default';
+                }
+            }
+            
+            function callUserList(order) {
+                const xhr = new XMLHttpRequest();
+
+                xhr.open('POST', '/SWP_Project/admin-user-list?order=' + encodeURIComponent(JSON.stringify(order))
+                        , true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const productResponse = JSON.parse(xhr.responseText);
+                        
+                    }
+                };
+
+                // Send the request
+                xhr.send();
             }
         </script>
     </body>

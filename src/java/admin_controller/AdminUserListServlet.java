@@ -14,13 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import models.Pair;
 import models.User;
+import org.json.JSONObject;
 
 /**
  *
@@ -45,6 +44,9 @@ public class AdminUserListServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String order = request.getParameter("order");
+        JSONObject orderJson = new JSONObject(order);
+        System.out.println(orderJson.getString("type"));
     }
 
     @Override
