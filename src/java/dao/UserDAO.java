@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import models.User;
 import database.DBHelper;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import models.Pair;
@@ -48,14 +49,14 @@ public class UserDAO {
     }
 
     public void updateUserWithId(String firstName, String lastName, String gender, String phone, Date dob, String email, int id) {
-        String query = "UPDATE users " +
-                                "SET first_name = ?, " +
-                                "last_name = ?, " +
-                                "gender = ?, " +
-                                "phone = ?, " +
-                                "date_of_birth = ?, " +
-                                "email = ?, " +
-                                "WHERE id = ?;";
+        String query = "UPDATE users "
+                + "SET first_name = ?, "
+                + "last_name = ?, "
+                + "gender = ?, "
+                + "phone = ?, "
+                + "date_of_birth = ?, "
+                + "email = ?, "
+                + "WHERE id = ?;";
         try {
             ps = con.prepareStatement(query);
             ps.setString(1, firstName);
@@ -91,10 +92,8 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    
-    
+
     // Admin Manage User
-    
     public List<User> getAllUser() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -114,7 +113,9 @@ public class UserDAO {
                     String username = rs.getString("username");
                     String firstname = rs.getString("first_name");
                     String lastname = rs.getString("last_name");
-                    if(lastname == null) lastname = "";
+                    if (lastname == null) {
+                        lastname = "";
+                    }
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -143,7 +144,7 @@ public class UserDAO {
             return users;
         }
     }
-    
+
     public List<User> getAllUserPagination(int page, int rowPerPage) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -168,7 +169,9 @@ public class UserDAO {
                     String username = rs.getString("username");
                     String firstname = rs.getString("first_name");
                     String lastname = rs.getString("last_name");
-                    if(lastname == null) lastname = "";
+                    if (lastname == null) {
+                        lastname = "";
+                    }
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -197,7 +200,7 @@ public class UserDAO {
             return users;
         }
     }
-    
+
     public User getUserById(int id) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -219,7 +222,9 @@ public class UserDAO {
                     String password = rs.getString("password");
                     String firstname = rs.getString("first_name");
                     String lastname = rs.getString("last_name");
-                    if(lastname == null) lastname = "";
+                    if (lastname == null) {
+                        lastname = "";
+                    }
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -248,7 +253,7 @@ public class UserDAO {
             return user;
         }
     }
-    
+
     public UserOrder getUserOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -286,6 +291,55 @@ public class UserDAO {
                 con.close();
             }
             return userOrder;
+        }
+    }
+
+    public void updateUser(int id, String password, String firstname, String lastname, String email, String phone, String gender, LocalDate date, boolean isActive) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET first_name = ?, last_name = ?, gender = ?, phone = ?, date_of_birth = ?, email = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, firstname);
+                stm.setString(2, lastname);
+                stm.setString(3, gender);
+                stm.setString(4, phone);
+                stm.setDate(5, java.sql.Date.valueOf(date));
+                stm.setString(6, email);
+                stm.setInt(7, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            updateAccount(id, password, isActive);
+        }
+    }
+
+    private void updateAccount(int id, String password, boolean isActive) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE accounts "
+                        + "SET password = ?, active = ? "
+                        + "WHERE user_id = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, password);
+                stm.setBoolean(2, isActive);
+                stm.setInt(3, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
     }
 }

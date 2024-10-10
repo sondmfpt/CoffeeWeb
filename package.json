@@ -7,9 +7,9 @@
     "postcss-cli": "^11.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run build-css & npm run dev",
     "build-css": "tailwindcss build -i ./web/input.css -o ./web/output.css",
     "watch-css": "tailwindcss build -i ./web/input.css -o ./web/output.css --watch",
-    "dev": "concurrently \"npm run watch-css\" \"npm start\""
+    "dev": "npx tailwindcss -i ./web/input.css -o ./web/output.css --watch"
   }
 }

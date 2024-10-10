@@ -12,48 +12,43 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.User;
-import models.UserOrder;
 
 /**
  *
  * @author Son Duong
  */
-@WebServlet(name = "AdminUserDetailServlet", urlPatterns = {"/admin-user-detail"})
-public class AdminUserDetailServlet extends HttpServlet {
+@WebServlet(name = "AdminUpdateUser", urlPatterns = {"/admin-update-user"})
+public class AdminUpdateUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int id = Integer.parseInt(request.getParameter("id"));
+        String password = request.getParameter("password");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+        String status = request.getParameter("status");
+        int day = Integer.parseInt(request.getParameter("date-day"));
+        int month = Integer.parseInt(request.getParameter("date-month"));
+        int year = Integer.parseInt(request.getParameter("date-year"));
+        LocalDate date = LocalDate.of(year, month, day);
+        boolean isActive = status.equals("active") ? true : false;
+        
         UserDAO uDao = new UserDAO();
-        User user = null;
-        UserOrder userOrder = null;
-
-        try {
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            request.setAttribute("currentYear", currentYear);
-
-            user = uDao.getUserById(userId);
-            userOrder = uDao.getUserOrderByUserId(userId);
-
-            request.setAttribute("USER", user);
-            request.setAttribute("USERORDER", userOrder);
-
-        } finally {
-            String statusUpdate = request.getParameter("status");
-            if(statusUpdate != null){
-                request.setAttribute("STATUSUPDATE", statusUpdate);
-            }
-            RequestDispatcher rd = request.getRequestDispatcher("admin_userDetail.jsp");
-            rd.forward(request, response);
+        try{
+            uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, isActive);
+            
+            
+        }finally{
+            String url = "./admin-user-detail?userId=" + id + "&status=success";
+            response.sendRedirect(url);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,9 +66,9 @@ public class AdminUserDetailServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminUpdateUser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminUpdateUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -91,9 +86,9 @@ public class AdminUserDetailServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminUpdateUser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminUpdateUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
