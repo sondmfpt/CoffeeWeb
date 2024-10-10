@@ -13,6 +13,7 @@ import java.util.Date;
 public class User {
     private int id;
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String gender;
@@ -124,6 +125,14 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     

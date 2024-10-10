@@ -10,6 +10,7 @@ import database.DBHelper;
 import java.util.ArrayList;
 import java.util.List;
 import models.Pair;
+import models.UserOrder;
 
 public class UserDAO {
 
@@ -194,6 +195,97 @@ public class UserDAO {
                 con.close();
             }
             return users;
+        }
+    }
+    
+    public User getUserById(int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT u.*, r.role_name, a.username, a.password, a.active "
+                        + "FROM users u "
+                        + "JOIN accounts a ON a.user_id = u.id "
+                        + "JOIN role r ON r.id = u.role_id "
+                        + "WHERE u.id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    String firstname = rs.getString("first_name");
+                    String lastname = rs.getString("last_name");
+                    if(lastname == null) lastname = "";
+                    String gender = rs.getString("gender");
+                    String phone = rs.getString("phone");
+                    Date dateofbirth = rs.getDate("date_of_birth");
+                    String email = rs.getString("email");
+                    String role = rs.getString("role_name");
+                    Boolean active = rs.getBoolean("active");
+                    Date createdAt = rs.getDate("created_at");
+                    user = new User(id, firstname, lastname, gender, phone, dateofbirth, email, role);
+                    user.setUsername(username);
+                    user.setActive(active);
+                    user.setCreatedAt(createdAt);
+                    user.setPassword(password);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return user;
+        }
+    }
+    
+    public UserOrder getUserOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        UserOrder userOrder = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * "
+                        + "FROM user_order "
+                        + "WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, userId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int sessionId = rs.getInt("session_id");
+                    String fullname = rs.getString("fullname");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String addressDetail = rs.getString("address_detail");
+                    Boolean isDefault = rs.getBoolean("isDefault");
+                    userOrder = new UserOrder(id, userId, sessionId, fullname, phone, address, addressDetail, isDefault);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return userOrder;
         }
     }
 }

@@ -4,6 +4,7 @@
  */
 package admin_controller;
 
+import dao.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,7 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
+import models.UserOrder;
+
 /**
  *
  * @author Son Duong
@@ -22,8 +29,27 @@ import java.util.Collections;
 public class AdminUserDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         int userId = Integer.parseInt(request.getParameter("userId"));
+        UserDAO uDao = new UserDAO();
+        User user = null;
+        UserOrder userOrder = null;
+
+        try {
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            request.setAttribute("currentYear", currentYear);
+
+            user = uDao.getUserById(userId);
+            userOrder = uDao.getUserOrderByUserId(userId);
+
+            request.setAttribute("USER", user);
+            request.setAttribute("USERORDER", userOrder);
+
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher("admin_userDetail.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -38,7 +64,13 @@ public class AdminUserDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -52,7 +84,13 @@ public class AdminUserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUserDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
