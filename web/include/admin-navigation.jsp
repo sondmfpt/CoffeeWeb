@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div class="w-64 h-screen bg-gray-800 shadow-md">
+        <div class="w-64 min-h-screen bg-gray-800 shadow-md">
             <div class="p-6">
                 <h2 class="text-white text-2xl font-bold">Admin Dashboard</h2>
             </div>

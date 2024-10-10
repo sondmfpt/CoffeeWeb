@@ -20,7 +20,7 @@
     <body>
         <c:set var="user" value="${USER}"/>
         <c:set var="userOrder" value="${USERORDER}"/>
-        <div class="bg-gray-100 h-screen relative">
+        <div class="bg-gray-100 relative">
             <div class="flex">
                 <!--Navigation-->
                 <%@ include file="./include/admin-navigation.jsp" %>
@@ -43,8 +43,8 @@
                         <!--Info-->
                         <div class="bg-white border border-gray-200 rounded">
                             <div class="p-10">
-                                <form action="./admin-update-user?id=${user.getId()}" method="POST">
-                                    <table class="w-full">
+                                <form action="./admin-update-user?id=${user.getId()}" method="POST" class="flex flex-col items-center">
+                                    <table class="w-2/3">
                                         <tr>
                                             <td class="text-end text-slate-500">Tên đăng nhập</td>
                                             <td class="py-2 px-5">${user.getUsername()}</td>
@@ -160,7 +160,7 @@
                                         <div id='saveForm' class="px-4 py-2 w-20 bg-coffee-500 rounded cursor-pointer text-center">Lưu</div>
                                     </div>
                                     <div id='confirmUpdate' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute hidden">
-                                        <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.75s_ease-out_,_moveInDownFull_.75s_ease-out]">
+                                        <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.5s_ease-out_,_moveInDownFull_.5s_ease-out]">
                                             <h1 class="text-3xl text-gray-800 text-center">Xác thực cập nhật!</h1>
                                             <div class="flex gap-5">
                                                 <div id='reject' class="py-2 px-3 bg-red-500 rounded w-20 cursor-pointer">Quay lại</div>
