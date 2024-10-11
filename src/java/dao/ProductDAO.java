@@ -318,6 +318,42 @@ public class ProductDAO {
             }
         }
     }
+    
+    public void editProduct(String productName, int categoryId, String thumbnailUrl, int price, String description, int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE products " +
+                                "SET product_name = ?, " +
+                                "category_id = ?, " +
+                                "thumbnail_url = ?, " +
+                                "price = ?, " +
+                                "description = ? " +
+                                "WHERE id = ?;";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, productName);
+                stm.setInt(2, categoryId);
+                stm.setString(3, thumbnailUrl);
+                stm.setInt(4, price);
+                stm.setString(5, description);
+                stm.setInt(6, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 
     public void addProductVariant(int productId, JSONObject attribute, int originPrice, int salePrice) throws ClassNotFoundException, SQLException {
         Connection con = null;

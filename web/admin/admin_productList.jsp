@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Product List</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="../output.css" rel="stylesheet">
         <link href="../css/mystyle.css" rel="stylesheet">
@@ -19,6 +19,7 @@
                 <%@ include file="../include/admin-navigation.jsp" %>
 
                 <!-- Main Content -->
+                <!-- Product List here -->
                 <div id="product-list" class="flex-1 flex-row p-5">
                     <div class="p-5">
                         <div class="inline-block">
@@ -58,7 +59,7 @@
                                             <td class="border-2 border-gray-300 p-2">${product.getName()}</td>
                                             <td class="border-2 border-gray-300 p-2">${product.getCategory()}</td>
                                             <td class="border-2 border-gray-300 p-2">${product.getPrice()}</td>
-                                            <td class="border-2 border-gray-300 p-2"><a class="hyperlink" href="product_detail?id=${product.getId()}">view</a></td>
+                                            <td class="border-2 border-gray-300 p-2"><a class="hyperlink" href="product?id=${product.getId()}">view</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -66,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Add new Product here -->
                 <div id="add-product" style="display:none" class="flex-1 flex-row p-5">
                     <div class="p-5">
                         <h1 class="text-4xl font-semibold">Add new Product</h1>
@@ -103,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" class=" text-1xl font-semibold border-4 border-black p-2" value="Add"/>
+                        <button type="submit" class="text-1xl font-semibold border-4 border-black p-2" value="Add">Add</button>
                         <button type="button" class=" text-1xl font-semibold border-4 border-black p-2" onclick="productList()">Cancel</button>
                     </form>
                 </div>
