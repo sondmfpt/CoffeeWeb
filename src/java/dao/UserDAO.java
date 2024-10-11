@@ -254,11 +254,11 @@ public class UserDAO {
         }
     }
 
-    public UserOrder getUserOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
+    public List<UserOrder> getUserOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        UserOrder userOrder = null;
+        List<UserOrder> userOrders = new ArrayList<>();
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
@@ -270,13 +270,13 @@ public class UserDAO {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    int sessionId = rs.getInt("session_id");
+                    int sessionId = rs.getInt("tracking_id");
                     String fullname = rs.getString("fullname");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String addressDetail = rs.getString("address_detail");
                     Boolean isDefault = rs.getBoolean("isDefault");
-                    userOrder = new UserOrder(id, userId, sessionId, fullname, phone, address, addressDetail, isDefault);
+                    userOrders.add(new UserOrder(id, userId, sessionId, fullname, phone, address, addressDetail, isDefault));
                 }
 
             }
@@ -290,18 +290,18 @@ public class UserDAO {
             if (con != null) {
                 con.close();
             }
-            return userOrder;
+            return userOrders;
         }
     }
 
-    public void updateUser(int id, String password, String firstname, String lastname, String email, String phone, String gender, LocalDate date, boolean isActive) throws ClassNotFoundException, SQLException {
+    public void updateUser(int id, String password, String firstname, String lastname, String email, String phone, String gender, LocalDate date, int roleId, boolean isActive) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "UPDATE users "
-                        + "SET first_name = ?, last_name = ?, gender = ?, phone = ?, date_of_birth = ?, email = ? "
+                        + "SET first_name = ?, last_name = ?, gender = ?, phone = ?, date_of_birth = ?, email = ?, role_id = ?  "
                         + "WHERE id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, firstname);
@@ -310,7 +310,8 @@ public class UserDAO {
                 stm.setString(4, phone);
                 stm.setDate(5, java.sql.Date.valueOf(date));
                 stm.setString(6, email);
-                stm.setInt(7, id);
+                stm.setInt(7, roleId);
+                stm.setInt(8, id);
                 stm.executeUpdate();
             }
         } finally {

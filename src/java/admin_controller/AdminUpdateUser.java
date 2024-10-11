@@ -33,6 +33,7 @@ public class AdminUpdateUser extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
         String status = request.getParameter("status");
         int day = Integer.parseInt(request.getParameter("date-day"));
         int month = Integer.parseInt(request.getParameter("date-month"));
@@ -42,7 +43,7 @@ public class AdminUpdateUser extends HttpServlet {
         
         UserDAO uDao = new UserDAO();
         try{
-            uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, isActive);
+            uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
             
             
         }finally{

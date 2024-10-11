@@ -17,7 +17,7 @@
     </head>
     <body>
         <c:set var="allUsers" value="${ALLUSERS}"/>
-        <div class="bg-gray-100 h-screen">
+        <div class="bg-gray-100 min-h-screen">
             <div class="flex">
                 <!--Navigation-->
                 <%@ include file="./include/admin-navigation.jsp" %>

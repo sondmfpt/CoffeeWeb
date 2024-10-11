@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
@@ -33,17 +34,17 @@ public class AdminUserDetailServlet extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserDAO uDao = new UserDAO();
         User user = null;
-        UserOrder userOrder = null;
+        List<UserOrder> userOrders = null;
 
         try {
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             request.setAttribute("currentYear", currentYear);
 
             user = uDao.getUserById(userId);
-            userOrder = uDao.getUserOrderByUserId(userId);
+            userOrders = uDao.getUserOrderByUserId(userId);
 
             request.setAttribute("USER", user);
-            request.setAttribute("USERORDER", userOrder);
+            request.setAttribute("USERORDER", userOrders);
 
         } finally {
             String statusUpdate = request.getParameter("status");

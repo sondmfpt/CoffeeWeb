@@ -35,15 +35,16 @@
                         <!--NAVIGATION-->
                         <div class="flex gap-5 justify-center items-center">
                             <p class="text-xl font-medium">Hồ sơ</p>
-                            <p class="text-xl">Hồ sơ</p>
-                            <p class="text-xl">Hồ sơ</p>
+                            <p class="text-xl">Địa chỉ</p>
+                            <p class="text-xl">Đơn hàng</p>
                         </div>
                         <hr class="border-gray-300 my-3">
 
-                        <!--Info-->
-                        <div class="bg-white border border-gray-200 rounded">
+                        <div class="bg-white border border-gray-200 rounded shadow-lg">
                             <div class="p-10">
-                                <form action="./admin-update-user?id=${user.getId()}" method="POST" class="flex flex-col items-center">
+
+                                <!--Info-->
+                                <form action="./admin-update-user?id=${user.getId()}" method="POST" class="flex flex-col items-center hidden">
                                     <table class="w-2/3">
                                         <tr>
                                             <td class="text-end text-slate-500">Tên đăng nhập</td>
@@ -143,6 +144,15 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="text-end text-slate-500">Vai trò</td>
+                                            <td class="py-2 px-5 flex gap-5">
+                                                <select name="roleId" class="px-2 py-2 border border-gray-200 rounded">
+                                                    <option value="1" ${user.getRole() == 'ADMIN' ? 'selected' : ''}>Quản trị viên</option>
+                                                    <option value="2" ${user.getRole() == 'CUSTOMER' ? 'selected' : ''}>Khách hàng</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td class="text-end text-slate-500">Trạng thái</td>
                                             <td class="py-2 px-5 flex gap-5">
                                                 <label for='status-active'>
@@ -168,7 +178,38 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>   
+                                </form>
+
+                                <!--Address-->
+                                <c:set var="userOrders" value="${USERORDER}"/>
+                                <div class="flex flex-col gap-5">
+                                    <c:forEach var="userOrder" items="${userOrders}">
+                                        <div class="flex justify-between">
+                                            <div class="flex flex-col gap-1">
+                                                <div class="flex mb-2">
+                                                    <p>${userOrder.getFullname()}</p>
+                                                    <div class="border-r-2 border-gray-300 mx-2"></div>
+                                                    <p class="text-gray-600">${userOrder.getPhone()}</p>
+                                                </div>
+                                                <div class="text-gray-600">
+                                                    <p>${userOrder.getAddress()}</p>
+                                                    <p>${userOrder.getAddressDetail()}</p>
+                                                </div>
+                                                <c:if test="${userOrder.isIsDefault()}">
+                                                    <div class="border border-red-700 text-red-700 w-[75px] text-center">Mặc định</div>
+                                                </c:if>
+                                            </div>
+                                            <div class="flex flex-col gap-2 text-end">
+                                                <p class="text-blue-500">Cập nhật</p>
+                                                <c:if test="${!userOrder.isIsDefault()}">
+                                                    <p class="text-red-700">Xóa</p>
+                                                    <div class="p-1 border border-gray-300 cursor-pointer">Thiết lập mặc định</div>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                        <hr class="border-gray-200">
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
