@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Order;
 import models.User;
 import models.UserOrder;
 
@@ -35,6 +36,7 @@ public class AdminUserDetailServlet extends HttpServlet {
         UserDAO uDao = new UserDAO();
         User user = null;
         List<UserOrder> userOrders = null;
+        List<Order> orders = null;
 
         try {
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -42,9 +44,11 @@ public class AdminUserDetailServlet extends HttpServlet {
 
             user = uDao.getUserById(userId);
             userOrders = uDao.getUserOrderByUserId(userId);
+            orders = uDao.getOrderByUserId(userId);
 
             request.setAttribute("USER", user);
             request.setAttribute("USERORDER", userOrders);
+            request.setAttribute("ORDERS", orders);
 
         } finally {
             String statusUpdate = request.getParameter("status");

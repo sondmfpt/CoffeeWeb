@@ -10,7 +10,11 @@ import database.DBHelper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import models.Order;
+import models.OrderItem;
 import models.Pair;
+import models.Product;
+import models.ProductVariant;
 import models.UserOrder;
 
 public class UserDAO {
@@ -341,6 +345,86 @@ public class UserDAO {
             if (con != null) {
                 con.close();
             }
+        }
+    }
+    
+    public List<Order> getOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Order> orders = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * "
+                        + "FROM orders "
+                        + "WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, userId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int trackingId = rs.getInt("tracking_id");
+                    Date date = rs.getDate("ordered_date");
+                    String totalPrice = rs.getString("total_price");
+                    String status = rs.getString("status");
+                    List<OrderItem> orderItems = getOrderItemsByOrderId(id);
+                    orders.add(new Order(id, userId, trackingId, orderItems, date, userId));
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return orders;
+        }
+    }
+    
+    public List<OrderItem> getOrderItemsByOrderId(int orderId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<OrderItem> orderItems = new ArrayList<>();
+        ProductDAO pDao = new ProductDAO();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * "
+                        + "FROM order_items "
+                        + "WHERE order_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int productId = rs.getInt("product_id");
+                    int productVariantId = rs.getInt("product_variant_id");
+                    int quantity = rs.getInt("quantity");
+                    int totalPrice = rs.getInt("total_price");
+                    Product product = pDao.getProduct(productId);
+                    ProductVariant productVariant = pDao.getVariantById(productVariantId);
+                    orderItems.add(new OrderItem(id, product, productVariant, quantity, totalPrice));
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return orderItems;
         }
     }
 }

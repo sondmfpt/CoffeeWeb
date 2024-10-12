@@ -181,8 +181,8 @@
                                 </form>
 
                                 <!--Address-->
-                                <c:set var="userOrders" value="${USERORDER}"/>
-                                <div class="flex flex-col gap-5">
+                                <div class="flex flex-col gap-5 hidden">
+                                    <c:set var="userOrders" value="${USERORDER}"/>
                                     <c:forEach var="userOrder" items="${userOrders}">
                                         <div class="flex justify-between">
                                             <div class="flex flex-col gap-1">
@@ -209,6 +209,38 @@
                                         </div>
                                         <hr class="border-gray-200">
                                     </c:forEach>
+                                </div>
+
+                                <!--Order-->
+                                <div class="flex flex-col gap-5">
+                                    <!--order-->
+                                    <div class="flex flex-col gap-5">
+                                        <div>
+                                            <p class="text-green-600 text-end uppercase">Hoàn thành</p>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <!--product-->
+                                            <div class="flex justify-between">
+                                                <div class="flex gap-3">
+                                                    <div class="w-20 h-20 bg-red-500">
+                                                        <img>
+                                                    </div>
+                                                    <div class="flex flex-col gap-1">
+                                                        <p>Tên</p>
+                                                        <p>Loại</p>
+                                                        <p>x1</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="border-gray-200">
+                                            <!--product-->
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <p>Ngày đặt hàng: 16/01/2004</p>
+                                            <p>Tổng tiền: 200.000đ</p>
+                                        </div>
+                                    </div>
+                                    <!--order-->
                                 </div>
                             </div>
                         </div>
