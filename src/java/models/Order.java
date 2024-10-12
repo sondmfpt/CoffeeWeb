@@ -18,17 +18,19 @@ public class Order {
     private List<OrderItem> orderItemList;
     private Date date;
     private int totalPrice;
+    private String status;
 
     public Order() {
     }
 
-    public Order(int id, int userId, int trackingId, List<OrderItem> orderItemList, Date date, int totalPrice) {
+    public Order(int id, int userId, int trackingId, List<OrderItem> orderItemList, Date date, int totalPrice, String status) {
         this.id = id;
         this.userId = userId;
         this.trackingId = trackingId;
         this.orderItemList = orderItemList;
         this.date = date;
         this.totalPrice = totalPrice;
+        this.status = status;
     }
 
     public int getId() {
@@ -78,5 +80,14 @@ public class Order {
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     
 }

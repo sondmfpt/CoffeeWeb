@@ -4,6 +4,8 @@
  */
 package admin_controller;
 
+import api.EmailSender_ChangeUserInformation;
+import dao.AccountDAO;
 import dao.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -16,6 +18,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Accounts;
+import models.User;
 
 /**
  *
@@ -39,14 +43,21 @@ public class AdminUpdateUser extends HttpServlet {
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
         LocalDate date = LocalDate.of(year, month, day);
-        boolean isActive = status.equals("active") ? true : false;
-        
+        boolean isActive = status.equals("active");
+
         UserDAO uDao = new UserDAO();
-        try{
-            uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
-            
-            
-        }finally{
+        try {
+
+            if (request.getParameter("sendForUser") != null) {
+                User userBefore = uDao.getUserById(id);
+                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
+                User userAfter = uDao.getUserById(id);
+                EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter);
+            } else {
+                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
+            }
+
+        } finally {
             String url = "./admin-user-detail?userId=" + id + "&status=success";
             response.sendRedirect(url);
         }

@@ -358,7 +358,8 @@ public class UserDAO {
             if (con != null) {
                 String sql = "SELECT * "
                         + "FROM orders "
-                        + "WHERE user_id = ?";
+                        + "WHERE user_id = ? "
+                        + "ORDER BY ordered_date DESC";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, userId);
                 rs = stm.executeQuery();
@@ -366,10 +367,10 @@ public class UserDAO {
                     int id = rs.getInt("id");
                     int trackingId = rs.getInt("tracking_id");
                     Date date = rs.getDate("ordered_date");
-                    String totalPrice = rs.getString("total_price");
+                    int totalPrice = rs.getInt("total_price");
                     String status = rs.getString("status");
                     List<OrderItem> orderItems = getOrderItemsByOrderId(id);
-                    orders.add(new Order(id, userId, trackingId, orderItems, date, userId));
+                    orders.add(new Order(id, userId, trackingId, orderItems, date, totalPrice, status));
                 }
 
             }
