@@ -101,6 +101,7 @@ public class AdminUserListServlet extends HttpServlet {
         String role = request.getParameter("roleUser");
         String search = request.getParameter("searchValue");
         int numPage = Integer.parseInt(request.getParameter("numPage"));
+        ROWS_PER_PAGE = Integer.parseInt(request.getParameter("numPerPage"));
 
         JSONObject orderJson = new JSONObject(order);
         String typeOrder = orderJson.getString("type");
@@ -123,7 +124,7 @@ public class AdminUserListServlet extends HttpServlet {
         int totalPage = totalUser % ROWS_PER_PAGE == 0 ? totalUser / ROWS_PER_PAGE : (totalUser / ROWS_PER_PAGE) + 1;
 
         PrintWriter out = response.getWriter();
-        UserResponse userResponse = new UserResponse(allUsers, totalPage);
+        UserResponse userResponse = new UserResponse(allUsers, totalPage, totalUser);
         String jsonResponse = new Gson().toJson(userResponse);
         out.write(jsonResponse);
         out.flush();
