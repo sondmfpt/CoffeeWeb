@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import models.User;
 import database.DBHelper;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import models.Pair;
@@ -47,14 +48,14 @@ public class UserDAO {
     }
 
     public void updateUserWithId(String firstName, String lastName, String gender, String phone, Date dob, String email, int id) {
-        String query = "UPDATE users " +
-                                "SET first_name = ?, " +
-                                "last_name = ?, " +
-                                "gender = ?, " +
-                                "phone = ?, " +
-                                "date_of_birth = ?, " +
-                                "email = ?, " +
-                                "WHERE id = ?;";
+        String query = "UPDATE users "
+                + "SET first_name = ?, "
+                + "last_name = ?, "
+                + "gender = ?, "
+                + "phone = ?, "
+                + "date_of_birth = ?, "
+                + "email = ?, "
+                + "WHERE id = ?;";
         try {
             ps = con.prepareStatement(query);
             ps.setString(1, firstName);
@@ -90,10 +91,8 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    
-    
+
     // Admin Manage User
-    
     public List<User> getAllUser() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -113,7 +112,9 @@ public class UserDAO {
                     String username = rs.getString("username");
                     String firstname = rs.getString("first_name");
                     String lastname = rs.getString("last_name");
-                    if(lastname == null) lastname = "";
+                    if (lastname == null) {
+                        lastname = "";
+                    }
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -142,7 +143,7 @@ public class UserDAO {
             return users;
         }
     }
-    
+
     public List<User> getAllUserPagination(int page, int rowPerPage) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -167,7 +168,9 @@ public class UserDAO {
                     String username = rs.getString("username");
                     String firstname = rs.getString("first_name");
                     String lastname = rs.getString("last_name");
-                    if(lastname == null) lastname = "";
+                    if (lastname == null) {
+                        lastname = "";
+                    }
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -196,4 +199,105 @@ public class UserDAO {
             return users;
         }
     }
+
+    public void addUser(String username, String password, String firstname, String lastname, String email, String phone, String gender, int roleId, boolean isActive, LocalDate date) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO users (first_name, last_name, gender, phone, date_of_birth, email, role_id)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, firstname);
+                stm.setString(2, lastname);
+                stm.setString(3, gender);
+                stm.setString(4, phone);
+                stm.setDate(5, java.sql.Date.valueOf(date));
+                stm.setString(6, email);
+                stm.setInt(7, roleId);
+                stm.executeUpdate();
+            }
+        } finally {
+
+        }
+    }
+
+    public void addAccount(String username, String password, boolean isActive, int userId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO accounts (username, password, active, user_id)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                stm.setBoolean(3, isActive);
+                stm.setInt(4, userId);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+    }
+    
+    public List<User getUserByUsername(String username) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        User user = new null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT u.*, a.active, a.username, r.role_name "
+                        + "FROM users u "
+                        + "JOIN accounts a ON u.id = a.user_id "
+                        + "JOIN role r ON u.role_id = r.id "
+                        + "LIMIT ?, ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, ROWS_PER_PAGE);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String username = rs.getString("username");
+                    String firstname = rs.getString("first_name");
+                    String lastname = rs.getString("last_name");
+                    if (lastname == null) {
+                        lastname = "";
+                    }
+                    String gender = rs.getString("gender");
+                    String phone = rs.getString("phone");
+                    Date dateofbirth = rs.getDate("date_of_birth");
+                    String email = rs.getString("email");
+                    String role = rs.getString("role_name");
+                    Boolean active = rs.getBoolean("active");
+                    Date createdAt = rs.getDate("created_at");
+                    User user = new User(id, firstname, lastname, gender, phone, dateofbirth, email, role);
+                    user.setUsername(username);
+                    user.setActive(active);
+                    user.setCreatedAt(createdAt);
+                    users.add(user);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return users;
+        }
+    }
+
 }

@@ -14,7 +14,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
 
 /**
  *
@@ -24,7 +29,36 @@ import java.util.Calendar;
 public class AdminAddUserServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        String status = request.getParameter("status");
+        int day = Integer.parseInt(request.getParameter("date-day"));
+        int month = Integer.parseInt(request.getParameter("date-month"));
+        int year = Integer.parseInt(request.getParameter("date-year"));
+        LocalDate date = LocalDate.of(year, month, day);
+        boolean isActive = status.equals("active");
+
+        UserDAO uDao = new UserDAO();
+        try {
+
+            if (request.getParameter("sendForUser") != null) {
+                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
+                EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter);
+            } else {
+                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
+            }
+
+        } finally {
+            String url = "./admin-user-detail?userId=" + id + "&status=success";
+            response.sendRedirect(url);
+        }
 
     }
 
@@ -47,7 +81,13 @@ public class AdminAddUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminAddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminAddUserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

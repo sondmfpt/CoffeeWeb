@@ -92,7 +92,7 @@
                                                     <!-- Day Dropdown -->
                                                     <div class="">
                                                         <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-day" required>
-                                                            <option value="" disabled>Day</option>
+                                                            <option value="" selected disabled>Ngày</option>
                                                             <c:forEach var="dayOption" begin="1" end="31">
                                                                 <option value="${dayOption < 10 ? '0' + dayOption : dayOption}">${dayOption}</option>
                                                             </c:forEach>
@@ -101,7 +101,7 @@
                                                     <!--Month Dropdown-->
                                                     <div class="">
                                                         <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-month" required>
-                                                            <option value="" disabled>Month</option>
+                                                            <option value="" selected disabled>Tháng</option>
                                                             <option value="01">Tháng 1</option>
                                                             <option value="02">Tháng 2</option>
                                                             <option value="03">Tháng 3</option>
@@ -119,7 +119,7 @@
                                                     <!-- Year Dropdown -->
                                                     <div class="">
                                                         <select class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="date-year" required>
-                                                            <option value="" disabled>Year</option>
+                                                            <option value="" selected disabled>Năm</option>
                                                             <c:forEach var="i" begin="0" end="${currentYear - 1900}">
                                                                 <option value="${currentYear - i}" ${year == currentYear - i ? 'selected' : ''}>${currentYear - i}</option>
                                                             </c:forEach>
@@ -152,11 +152,11 @@
                                         </tr>
                                     </table>
                                     <div class="flex justify-center">
-                                        <div id='saveForm' class="px-4 py-2 w-20 bg-coffee-500 rounded cursor-pointer text-center">Lưu</div>
+                                        <div id='saveForm' class="px-4 py-2 w-20 bg-coffee-500 rounded cursor-pointer text-center">Thêm</div>
                                     </div>
                                     <div id='confirmUpdate' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute hidden">
                                         <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.5s_ease-out_,_moveInDownFull_.5s_ease-out]">
-                                            <h1 class="text-3xl text-gray-800 text-center font-bold">Xác thực cập nhật!</h1>
+                                            <h1 class="text-3xl text-gray-800 text-center font-bold">Bạn có chắc chắn thêm người dùng?</h1>
                                             <label class="flex items-center gap-2">
                                                 <input type="checkbox" name="sendForUser" value="Yes">
                                                 Gửi thông báo đến email người dùng
@@ -173,6 +173,43 @@
                     </div>
                 </div>
             </div>
+            <!--annotation-->
+            <c:set var="statusUpdate" value="${STATUSUPDATE}"/>
+            <c:if test="${statusUpdate.equals('success')}">
+                <div id='updateSuccesfull' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute">
+                    <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.75s_ease-out_,_moveInDownFull_.75s_ease-out]">
+                        <h1 class="text-3xl text-gray-800 text-center font-bold">Thêm người dùng thành công!</h1>
+                        <button id="conceptUpdateBtn" class="py-2 px-3 bg-green-500 rounded">Đồng ý</button>
+                    </div>
+                </div>
+            </c:if>
         </div>
+        <script>
+            var updateSuccessfull = document.getElementById('updateSuccesfull');
+            var conceptUpdateBtn = document.getElementById('conceptUpdateBtn');
+            if (updateSuccessfull) {
+                conceptUpdateBtn.addEventListener('click', () => {
+                    updateSuccessfull.classList.add('hidden');
+                    // Remove url
+                    const currentUrl = new URL(window.location.href);
+                    const searchParams = currentUrl.searchParams;
+                    searchParams.delete('status');
+                    const newUrl = currentUrl.pathname + '?' + searchParams.toString();
+                    window.history.replaceState({}, '', newUrl);
+                })
+            }
+
+            var saveForm = document.getElementById('saveForm');
+            var confirmUpdate = document.getElementById('confirmUpdate');
+            var reject = document.getElementById('reject');
+
+            saveForm.addEventListener('click', () => {
+                confirmUpdate.classList.remove('hidden');
+            })
+
+            reject.addEventListener('click', () => {
+                confirmUpdate.classList.add('hidden');
+            })
+        </script>
     </body>
 </html>
