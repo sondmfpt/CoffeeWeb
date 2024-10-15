@@ -45,7 +45,10 @@
                         </div>
                     </div>
                     <div class="my-5 flex justify-between items-center">
-                        <input name="searchUser" oninput="searchUser()" class="rounded px-3 py-2 w-48 border border-gray-300" type="text" placeholder="Tìm kiếm người dùng">
+                        <div>
+                            <input name="searchUser" oninput="searchUser()" class="rounded px-3 py-2 w-48 border border-gray-300" type="text" placeholder="Tìm kiếm người dùng">
+                            <a class="px-4 py-3 rounded bg-gray-300 cursor-pointer">Thêm người dùng</a>
+                        </div>
                         <div class="flex gap-1">
                             <button onclick="changePage('start')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-left"></i></button>
                             <button onclick="changePage('pre')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-left"></i></button>
@@ -231,7 +234,7 @@
                         listUserResponse.forEach(function (user) {
                             var userElement = document.createElement('tr');
                             userElement.classList.add("odd:bg-white", "even:bg-gray-100", "cursor-pointer", "hover:bg-coffee-300");
-                            userElement.setAttribute('onclick', 'userItemClick('+ user.id +')');
+                            userElement.setAttribute('onclick', 'userItemClick(' + user.id + ')');
                             var statusUser = user.active ? 'Active' : 'Deactive';
                             userElement.innerHTML =
                                     '<td class="py-2 px-4 border-b">' + user.username + '</td>' +

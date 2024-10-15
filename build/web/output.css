@@ -1508,6 +1508,11 @@ video {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -1957,10 +1962,6 @@ video {
   line-height: 2.5rem;
 }
 
-.hover\:font-bold:hover {
-  font-weight: 700;
-}
-
 .hover\:text-black:hover {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1979,11 +1980,6 @@ video {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.hover\:text-coffee-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(238 225 196 / var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {
