@@ -4,6 +4,7 @@
  */
 package admin_controller;
 
+import api.EmailSender_ChangeUserInformation;
 import com.google.gson.Gson;
 import dao.UserDAO;
 import jakarta.servlet.RequestDispatcher;
@@ -47,9 +48,10 @@ public class AdminAddUserServlet extends HttpServlet {
 
         UserDAO uDao = new UserDAO();
         try {
-                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
+                User user = uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
 
             if (request.getParameter("sendForUser") != null) {
+                EmailSender_ChangeUserInformation.addNewUser(user);
             }
 
         } finally {

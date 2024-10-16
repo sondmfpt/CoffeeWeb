@@ -18,7 +18,6 @@ import models.User;
 import models.UserOrder;
 import java.sql.Statement;
 
-
 public class UserDAO {
 
     Connection con;
@@ -247,15 +246,7 @@ public class UserDAO {
 
             }
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+
             return user;
         }
     }
@@ -349,7 +340,7 @@ public class UserDAO {
             }
         }
     }
-    
+
     public List<Order> getOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -389,7 +380,7 @@ public class UserDAO {
             return orders;
         }
     }
-    
+
     public List<OrderItem> getOrderItemsByOrderId(int orderId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -430,10 +421,11 @@ public class UserDAO {
             return orderItems;
         }
     }
-    
-     public void addUser(String username, String password, String firstname, String lastname, String email, String phone, String gender, int roleId, boolean isActive, LocalDate date) throws ClassNotFoundException, SQLException {
+
+    public User addUser(String username, String password, String firstname, String lastname, String email, String phone, String gender, int roleId, boolean isActive, LocalDate date) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
+        User user = null;
         int userId = 0;
         try {
             con = DBHelper.makeConnection();
@@ -456,7 +448,16 @@ public class UserDAO {
             }
         } finally {
             addAccount(username, password, isActive, userId);
+            user = getUserById(userId);
+
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
         }
+        return user;
     }
 
     public void addAccount(String username, String password, boolean isActive, int userId) throws ClassNotFoundException, SQLException {
@@ -475,12 +476,7 @@ public class UserDAO {
                 stm.executeUpdate();
             }
         } finally {
-            if (con != null) {
-                con.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
+
         }
     }
 }

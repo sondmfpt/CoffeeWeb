@@ -76,4 +76,59 @@ public class EmailSender_ChangeUserInformation {
             e.printStackTrace();
         }
     }
+    
+    public static void addNewUser(User user) {
+
+        final String from = "duongminhson1601@gmail.com";
+        final String passwordEmail = "govc qfcq hsbl igjc";
+        final String recipient = user.getEmail();
+
+        // Get properties object
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", 587);
+        props.put("mail.smtp.starttls.enable", "true");
+
+        // get Session
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, passwordEmail);
+            }
+        };
+
+        Session session = Session.getInstance(props, auth);
+
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            msg.setFrom(from);
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient, false));
+            msg.setSubject("Test");
+            msg.setSentDate(new Date());
+            msg.setContent("<DOCTYPE html>\r\n"
+                    + "<html>\r\n"
+                    + "<body>\r\n"
+                    + "\r\n"
+                    + "<h1>Chúng tôi đã tạo một tài khoản cho Coffein</h1>"
+                    + "<h2>Đây là thông tin tài khoản của bạn:</h2>"
+                    + "<p>ID: " + user.getId() + "</p>"
+                    + "<p>Tên đăng nhập: " + user.getUsername() + "</p>"
+                    + "<p>Mật khẩu: " + user.getPassword() + "</p>"
+                    + "<p>Tên: " + user.getFirstName() + "</p>"
+                    + "<p>Họ: " + user.getLastName() + "</p>"
+                    + "<p>Email: " + user.getEmail() + "</p>"
+                    + "<p>Số điện thoại: " + user.getPhone() + "</p>"
+                    + "<p>Giới tính: " + user.getGender() + "</p>"
+                    + "<p>Ngày sinh: " + user.getDate() + "</p>"
+                    + "<p>Vai trò: " + user.getRole() + "</p>"
+                    + "<p>Trạng thái: " + (user.isActive() ? "Active" : "Deactive") + "</p>"
+                    + "<body>"
+                    + "<html>", "text/html;charset=UTF-8");
+            Transport.send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
