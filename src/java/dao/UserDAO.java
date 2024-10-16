@@ -10,7 +10,7 @@ import database.DBHelper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import models.Pair;
+import java.sql.Statement;
 
 public class UserDAO {
 
@@ -203,11 +203,13 @@ public class UserDAO {
     public void addUser(String username, String password, String firstname, String lastname, String email, String phone, String gender, int roleId, boolean isActive, LocalDate date) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
+        int userId = 0;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO users (first_name, last_name, gender, phone, date_of_birth, email, role_id)";
-                stm = con.prepareStatement(sql);
+                String sql = "INSERT INTO users (first_name, last_name, gender, phone, date_of_birth, email, role_id) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, firstname);
                 stm.setString(2, lastname);
                 stm.setString(3, gender);
@@ -216,9 +218,13 @@ public class UserDAO {
                 stm.setString(6, email);
                 stm.setInt(7, roleId);
                 stm.executeUpdate();
+                ResultSet generatedKeys = stm.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    userId = generatedKeys.getInt(1);
+                }
             }
         } finally {
-
+            addAccount(username, password, isActive, userId);
         }
     }
 
@@ -228,7 +234,8 @@ public class UserDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO accounts (username, password, active, user_id)";
+                String sql = "INSERT INTO accounts (username, password, active, user_id) "
+                        + "VALUES (?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
                 stm.setString(2, password);
@@ -243,60 +250,6 @@ public class UserDAO {
             if (stm != null) {
                 stm.close();
             }
-        }
-    }
-    
-    public List<User getUserByUsername(String username) throws ClassNotFoundException, SQLException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        User user = new null;
-        try {
-            con = DBHelper.makeConnection();
-            if (con != null) {
-                String sql = "SELECT u.*, a.active, a.username, r.role_name "
-                        + "FROM users u "
-                        + "JOIN accounts a ON u.id = a.user_id "
-                        + "JOIN role r ON u.role_id = r.id "
-                        + "LIMIT ?, ?";
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, offset);
-                stm.setInt(2, ROWS_PER_PAGE);
-                rs = stm.executeQuery();
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String username = rs.getString("username");
-                    String firstname = rs.getString("first_name");
-                    String lastname = rs.getString("last_name");
-                    if (lastname == null) {
-                        lastname = "";
-                    }
-                    String gender = rs.getString("gender");
-                    String phone = rs.getString("phone");
-                    Date dateofbirth = rs.getDate("date_of_birth");
-                    String email = rs.getString("email");
-                    String role = rs.getString("role_name");
-                    Boolean active = rs.getBoolean("active");
-                    Date createdAt = rs.getDate("created_at");
-                    User user = new User(id, firstname, lastname, gender, phone, dateofbirth, email, role);
-                    user.setUsername(username);
-                    user.setActive(active);
-                    user.setCreatedAt(createdAt);
-                    users.add(user);
-                }
-
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-            return users;
         }
     }
 

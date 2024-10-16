@@ -47,16 +47,13 @@ public class AdminAddUserServlet extends HttpServlet {
 
         UserDAO uDao = new UserDAO();
         try {
+                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
 
             if (request.getParameter("sendForUser") != null) {
-                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
-                EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter);
-            } else {
-                uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
             }
 
         } finally {
-            String url = "./admin-user-detail?userId=" + id + "&status=success";
+            String url = "./admin-add-user?status=success";
             response.sendRedirect(url);
         }
 
@@ -67,6 +64,10 @@ public class AdminAddUserServlet extends HttpServlet {
             throws ServletException, IOException {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         request.setAttribute("currentYear", currentYear);
+
+        String status = request.getParameter("status");
+        request.setAttribute("STATUS", status);
+
         request.getRequestDispatcher("admin_addUser.jsp").forward(request, response);
     }
 

@@ -174,27 +174,27 @@
                 </div>
             </div>
             <!--annotation-->
-            <c:set var="statusUpdate" value="${STATUSUPDATE}"/>
-            <c:if test="${statusUpdate.equals('success')}">
-                <div id='updateSuccesfull' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute">
+            <c:set var="statusAdd" value="${STATUS}"/>
+            <c:if test="${statusAdd.equals('success')}">
+                <div id='addSuccesfull' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute">
                     <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.75s_ease-out_,_moveInDownFull_.75s_ease-out]">
                         <h1 class="text-3xl text-gray-800 text-center font-bold">Thêm người dùng thành công!</h1>
-                        <button id="conceptUpdateBtn" class="py-2 px-3 bg-green-500 rounded">Đồng ý</button>
+                        <button id="conceptBtn" class="py-2 px-3 bg-green-500 rounded">Đồng ý</button>
                     </div>
                 </div>
             </c:if>
         </div>
         <script>
-            var updateSuccessfull = document.getElementById('updateSuccesfull');
-            var conceptUpdateBtn = document.getElementById('conceptUpdateBtn');
-            if (updateSuccessfull) {
-                conceptUpdateBtn.addEventListener('click', () => {
-                    updateSuccessfull.classList.add('hidden');
+            var addSuccessfull = document.getElementById('addSuccesfull');
+            var conceptBtn = document.getElementById('conceptBtn');
+            if (addSuccessfull) {
+                conceptBtn.addEventListener('click', () => {
+                    addSuccessfull.classList.add('hidden');
                     // Remove url
                     const currentUrl = new URL(window.location.href);
                     const searchParams = currentUrl.searchParams;
                     searchParams.delete('status');
-                    const newUrl = currentUrl.pathname + '?' + searchParams.toString();
+                    const newUrl = currentUrl.pathname;
                     window.history.replaceState({}, '', newUrl);
                 })
             }
