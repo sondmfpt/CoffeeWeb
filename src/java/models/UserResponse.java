@@ -13,13 +13,15 @@ import java.util.List;
 public class UserResponse {
     private List<User> users;
     private int totalPage;
+    private int totalProduct;
 
     public UserResponse() {
     }
 
-    public UserResponse(List<User> users, int totalPage) {
+    public UserResponse(List<User> users, int totalPage, int totalProduct) {
         this.users = users;
         this.totalPage = totalPage;
+        this.totalProduct = totalProduct;
     }
     
     

@@ -4,18 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import models.User;
-import database.DBHelper;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import database.DBHelper;
 import models.Order;
 import models.OrderItem;
-import models.Pair;
 import models.Product;
 import models.ProductVariant;
+import models.User;
 import models.UserOrder;
+import java.sql.Statement;
+
 
 public class UserDAO {
 
@@ -426,6 +428,59 @@ public class UserDAO {
                 con.close();
             }
             return orderItems;
+        }
+    }
+    
+     public void addUser(String username, String password, String firstname, String lastname, String email, String phone, String gender, int roleId, boolean isActive, LocalDate date) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        int userId = 0;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO users (first_name, last_name, gender, phone, date_of_birth, email, role_id) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, firstname);
+                stm.setString(2, lastname);
+                stm.setString(3, gender);
+                stm.setString(4, phone);
+                stm.setDate(5, java.sql.Date.valueOf(date));
+                stm.setString(6, email);
+                stm.setInt(7, roleId);
+                stm.executeUpdate();
+                ResultSet generatedKeys = stm.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    userId = generatedKeys.getInt(1);
+                }
+            }
+        } finally {
+            addAccount(username, password, isActive, userId);
+        }
+    }
+
+    public void addAccount(String username, String password, boolean isActive, int userId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO accounts (username, password, active, user_id) "
+                        + "VALUES (?, ?, ?, ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                stm.setBoolean(3, isActive);
+                stm.setInt(4, userId);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
         }
     }
 }

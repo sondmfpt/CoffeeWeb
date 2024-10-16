@@ -45,46 +45,102 @@
                         </div>
                     </div>
                     <div class="my-5 flex justify-between items-center">
-                        <input name="searchUser" oninput="searchUser()" class="rounded px-3 py-2 w-48 border border-gray-300" type="text" placeholder="Tìm kiếm người dùng">
-                        <div class="flex gap-1">
-                            <button onclick="changePage('start')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-left"></i></button>
-                            <button onclick="changePage('pre')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-left"></i></button>
-                            <input onchange="numPageChange()" id="numPage" type="number" class="text-center w-14 rounded border border-gray-300 no-spinner" value="1" max="5">
-                            <div class="h-9 flex gap-1 items-center">
-                                trên 
-                                <span id="totalPage">${TOTALPAGE}</span>
+                        <div>
+                            <input name="searchUser" oninput="searchUser()" class="rounded px-3 py-2 w-48 border border-gray-300" type="text" placeholder="Tìm kiếm người dùng">
+                            <a href="./admin-add-user" class="px-4 py-3 rounded bg-gray-300 cursor-pointer">Thêm người dùng</a>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="relative">
+                                <i onclick="informationOptionShow()" class="fa-solid fa-circle-info cursor-pointer"></i>
+                                <div id="informationOption" class="hidden absolute p-5 bg-white w-64 right-0 rounded shadow-md overflow-hidden">
+                                    <p class="text-xl font-bold">Hiển thị thông tin:</p>
+                                    <hr class="border-gray-300 py-1">
+                                    <div class="flex flex-col gap-2">
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="username" checked>
+                                            Tên người dùng
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="firstname" checked>
+                                            Tên
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="lastname" checked>
+                                            Họ
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="email" checked>
+                                            Email
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="phone" checked>
+                                            Số điện thoại
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="role" checked>
+                                            Vai trò
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="date" checked>
+                                            Ngày tạo
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="informationShow" onchange="informationChange()" value="status" checked>
+                                            Trạng thái
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 py-1">
+                                    <div class="font-medium">
+                                        Số lượng người dùng trong 1 trang: 
+                                        <input class="w-8 border border-gray-300 rounded" onchange="numPerPageChange()" type="number" name="numPerPage" value="2" min="1">
+                                    </div>
+                                </div>
                             </div>
-                            <button onclick="changePage('next')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-right"></i></button>
-                            <button onclick="changePage('end')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-right"></i></button>
+                            <div class="flex gap-1">
+                                <button onclick="changePage('start')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-left"></i></button>
+                                <button onclick="changePage('pre')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-left"></i></button>
+                                <input onchange="numPageChange()" id="numPage" name="numPage" type="number" class="text-center w-14 rounded border border-gray-300 no-spinner" value="1" max="5">
+                                <div class="h-9 flex gap-1 items-center">
+                                    trên 
+                                    <span id="totalPage">${TOTALPAGE}</span>
+                                </div>
+                                <button onclick="changePage('next')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-chevron-right"></i></button>
+                                <button onclick="changePage('end')" class="flex justify-center items-center w-9 h-9 bg-gray-100 border border-gray-300 rounded"><i class="text-xs fa-solid fa-angles-right"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table id='tableUser' class="min-w-full border-collapse border border-gray-300 text-left">
                             <thead class="bg-gray-200">
                                 <tr>
-                                    <th onclick="orderEvent('username')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                    <th id="header-username" onclick="orderEvent('username')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Tên người dùng
                                         <i class="fa-solid fa-caret-up hidden"></i>
                                         <i class="fa-solid fa-caret-down hidden"></i>
                                     </th>
-                                    <th onclick="orderEvent('name')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                    <th id="header-firstname" onclick="orderEvent('firstname')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Tên
                                         <i class="fa-solid fa-caret-up hidden"></i>
                                         <i class="fa-solid fa-caret-down hidden"></i>
                                     </th>
-                                    <th onclick="" class="py-2 px-4 border-b">Email</th>
-                                    <th onclick="" class="py-2 px-4 border-b">Số điện thoại</th>
-                                    <th onclick="orderEvent('role')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                    <th id="header-lastname" onclick="orderEvent('lastname')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                        Họ
+                                        <i class="fa-solid fa-caret-up hidden"></i>
+                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                    </th>
+                                    <th id="header-email" onclick="" class="py-2 px-4 border-b">Email</th>
+                                    <th id="header-phone" onclick="" class="py-2 px-4 border-b">Số điện thoại</th>
+                                    <th id="header-role" onclick="orderEvent('role')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Vai trò
                                         <i class="fa-solid fa-caret-up hidden"></i>
                                         <i class="fa-solid fa-caret-down hidden"></i>
                                     </th>
-                                    <th onclick="orderEvent('date')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                    <th id="header-date" onclick="orderEvent('date')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Ngày tạo
                                         <i class="fa-solid fa-caret-up hidden"></i>
                                         <i class="fa-solid fa-caret-down hidden"></i>
                                     </th>
-                                    <th onclick="orderEvent('status')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
+                                    <th id="header-status" onclick="orderEvent('status')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Trạng thái
                                         <i class="fa-solid fa-caret-up hidden"></i>
                                         <i class="fa-solid fa-caret-down hidden"></i>
@@ -94,13 +150,14 @@
                             <tbody id="listUsers">
                                 <c:forEach var="user" items="${allUsers}">
                                     <tr onclick="userItemClick(${user.getId()})" class="odd:bg-white even:bg-gray-100 cursor-pointer hover:bg-coffee-300">
-                                        <td class="py-2 px-4 border-b">${user.getUsername()}</td>
-                                        <td class="py-2 px-4 border-b">${user.getLastName()} ${user.getFirstName()}</td>
-                                        <td class="py-2 px-4 border-b">${user.getEmail()}</td>
-                                        <td class="py-2 px-4 border-b">${user.getPhone()}</td>
-                                        <td class="py-2 px-4 border-b">${user.getRole()}</td>
-                                        <td class="py-2 px-4 border-b">${user.getCreatedAt()}</td>
-                                        <td class="py-2 px-4 border-b">${user.isActive() ? 'Active' : 'Deactive'}</td>
+                                        <td id="username" class="py-2 px-4 border-b">${user.getUsername()}</td>
+                                        <td id="firstname" class="py-2 px-4 border-b">${user.getFirstName()}</td>
+                                        <td id="lastname" class="py-2 px-4 border-b">${user.getLastName()}</td>
+                                        <td id="email" class="py-2 px-4 border-b">${user.getEmail()}</td>
+                                        <td id="phone" class="py-2 px-4 border-b">${user.getPhone()}</td>
+                                        <td id="role" class="py-2 px-4 border-b">${user.getRole()}</td>
+                                        <td id="date" class="py-2 px-4 border-b">${user.getCreatedAt()}</td>
+                                        <td id="status" class="py-2 px-4 border-b">${user.isActive() ? 'Active' : 'Deactive'}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -133,6 +190,10 @@
             function userItemClick(userId) {
                 window.location.href = "http://localhost:9999/SWP_Project/admin-user-detail?userId=" + userId;
             }
+            
+            function informationOptionShow(){
+                document.getElementById('informationOption').classList.toggle('hidden');
+            }
         </script>
 
         <script>
@@ -143,6 +204,7 @@
             var roleUserSelected = "all";
             var searchValue = "";
             var numPage = 1;
+            var numPerPage = 2;
 
             function orderEvent(typeOrder) {
                 if (typeOrder == order.type) {
@@ -208,6 +270,42 @@
                 callUserList();
             }
 
+            function numPerPageChange() {
+                numPerPage = document.querySelector('input[name="numPerPage"]').value;
+                searchValue = document.querySelector('input[name="searchUser"]').value;
+                numPage = document.querySelector('input[name="numPage"]').value;
+                callUserList();
+            }
+
+            function informationChange() {
+                var listInformation = document.querySelectorAll('input[name="informationShow"]');
+                var leastOneInfoChosen = false;
+                listInformation.forEach(function (info) {
+                    var headerTable = document.getElementById('header-' + info.value);
+                    var rowTable = document.querySelectorAll('#' + info.value);
+                    if (info.checked) {
+                        leastOneInfoChosen = true;
+                        rowTable.forEach(function (row) {
+                            row.classList.remove('hidden');
+                        })
+                        headerTable.classList.remove('hidden');
+                    } else {
+                        rowTable.forEach(function (row) {
+                            row.classList.add('hidden');
+                        })
+                        headerTable.classList.add('hidden');
+                    }
+                })
+                if (!leastOneInfoChosen) {
+                    document.querySelectorAll('#tableUser td').forEach(function (row) {
+                        row.classList.remove('hidden');
+                    })
+                    document.querySelectorAll('#tableUser th').forEach(function (row) {
+                        row.classList.remove('hidden');
+                    })
+                }
+            }
+
 
             function callUserList() {
                 const xhr = new XMLHttpRequest();
@@ -216,31 +314,39 @@
                         + '&roleUser=' + encodeURIComponent(roleUserSelected)
                         + '&searchValue=' + encodeURIComponent(searchValue)
                         + '&numPage=' + encodeURIComponent(numPage)
+                        + '&numPerPage=' + encodeURI(numPerPage)
                         , true);
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
                         var listUserResponse = response.users;
+                        var totalPage = response.totalPage;
+                        var totalProduct = response.totalProduct;
 
-                        document.getElementById('totalPage').textContent = response.totalPage
+                        document.getElementById('totalPage').textContent = totalPage;
                         document.getElementById('numPage').value = numPage;
+                        document.querySelector('input[name="numPerPage"]').setAttribute("max", totalProduct);
+                        if (document.querySelector('input[name="numPerPage"]').value > totalProduct) {
+                            document.querySelector('input[name="numPerPage"]').value = totalProduct;
+                        }
 
                         var listUser = document.getElementById('listUsers');
                         listUser.innerHTML = '';
                         listUserResponse.forEach(function (user) {
                             var userElement = document.createElement('tr');
                             userElement.classList.add("odd:bg-white", "even:bg-gray-100", "cursor-pointer", "hover:bg-coffee-300");
-                            userElement.setAttribute('onclick', 'userItemClick('+ user.id +')');
+                            userElement.setAttribute('onclick', 'userItemClick(' + user.id + ')');
                             var statusUser = user.active ? 'Active' : 'Deactive';
                             userElement.innerHTML =
-                                    '<td class="py-2 px-4 border-b">' + user.username + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + user.lastName + ' ' + user.firstName + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + user.email + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + user.phone + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + user.role + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + user.createdAt + '</td>' +
-                                    '<td class="py-2 px-4 border-b">' + statusUser + '</td>';
+                                    '<td id="username" class="py-2 px-4 border-b">' + user.username + '</td>' +
+                                    '<td id="firstname" class="py-2 px-4 border-b">' + user.firstName + '</td>' +
+                                    '<td id="lastname" class="py-2 px-4 border-b">' + user.lastName + '</td>' +
+                                    '<td id="email" class="py-2 px-4 border-b">' + user.email + '</td>' +
+                                    '<td id="phone" class="py-2 px-4 border-b">' + user.phone + '</td>' +
+                                    '<td id="role" class="py-2 px-4 border-b">' + user.role + '</td>' +
+                                    '<td id="date" class="py-2 px-4 border-b">' + user.createdAt + '</td>' +
+                                    '<td id="status" class="py-2 px-4 border-b">' + statusUser + '</td>';
                             listUser.appendChild(userElement);
                         });
                     }
