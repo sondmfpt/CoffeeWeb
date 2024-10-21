@@ -871,6 +871,10 @@ video {
   height: 12%;
 }
 
+.h-\[80\%\] {
+  height: 80%;
+}
+
 .h-\[200px\] {
   height: 200px;
 }

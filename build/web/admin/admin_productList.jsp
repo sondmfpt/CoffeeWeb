@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="flex">
-                            <div class="flex flex-col w-64 h-screen bg-gray-800/[0.1] shadow-md">
+                            <div class="flex flex-col w-64 h-[80%] bg-gray-800/[0.1] shadow-md">
                                 <h2 class="text-3xl font-semibold p-2">Search:</h2>
                                 <input id="key" class="mx-2 px-2" placeholder="Input id or name here" onkeyup ="filterKey()"/>
                                 <div class="flex flex-row justify-around items-center">
@@ -50,7 +50,7 @@
                                     </c:forEach>
                                 </form>
                             </div>
-                            <div class="flex-1 px-3">
+                            <div id="table" class="flex-1 px-3">
                                 <table class="table-auto border-4 border-black w-full">
                                     <thead>
                                         <tr>
@@ -62,12 +62,18 @@
                                         </tr>
                                     </thead>
                                     <tbody id="productList">
-
                                     </tbody>
                                 </table>
-                                <div>
-                                    <button onlick=''>Previous</button><button onlick=''>Next</button>
+                                <div class="flex flex-row justify-center mt-4">
+                                    <button  class="mx-2 border-black border-4" style="width:36px;height:36px" type="button" title="pages" onclick="firstPage()"><i class='fas fa-angle-double-left' style='font-size:30px'></i></button>
+                                    <button class="mx-2  border-black border-4" style="width:36px;height:36px" type="button" title="pages" onclick="previousPage()"><i class='fas fa-angle-left' style='font-size:30px'></i></button>
+                                    <span class="mx-2 px-2 text-2xl" style="height:36px"><span id="page">1</span>/<span id="total-page">10</span></span>
+                                    <button class="mx-2  border-black border-4" style="width:36px;height:36px" type="button" title="pages" onclick="nextPage()"><i class='fas fa-angle-right' style='font-size:30px'></i></button>
+                                    <button class="mx-2  border-black border-4" style="width:36px;height:36px" type="button" title="pages" onclick="lastPage()"><i class='fas fa-angle-double-right' style='font-size:30px'></i></button>
                                 </div>
+                            </div>
+                            <div id="empty-notification" style="display:none">
+                                <h2 class="text-3xl font-semibold p-2">No available product.</h2>
                             </div>
                         </div>
                     </div>
@@ -126,7 +132,7 @@
                     document.getElementById('product-list').style.display = "block";
                 };
 
-                let string, i, j, key, tpl, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct;
+                let string, i, j, key, tpl, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct, pageIndex, totalPage, from, to;
                 let pl = [];
                 
                 //add all products in display list with form of id-name-category
@@ -136,23 +142,7 @@
                 const products = pl.slice(0, pl.length); 
                 tpl = products.slice(0, products.length); 
                
-                displayList();
-                
-                
-                function displayList() {
-                    string = "";
-                    for (i = 0; i < pl.length; i++) {
-                        item1=pl[i].split("|");
-                        string += "<tr id=" + pl[i] + ">\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[0] + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"../img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[2].replace("_", " ") + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[3] + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"product?id=" + item1[0] + "\">view</a></td>\n"
-                                         + "</tr>\n"
-                    }
-                    document.getElementById('productList').innerHTML = string;
-                }
+                identifyPage();
                                
                 function filterKey() {
                     pl = [];
@@ -189,7 +179,7 @@
                                             i--;
                                         }
                                     }
-                                    displayList();
+                                    identifyPage();
                                 }
                                 break;
                 </c:forEach>
@@ -253,16 +243,68 @@
                             break;
                         }
                     }
+                    identifyPage();
+                };
+                
+                function identifyPage() {
+                    pageIndex = 1;
+                    totalPage = Math.ceil(pl.length / 10);
                     displayList();
                 };
                 
-                function createPageButtons() {
-                    
+                function firstPage() {
+                    pageIndex = 1;
+                    displayList();
                 };
                 
-                function getPage(page) {
-                    
+                function previousPage() {
+                    if (pageIndex > 1) {
+                        pageIndex--;
+                        displayList();
+                    }
                 };
+                
+                function nextPage() {
+                    if (pageIndex < totalPage) {
+                        pageIndex++;
+                        displayList();
+                    }
+                };
+                
+                function lastPage() {
+                    pageIndex = totalPage;
+                    displayList();
+                };
+                
+                function displayList() {
+                    if (pl.length == 0) {
+                        document.getElementById('table').style.display = "none";
+                        document.getElementById('empty-notification').style.display = "";
+                        return;
+                    }
+                    document.getElementById('empty-notification').style.display = "none";
+                    document.getElementById('table').style.display = "";
+                    string = "";
+                    from = (pageIndex - 1) * 10;
+                    if (pageIndex == totalPage) {
+                        to = pl.length;
+                    } else {
+                        to = pageIndex * 10;
+                    } 
+                    for (i = from; i < to; i++) {
+                        item1=pl[i].split("|");
+                        string += "<tr id=" + pl[i] + ">\n"
+                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[0] + "</td>\n"
+                                         + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"../img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>\n"
+                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[2].replace("_", " ") + "</td>\n"
+                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[3] + "</td>\n"
+                                         + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"product?id=" + item1[0] + "\">view</a></td>\n"
+                                         + "</tr>\n"
+                    }
+                    document.getElementById('productList').innerHTML = string;
+                    document.getElementById('page').innerHTML = pageIndex;
+                    document.getElementById('total-page').innerHTML = totalPage;
+                }
 
                 //for Preview Image
                 function previewImage(event) {
