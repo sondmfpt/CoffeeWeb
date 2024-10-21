@@ -33,6 +33,8 @@
                         </div>
                         <div class="flex">
                             <div class="flex flex-col w-64 h-screen bg-gray-800/[0.1] shadow-md">
+                                <h2 class="text-3xl font-semibold p-2">Search:</h2>
+                                <input id="key" class="mx-2 px-2" placeholder="Input id or name here" onkeyup ="filterKey()"/>
                                 <div class="flex flex-row justify-around items-center">
                                     <h2 class="text-3xl font-semibold p-2">Sort by:</h2>
                                     <select id="sort" title="hello" onchange="sortList()">
@@ -44,7 +46,7 @@
                                 <form class="px-3">
                                     <h3 class="text-2xl font-semibold mb-2">Category:</h3>
                                     <c:forEach var="category" items="${cl}">
-                                        <input id="${category.getName().toLowerCase()}" class="mx-3" type="checkbox" value="${category.getName()}" checked onchange="changeProductList('${category.getName().toLowerCase()}')"/><label for="${category.getName().toLowerCase()}">${category.getName()}</label><br>
+                                        <input id="${category.getName().toLowerCase()}" class="mx-3" type="checkbox" value="${category.getName()}" checked onchange="filterCategory('${category.getName().toLowerCase()}')"/><label for="${category.getName().toLowerCase()}">${category.getName()}</label><br>
                                     </c:forEach>
                                 </form>
                             </div>
@@ -125,14 +127,15 @@
                     document.getElementById('product-list').style.display = "block";
                 };
 
-                let string, i, j, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct;
+                let string, i, j, key, tpl, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct;
                 let pl = [];
                 
                 //add all products in display list with form of id-name-category
                 <c:forEach var="product" items="${pl}">
                     pl.push("${product.getId()}|<c:choose><c:when test="${empty product.getThumbnailUrl()}">invalid-image.png</c:when><c:otherwise>${product.getThumbnailUrl()}</c:otherwise></c:choose>|${product.getName().replace(" ", "_")}|${product.getCategory()}");
                 </c:forEach>
-                const products = pl.slice(0, pl.length);
+                const products = pl.slice(0, pl.length); 
+                tpl = products.slice(0, products.length); 
                
                 displayList();
                 
@@ -151,15 +154,32 @@
                     }
                     document.getElementById('productList').innerHTML = string;
                 }
+                               
+                function filterKey() {
+                    pl = [];
+                    key = document.getElementById('key').value;
+                    if (key === "") {
+                        tpl = products.slice(0, products.length); 
+                    } else {
+                        tpl = [];
+                        for (i = 0; i < products.length; i++) {
+                            item1 = products[i].split("|");
+                            if (item1[0].includes(key) || item1[2].includes(key)) {
+                                tpl.push(products[i]);
+                            }
+                        }
+                    }
+                    filterCategory("all");
+                }
 
-                function changeProductList(type) {
+                function filterCategory(type) {
                         switch (type) {
                 <c:forEach var="category" items="${cl}">
                             case '${category.getName().toLowerCase()}':
                                 if (document.getElementById('${category.getName().toLowerCase()}').checked) {
-                                    for (i = 0; i < products.length; i++) {
-                                        if (products[i].endsWith('${category.getName()}')) {
-                                            pl.push(products[i]);
+                                    for (i = 0; i < tpl.length; i++) {
+                                        if (tpl[i].endsWith('${category.getName()}')) {
+                                            pl.push(tpl[i]);
                                         }
                                     }
                                 sortList();
@@ -174,9 +194,28 @@
                                 }
                                 break;
                 </c:forEach>
+                            case "all":
+                                <c:forEach var="category" items="${cl}">
+                                if (document.getElementById('${category.getName().toLowerCase()}').checked) {
+                                    for (i = 0; i < tpl.length; i++) {
+                                        if (tpl[i].endsWith('${category.getName()}')) {
+                                            pl.push(tpl[i]);
+                                        }
+                                    }
+                                }  else {
+                                    for (i = 0; i < pl.length; i++) {
+                                        if (pl[i].endsWith('${category.getName()}')) {
+                                            pl.splice(i, 1);
+                                            i--;
+                                        }
+                                    }
+                                }
+                                </c:forEach>
+                                sortList();
+                                break;
                         }
                 };
-                
+                                
                 function sortList() {
                 attributeType = document.getElementById('sort').value;
                     switch (attributeType) {
