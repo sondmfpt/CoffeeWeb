@@ -50,7 +50,7 @@ public class UserDAO {
                                 "gender = ?, " +
                                 "phone = ?, " +
                                 "date_of_birth = ?, " +
-                                "email = ?, " +
+                                "email = ?" +
                                 "WHERE id = ?;";
         try {
             ps = con.prepareStatement(query);

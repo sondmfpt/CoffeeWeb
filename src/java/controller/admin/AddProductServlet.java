@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AddProductServlet extends HttpServlet {
 
-    private static final String UPLOAD_DIR = "img/thumbnails";
+    private static final String UPLOAD_DIR = "img/thumbnail";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +41,6 @@ public class AddProductServlet extends HttpServlet {
             Part filePart = request.getPart("thumbnail"); 
             String fileName = extractFileName(filePart);
             filePart.write(uploadFilePath + File.separator + fileName);
-            String thumbnailURL = "../" + UPLOAD_DIR + "/" + fileName;
 
             // Save product
             ProductDAO pd = new ProductDAO();
@@ -51,7 +50,7 @@ public class AddProductServlet extends HttpServlet {
                 if (c.getName().equals(category))
                     categoryID = c.getId();
             }
-            pd.addProduct(name, categoryID, thumbnailURL, price, description);
+            pd.addProduct(name, categoryID, fileName, price, description);
 
             // Redirect to product listing
             response.sendRedirect("products");

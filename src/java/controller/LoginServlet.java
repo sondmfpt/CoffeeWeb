@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
 
     private final String ERROR_PAGE = "login.jsp";
     private final String HOME = "./home";
+    private final String ADMIN = "./admin/products";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -40,16 +41,19 @@ public class LoginServlet extends HttpServlet {
             LoginDAO lDao = new LoginDAO();
             User user = lDao.checkAccount(username, password);
             if (user != null) {
-                url = HOME;
+                if (user.getRole().equals("ADMIN")) {
+                    url = ADMIN;
+                } else {
+                    url = HOME;
+                }
                 HttpSession session = request.getSession();
                 session.setAttribute("USER", user);
+            } else {
+                url = "./login?status=error";
             }
         } finally {
-            if (url == HOME) {
-                response.sendRedirect(url);
-            } else {
-                response.sendRedirect("./login?status=error");
-            }
+            response.sendRedirect(url);
+
         }
 
     }
@@ -59,12 +63,14 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("USER");
-        
+
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         request.setAttribute("currentYear", currentYear);
-        
+
         String status = request.getParameter("status");
-        if(status != null) request.setAttribute("LOGINSTATUS", status);
+        if (status != null) {
+            request.setAttribute("LOGINSTATUS", status);
+        }
         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }

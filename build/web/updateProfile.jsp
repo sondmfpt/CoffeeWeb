@@ -36,14 +36,11 @@
             <input id="dob" name="dob" type="date" <%if (u.getDate() != null) {%> value="<%=dob%>" <%}%>/><br>
             <label for="email">Email:</label><br>
             <input id="email" name="email" type="email" <%if (u.getEmail() !=  null && !u.getEmail().isBlank()) {%> value="<%=u.getEmail()%>" readonly <%}%>/><br>
-            <label for="address">Address:</label><br>
-            <input id="address" name="address" type="text" <%if (u.getAddress() != null) {%> value="<%=u.getAddress()%>" <%}%>"/><br><br>
             <input type="submit" name="type" value ="Update"/>
             <input type="submit" name="type" value ="Cancel"/>
         </form>
         <%} else {%>
-        <h1>User not found, please login</h1>
-        <a href="login"><div class="btn btn-cyan">Login</div></a>
+        <%@ include file="../include/no-permission.html" %>
         <%}%>
     </body>
     

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class EditProductServlet extends HttpServlet {
 
-    private static final String UPLOAD_DIR = "img/thumbnails";
+    private static final String UPLOAD_DIR = "img/thumbnail";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,9 +34,9 @@ public class EditProductServlet extends HttpServlet {
             int price = Integer.parseInt(priceStr);
             String description = getFormField(request.getPart("description"));
             // Handle file upload
-            String thumbnailURL;
+            String fileName;
             if (request.getPart("thumbnail") == null) {
-                thumbnailURL = request.getParameter("thumbnailURL");
+                fileName = request.getParameter("thumbnailURL");
             } else {
                 String applicationPath = request.getServletContext().getRealPath("");
                 String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
@@ -45,10 +45,9 @@ public class EditProductServlet extends HttpServlet {
                     uploadDir.mkdirs();
                 }
                 Part filePart = request.getPart("thumbnail");
-                String fileName = extractFileName(filePart);
+                fileName = extractFileName(filePart);
                 String path = uploadFilePath + File.separator + UUID.randomUUID().toString() + "_"  + fileName;
                 filePart.write(path);
-                thumbnailURL = "../" + UPLOAD_DIR + "/" + fileName;
             }
             ProductDAO pd = new ProductDAO();
             List<Category> cl = pd.getAllCategories();
@@ -58,7 +57,7 @@ public class EditProductServlet extends HttpServlet {
                     categoryID = c.getId();
                 }
             }
-            pd.editProduct(name, categoryID, thumbnailURL, price, description, id);
+            pd.editProduct(name, categoryID, fileName, price, description, id);
 
             // Redirect to product listing
             response.sendRedirect("product?id=" + id);

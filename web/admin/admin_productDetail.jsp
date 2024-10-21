@@ -53,7 +53,7 @@
                                 <p class="text-2xl font-semibold">Thumbnail Image:</p>
                             </div>
                             <div class="flex justify-center pt-10">
-                                <img style="width:50%" src="${p.getThumbnailUrl()}" alt="Image Preview">
+                                <img style="width:50%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                                     <label class="text-2xl font-semibold">Thumbnail Image:</label><label class="text-1xl font-semibold border-2 border-black px-2" for="thumbnail">Upload</label><input id="thumbnail" name="thumbnail" type="file" style="display: none" accept="image/*" required onchange="previewImage(event)"/><input id="thumbnailURL" name="thumbnailURL" type="text" style="display: none"  value="${p.getThumbnailUrl()}" /><br>
                                 </div>
                                 <div class="flex justify-center pt-10">
-                                    <img id="preview" style="width:50%" src="${p.getThumbnailUrl()}" alt="Image Preview">
+                                    <img id="preview" style="width:50%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
                                 </div>
                             </div>
                         </div>
