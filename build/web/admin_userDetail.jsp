@@ -221,7 +221,7 @@
                                                 </c:if>
                                             </div>
                                             <div class="flex flex-col gap-2 text-end">
-                                                <p class="text-blue-500 cursor-pointer">Cập nhật</p>
+                                                <!--<p class="text-blue-500 cursor-pointer">Cập nhật</p>-->
                                                 <c:if test="${!userOrder.isIsDefault()}">
                                                     <p class="text-red-700 cursor-pointer">Xóa</p>
                                                     <div class="p-1 border border-gray-300 cursor-pointer">Thiết lập mặc định</div>

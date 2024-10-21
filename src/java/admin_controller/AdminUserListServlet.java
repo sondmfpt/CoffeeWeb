@@ -77,9 +77,13 @@ public class AdminUserListServlet extends HttpServlet {
                 users = users.stream()
                         .sorted((p1, p2) -> p1.getUsername().compareTo(p2.getUsername()))
                         .collect(Collectors.toList());
-            } else if (type.equals("name")) {
+            } else if (type.equals("firstname")) {
                 users = users.stream()
                         .sorted((p1, p2) -> p1.getFirstName().compareTo(p2.getFirstName()))
+                        .collect(Collectors.toList());
+            } else if (type.equals("lastname")) {
+                users = users.stream()
+                        .sorted((p1, p2) -> p1.getLastName().compareTo(p2.getLastName()))
                         .collect(Collectors.toList());
             } else if (type.equals("role")) {
                 users = users.stream()
