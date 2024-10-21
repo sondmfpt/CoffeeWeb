@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -36,7 +37,7 @@ public class AdminUserListServlet extends HttpServlet {
 
     // Method to count the number of users belonging to a specific role
     private int getTotalUserInRole(List<User> users, String role) {
-         // Stream through the list of users, filter by role, and count the total
+        // Stream through the list of users, filter by role, and count the total
         return (int) users.stream()
                 .filter(user -> user.getRole().equals(role)).count();
     }
@@ -51,7 +52,7 @@ public class AdminUserListServlet extends HttpServlet {
 
     // Method to search for users by their username (case-insensitive)
     private List<User> searchUser(List<User> users, String search) {
-         // Stream through the list of users, filter by username, and return the matching results
+        // Stream through the list of users, filter by username, and return the matching results
         return users.stream()
                 .filter(user -> user.getUsername().toLowerCase().contains(search.toLowerCase()))
                 .collect(Collectors.toList());
@@ -118,7 +119,7 @@ public class AdminUserListServlet extends HttpServlet {
 
         JSONObject orderJson = new JSONObject(order);   //convert order object to json
         //get key and value in json
-        String typeOrder = orderJson.getString("type"); 
+        String typeOrder = orderJson.getString("type");
         String valueOrder = orderJson.getString("value");
         UserDAO uDao = new UserDAO();
         List<User> allUsers = uDao.getAllUser();
@@ -152,30 +153,47 @@ public class AdminUserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            //get user by default
-            UserDAO uDao = new UserDAO();
-            List<User> allUsers = uDao.getAllUser();
-            List<User> allUsersInPage = uDao.getAllUserPagination(1, ROWS_PER_PAGE);
+        // Decentralization: only allow admin access to page
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("USER");
+        if (user == null || !user.getRole().equals("ADMIN")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Validate Role</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Bạn không có quyền truy cập vào trang web này.</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } else {
+            try {
+                //get user by default
+                UserDAO uDao = new UserDAO();
+                List<User> allUsers = uDao.getAllUser();
+                List<User> allUsersInPage = uDao.getAllUserPagination(1, ROWS_PER_PAGE);
 
-            int totalAdmin = getTotalUserInRole(allUsers, "ADMIN");
-            int totalCustomer = getTotalUserInRole(allUsers, "CUSTOMER");
-            int totalUser = allUsers.size();
-            //calculate total page by total user and numbers user in page
-            int totalPage = totalUser % ROWS_PER_PAGE == 0 ? totalUser / ROWS_PER_PAGE : (totalUser / ROWS_PER_PAGE) + 1;
+                int totalAdmin = getTotalUserInRole(allUsers, "ADMIN");
+                int totalCustomer = getTotalUserInRole(allUsers, "CUSTOMER");
+                int totalUser = allUsers.size();
+                //calculate total page by total user and numbers user in page
+                int totalPage = totalUser % ROWS_PER_PAGE == 0 ? totalUser / ROWS_PER_PAGE : (totalUser / ROWS_PER_PAGE) + 1;
 
-            //set attribute to redirect to view
-            request.setAttribute("ALLUSERS", allUsersInPage);
-            request.setAttribute("TOTALADMIN", totalAdmin);
-            request.setAttribute("TOTALCUSTOMER", totalCustomer);
-            request.setAttribute("TOTALUSER", totalUser);
-            request.setAttribute("TOTALPAGE", totalPage);
+                //set attribute to redirect to view
+                request.setAttribute("ALLUSERS", allUsersInPage);
+                request.setAttribute("TOTALADMIN", totalAdmin);
+                request.setAttribute("TOTALCUSTOMER", totalCustomer);
+                request.setAttribute("TOTALUSER", totalUser);
+                request.setAttribute("TOTALPAGE", totalPage);
 
-            RequestDispatcher rd = request.getRequestDispatcher("admin_userList.jsp");
-            rd.forward(request, response);
+                RequestDispatcher rd = request.getRequestDispatcher("admin_userList.jsp");
+                rd.forward(request, response);
 
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AdminUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AdminUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

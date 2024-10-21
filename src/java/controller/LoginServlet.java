@@ -21,14 +21,14 @@ import models.User;
 
 /**
  *
- * @author Son Duong
- * This program will login user
+ * @author Son Duong This program will login user
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     private final String ERROR_PAGE = "login.jsp";
     private final String HOME = "./home";
+    private final String ADMINDASHBOARD = "./admin-user-list";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -44,15 +44,19 @@ public class LoginServlet extends HttpServlet {
             User user = lDao.checkAccount(username, password);
             //if user is exist, change url to home page
             if (user != null) {
-                url = HOME;
+                if (user.getRole().equals("ADMIN")) {
+                    url = ADMINDASHBOARD;
+                } else {
+                    url = HOME;
+                }
                 HttpSession session = request.getSession();
                 session.setAttribute("USER", user);
             }
         } finally {
-            if (url == HOME) {
-                response.sendRedirect(url);
-            } else {
+            if (url == ERROR_PAGE) {
                 response.sendRedirect("./login?status=error");
+            } else {
+                response.sendRedirect(url);
             }
         }
 
@@ -63,12 +67,14 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("USER");
-        
+
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         request.setAttribute("currentYear", currentYear);
-        
+
         String status = request.getParameter("status");
-        if(status != null) request.setAttribute("LOGINSTATUS", status);
+        if (status != null) {
+            request.setAttribute("LOGINSTATUS", status);
+        }
         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
