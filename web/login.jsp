@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="./output.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="font-sans">
         <c:set var="status" value="${LOGINSTATUS}"/>
         <c:set var="regisErrors" value="${REGIS_ERRORS}"/>
         <img class="absolute h-full w-full object-cover"
