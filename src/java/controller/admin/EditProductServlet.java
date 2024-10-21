@@ -45,8 +45,8 @@ public class EditProductServlet extends HttpServlet {
                     uploadDir.mkdirs();
                 }
                 Part filePart = request.getPart("thumbnail");
-                fileName = extractFileName(filePart);
-                String path = uploadFilePath + File.separator + UUID.randomUUID().toString() + "_"  + fileName;
+                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                String path = uploadFilePath + File.separator + fileName;
                 filePart.write(path);
             }
             ProductDAO pd = new ProductDAO();

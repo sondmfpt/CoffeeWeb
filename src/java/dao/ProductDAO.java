@@ -16,6 +16,7 @@ import models.Category;
 import models.Product;
 import models.ProductVariant;
 import models.Trend;
+import models.Attribute;
 import org.json.JSONObject;
 
 public class ProductDAO {
@@ -462,4 +463,48 @@ public class ProductDAO {
             return products;
         }
     }
+    
+    public List<Attribute> getAllAttributes() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Attribute> attributes = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM product_attributes";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                Attribute attribute;
+                while (rs.next()) {
+                    attribute = new Attribute();
+                    attribute.setName(rs.getString("product_attributes_name"));
+                    attributes.add(attribute);
+                }
+                for (Attribute a : attributes) {
+                    sql = "SELECT * FROM product_attributes pa JOIN attribute_values av ON pa.id = av.attribute_id WHERE product_attributes_name = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, a.getName());
+                    rs = stm.executeQuery();
+                    List<String> values = new ArrayList();
+                    while (rs.next()) {
+                        values.add(rs.getString("attribute_value"));
+                    }
+                    a.setValues(values);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return attributes;
+        }
+    }
+    
 }

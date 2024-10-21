@@ -15,6 +15,7 @@
         <c:if test="${u != null && u.getRole().equals(\"ADMIN\")}">
             <c:set var="pl" value="${product_list}"/>
             <c:set var="cl" value="${category_list}"/>
+            <c:set var="al" value="${attribute_list}"/>
             <div class="bg-gray-100 h-screen">
                 <div class="flex">
                     <!--Navigation-->
@@ -98,9 +99,22 @@
                                         </select>
                                     </div>
                                     <div class="flex justify-between my-2">
-                                        <label class="text-2xl font-semibold" for="price">Product's price:</label>
-                                        <input id="price" name="price" class="input-box" type="number" required/>
+                                        <label class="text-2xl font-semibold" for="price">Product's variants:</label>
+                                        <button class="border-black border-2 text-1xl font-semibold px-2" type="button" title="addVariant" onclick="addVariant()">Add new variant</button>
                                     </div>
+                                    <table class="table-auto border-2 border-black w-full mb-5">
+                                        <thead>
+                                            <tr>
+                                                <c:forEach var="attribute" items="${al}">
+                                                    <th class="border border-black" >${attribute.getName()}</th>
+                                                </c:forEach>
+                                                <th class="border border-black">Price</th>
+                                                <th class="border border-black"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="variantList">
+                                        </tbody>
+                                    </table>
                                     <div class="flex justify-between my-2">
                                         <label class="text-2xl font-semibold" for="description">Description:</label><br>
                                         <textarea id="description" name="description" class="input-box" style="height:150px" type="text" required></textarea>
@@ -122,46 +136,48 @@
                 </div>
             </div>
             <script>
+                //For display page
                 function addNewProduct() {
                     document.getElementById('product-list').style.display = "none";
                     document.getElementById('add-product').style.display = "block";
-                };
+                }
 
                 function productList() {
                     document.getElementById('add-product').style.display = "none";
                     document.getElementById('product-list').style.display = "block";
-                };
-
-                let string, i, j, key, tpl, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct, pageIndex, totalPage, from, to;
-                let pl = [];
-                
-                //add all products in display list with form of id-name-category
-                <c:forEach var="product" items="${pl}">
-                    pl.push("${product.getId()}|<c:choose><c:when test="${empty product.getThumbnailUrl()}">invalid-image.png</c:when><c:otherwise>${product.getThumbnailUrl()}</c:otherwise></c:choose>|${product.getName().replace(" ", "_")}|${product.getCategory()}");
-                </c:forEach>
-                const products = pl.slice(0, pl.length); 
-                tpl = products.slice(0, products.length); 
-               
-                identifyPage();
-                               
-                function filterKey() {
-                    pl = [];
-                    key = document.getElementById('key').value.trim();
-                    if (key === "") {
-                        tpl = products.slice(0, products.length); 
-                    } else {
-                        tpl = [];
-                        for (i = 0; i < products.length; i++) {
-                            item1 = products[i].split("|");
-                            if (item1[0].includes(key) || item1[2].replace("_"," ").includes(key)) {
-                                tpl.push(products[i]);
-                            }
-                        }
-                    }
-                    filterCategory("all");
                 }
 
-                function filterCategory(type) {
+                //For List
+                let string, i, j, key, tpl, attributeType, dataType, exit, swap, attributeid, item1, item2, tproduct, pageIndex, totalPage, from, to;
+                let pl = [];
+
+                //add all products in display list with form of id-name-category
+                <c:forEach var="product" items="${pl}">
+                pl.push("${product.getId()}|<c:choose><c:when test="${empty product.getThumbnailUrl()}">invalid-image.png</c:when><c:otherwise>${product.getThumbnailUrl()}</c:otherwise></c:choose>|${product.getName().replace(" ", "_")}|${product.getCategory()}");
+                </c:forEach>
+                    const products = pl.slice(0, pl.length);
+                    tpl = products.slice(0, products.length);
+
+                    identifyPage();
+
+                    function filterKey() {
+                        pl = [];
+                        key = document.getElementById('key').value.trim();
+                        if (key === "") {
+                            tpl = products.slice(0, products.length);
+                        } else {
+                            tpl = [];
+                            for (i = 0; i < products.length; i++) {
+                                item1 = products[i].split("|");
+                                if (item1[0].includes(key) || item1[2].replace("_", " ").includes(key)) {
+                                    tpl.push(products[i]);
+                                }
+                            }
+                        }
+                        filterCategory("all");
+                    }
+
+                    function filterCategory(type) {
                         switch (type) {
                 <c:forEach var="category" items="${cl}">
                             case '${category.getName().toLowerCase()}':
@@ -171,8 +187,8 @@
                                             pl.push(tpl[i]);
                                         }
                                     }
-                                sortList();
-                                }  else {
+                                    sortList();
+                                } else {
                                     for (i = 0; i < pl.length; i++) {
                                         if (pl[i].endsWith('${category.getName()}')) {
                                             pl.splice(i, 1);
@@ -184,14 +200,14 @@
                                 break;
                 </c:forEach>
                             case "all":
-                                <c:forEach var="category" items="${cl}">
+                <c:forEach var="category" items="${cl}">
                                 if (document.getElementById('${category.getName().toLowerCase()}').checked) {
                                     for (i = 0; i < tpl.length; i++) {
                                         if (tpl[i].endsWith('${category.getName()}')) {
                                             pl.push(tpl[i]);
                                         }
                                     }
-                                }  else {
+                                } else {
                                     for (i = 0; i < pl.length; i++) {
                                         if (pl[i].endsWith('${category.getName()}')) {
                                             pl.splice(i, 1);
@@ -199,133 +215,154 @@
                                         }
                                     }
                                 }
-                                </c:forEach>
+                </c:forEach>
                                 sortList();
                                 break;
                         }
-                };
-                                
-                function sortList() {
-                attributeType = document.getElementById('sort').value;
-                    switch (attributeType) {
-                        case "id":
-                            attributeid = 0;
-                            dataType = "number";
-                            break;
-                        case "name":
-                            attributeid = 2;
-                            dataType="string";
-                            break;
                     }
-                    for (i = 0; i < pl.length - 1; i++) {
-                        exit = true;
-                        for (j = 0; j < pl.length - i - 1; j++) {
-                            swap = false;
-                            item1 = pl[j].split("|");
-                            item2 = pl[j + 1].split("|");
-                            if (dataType === "number") {
-                                if (Number(item1[attributeid]) > Number(item2[attributeid])) {
-                                    swap = true;
-                                }
-                            } else if (dataType === "string") {
-                                if (item1[attributeid].localeCompare(item2[attributeid]) > 0) {
-                                    swap = true;
-                                }
-                            }
-                            if (swap) {
-                                tproduct = pl[j];
-                                pl[j] = pl[j + 1];
-                                pl[j + 1] = tproduct;
-                                exit = false;
-                            }
-                        }
-                        if (exit) {
-                            break;
-                        }
-                    }
-                    identifyPage();
-                };
-                
-                function identifyPage() {
-                    pageIndex = 1;
-                    totalPage = Math.ceil(pl.length / 10);
-                    displayList();
-                };
-                
-                function firstPage() {
-                    pageIndex = 1;
-                    displayList();
-                };
-                
-                function previousPage() {
-                    if (pageIndex > 1) {
-                        pageIndex--;
-                        displayList();
-                    }
-                };
-                
-                function nextPage() {
-                    if (pageIndex < totalPage) {
-                        pageIndex++;
-                        displayList();
-                    }
-                };
-                
-                function lastPage() {
-                    pageIndex = totalPage;
-                    displayList();
-                };
-                
-                function displayList() {
-                    if (pl.length == 0) {
-                        document.getElementById('table').style.display = "none";
-                        document.getElementById('empty-notification').style.display = "";
-                        return;
-                    }
-                    document.getElementById('empty-notification').style.display = "none";
-                    document.getElementById('table').style.display = "";
-                    string = "";
-                    from = (pageIndex - 1) * 10;
-                    if (pageIndex == totalPage) {
-                        to = pl.length;
-                    } else {
-                        to = pageIndex * 10;
-                    } 
-                    for (i = from; i < to; i++) {
-                        item1=pl[i].split("|");
-                        string += "<tr id=" + pl[i] + ">\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[0] + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"../img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[2].replace("_", " ") + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[3] + "</td>\n"
-                                         + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"product?id=" + item1[0] + "\">view</a></td>\n"
-                                         + "</tr>\n"
-                    }
-                    document.getElementById('productList').innerHTML = string;
-                    document.getElementById('page').innerHTML = pageIndex;
-                    document.getElementById('total-page').innerHTML = totalPage;
-                }
 
-                //for Preview Image
-                function previewImage(event) {
-                    // Get the file input and preview image elements
-                    var image = document.getElementById('thumbnail').files[0];
-                    var preview = document.getElementById('preview');
-                    // Use FileReader to read the image file
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        // Set the src of the image preview to the file data
-                        preview.src = reader.result;
-                        preview.style.display = 'block'; // Show the preview
-                    };
-                    if (image) {
-                        reader.readAsDataURL(image); // Read the image file as a data URL
-                    } else {
-                        preview.src = ""; // Clear preview if no image is selected
-                        preview.style.display = 'none';
+                    function sortList() {
+                        attributeType = document.getElementById('sort').value;
+                        switch (attributeType) {
+                            case "id":
+                                attributeid = 0;
+                                dataType = "number";
+                                break;
+                            case "name":
+                                attributeid = 2;
+                                dataType = "string";
+                                break;
+                        }
+                        for (i = 0; i < pl.length - 1; i++) {
+                            exit = true;
+                            for (j = 0; j < pl.length - i - 1; j++) {
+                                swap = false;
+                                item1 = pl[j].split("|");
+                                item2 = pl[j + 1].split("|");
+                                if (dataType === "number") {
+                                    if (Number(item1[attributeid]) > Number(item2[attributeid])) {
+                                        swap = true;
+                                    }
+                                } else if (dataType === "string") {
+                                    if (item1[attributeid].localeCompare(item2[attributeid]) > 0) {
+                                        swap = true;
+                                    }
+                                }
+                                if (swap) {
+                                    tproduct = pl[j];
+                                    pl[j] = pl[j + 1];
+                                    pl[j + 1] = tproduct;
+                                    exit = false;
+                                }
+                            }
+                            if (exit) {
+                                break;
+                            }
+                        }
+                        identifyPage();
                     }
-                };
-                
+
+                    function identifyPage() {
+                        pageIndex = 1;
+                        totalPage = Math.ceil(pl.length / 10);
+                        displayList();
+                    }
+
+                    function firstPage() {
+                        pageIndex = 1;
+                        displayList();
+                    }
+
+                    function previousPage() {
+                        if (pageIndex > 1) {
+                            pageIndex--;
+                            displayList();
+                        }
+                    }
+
+                    function nextPage() {
+                        if (pageIndex < totalPage) {
+                            pageIndex++;
+                            displayList();
+                        }
+                    }
+                    
+                    function lastPage() {
+                        pageIndex = totalPage;
+                        displayList();
+                    }
+
+                    function displayList() {
+                        if (pl.length == 0) {
+                            document.getElementById('table').style.display = "none";
+                            document.getElementById('empty-notification').style.display = "";
+                            return;
+                        }
+                        document.getElementById('empty-notification').style.display = "none";
+                        document.getElementById('table').style.display = "";
+                        string = "";
+                        from = (pageIndex - 1) * 10;
+                        if (pageIndex == totalPage) {
+                            to = pl.length;
+                        } else {
+                            to = pageIndex * 10;
+                        }
+                        for (i = from; i < to; i++) {
+                            item1 = pl[i].split("|");
+                            string += "<tr id=" + pl[i] + ">\n"
+                                    + "<td class=\"border-2 border-gray-300 p-2\">" + item1[0] + "</td>\n"
+                                    + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"../img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>\n"
+                                    + "<td class=\"border-2 border-gray-300 p-2\">" + item1[2].replace("_", " ") + "</td>\n"
+                                    + "<td class=\"border-2 border-gray-300 p-2\">" + item1[3] + "</td>\n"
+                                    + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"product?id=" + item1[0] + "\">view</a></td>\n"
+                                    + "</tr>\n"
+                        }
+                        document.getElementById('productList').innerHTML = string;
+                        document.getElementById('page').innerHTML = pageIndex;
+                        document.getElementById('total-page').innerHTML = totalPage;
+                    }
+
+                    //for Preview Image
+                    function previewImage(event) {
+                        // Get the file input and preview image elements
+                        var image = document.getElementById('thumbnail').files[0];
+                        var preview = document.getElementById('preview');
+                        // Use FileReader to read the image file
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            // Set the src of the image preview to the file data
+                            preview.src = reader.result;
+                            preview.style.display = 'block'; // Show the preview
+                        };
+                        if (image) {
+                            reader.readAsDataURL(image); // Read the image file as a data URL
+                        } else {
+                            preview.src = ""; // Clear preview if no image is selected
+                            preview.style.display = 'none';
+                        }
+                    }
+                    
+                    //For add product
+                    let vcount = 0;
+                    let vlist = document.getElementById('variantList');
+                    let variants;
+                    function addVariant() {
+                        vcount++;
+                        vlist.innerHTML += "<tr id=\"v" + vcount + "\">"
+                                                       <c:forEach var="attribute" items="${al}">
+                                                       + "<td class=\"border border-gray-300 p-1\" style=\"text-align:center\">"
+                                                       + "<select class=\"border border-black mx-2 px-2\" title=\"${attribute.getName().toLowerCase()}" + vcount + "\">"
+                                                           <c:forEach var="value" items="${attribute.getValues()}">
+                                                           + "<option value=\"${value}\">${value}</option>"
+                                                           </c:forEach>
+                                                       + "</select>"
+                                                       + "</td>\n"
+                                                       </c:forEach>
+                                                       + "<td class=\"border border-gray-300 p-1\" style=\"text-align:center\">"
+                                                       + "<input class=\"border border-black mx-2 px-2\" type=\"number\"/>"
+                                                       + "</td>\n"
+                                                       + "</tr>\n";
+                    }
             </script>
         </c:if>
         <c:if test="${u == null || !u.getRole().equals(\"ADMIN\")}">

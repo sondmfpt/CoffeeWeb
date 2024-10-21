@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import models.Attribute;
 import models.Product;
 import models.Category;
 /**
@@ -34,8 +35,10 @@ public class ProductListServlet extends HttpServlet {
             ProductDAO pd = new ProductDAO();
             List<Product> pl = pd.getAllProduct();
             List<Category> cl = pd.getAllCategories();
+            List<Attribute> al = pd.getAllAttributes();
             request.setAttribute("product_list", pl);
             request.setAttribute("category_list", cl);
+            request.setAttribute("attribute_list", al);
             request.getRequestDispatcher("admin_productList.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

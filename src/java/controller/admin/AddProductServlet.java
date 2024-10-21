@@ -14,6 +14,7 @@ import models.Category;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @WebServlet(name = "AddProductServlet", urlPatterns = {"/admin/addproduct"})
 @MultipartConfig // Needed for handling file uploads
@@ -39,7 +40,7 @@ public class AddProductServlet extends HttpServlet {
                 uploadDir.mkdirs();
             }
             Part filePart = request.getPart("thumbnail"); 
-            String fileName = extractFileName(filePart);
+            String fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
             filePart.write(uploadFilePath + File.separator + fileName);
 
             // Save product
