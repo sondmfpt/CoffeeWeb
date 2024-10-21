@@ -157,14 +157,14 @@
                                
                 function filterKey() {
                     pl = [];
-                    key = document.getElementById('key').value;
+                    key = document.getElementById('key').value.trim();
                     if (key === "") {
                         tpl = products.slice(0, products.length); 
                     } else {
                         tpl = [];
                         for (i = 0; i < products.length; i++) {
                             item1 = products[i].split("|");
-                            if (item1[0].includes(key) || item1[2].includes(key)) {
+                            if (item1[0].includes(key) || item1[2].replace("_"," ").includes(key)) {
                                 tpl.push(products[i]);
                             }
                         }
