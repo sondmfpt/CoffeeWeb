@@ -130,7 +130,7 @@
                 
                 //add all products in display list with form of id-name-category
                 <c:forEach var="product" items="${pl}">
-                    pl.push("${product.getId()}|${product.getThumbnailUrl()}|${product.getName().replace(" ", "_")}|${product.getCategory()}");
+                    pl.push("${product.getId()}|<c:choose><c:when test="${empty product.getThumbnailUrl()}">invalid-image.png</c:when><c:otherwise>${product.getThumbnailUrl()}</c:otherwise></c:choose>|${product.getName().replace(" ", "_")}|${product.getCategory()}");
                 </c:forEach>
                 const products = pl.slice(0, pl.length);
                
