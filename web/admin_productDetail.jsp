@@ -51,7 +51,12 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="relative">
-                                <i onclick="informationOptionShow()" class="fa-solid fa-circle-info cursor-pointer"></i>
+                                <div class="relative group cursor-pointer">
+                                    <i onclick="informationOptionShow()" class="fa-solid fa-circle-info"></i>
+                                    <div class="hidden absolute group-hover:block bg-gray-200 w-36 -top-10 right-0 transition-all animate-[fadeIn_.25s_ease-out] duration-200 ease-in-out rounded">
+                                        <p class="p-2">Hiển thị thông tin</p>
+                                    </div>
+                                </div>
                                 <div id="informationOption" class="hidden absolute p-5 bg-white w-64 right-0 rounded shadow-md overflow-hidden">
                                     <p class="text-xl font-bold">Hiển thị thông tin:</p>
                                     <hr class="border-gray-300 py-1">
@@ -190,8 +195,8 @@
             function userItemClick(userId) {
                 window.location.href = "http://localhost:9999/SWP_Project/admin-user-detail?userId=" + userId;
             }
-            
-            function informationOptionShow(){
+
+            function informationOptionShow() {
                 document.getElementById('informationOption').classList.toggle('hidden');
             }
         </script>
