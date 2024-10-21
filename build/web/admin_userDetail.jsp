@@ -187,8 +187,8 @@
                                                 Gửi thông báo đến email người dùng
                                             </label>
                                             <div class="flex gap-5">
-                                                <div id='reject' class="py-2 px-3 bg-red-500 rounded w-20 cursor-pointer">Quay lại</div>
-                                                <input id='concept' type="submit" value='Đồng ý' class="py-2 px-3 bg-green-500 rounded w-20 cursor-pointer">
+                                                <div id='reject' class="py-2 px-3 bg-red-500 rounded w-24 text-center cursor-pointer">Quay lại</div>
+                                                <input id='concept' type="submit" value='Đồng ý' class="py-2 px-3 bg-green-500 rounded w-24 text-center cursor-pointer">
                                             </div>
                                         </div>
                                     </div>
@@ -223,8 +223,8 @@
                                             <div class="flex flex-col gap-2 text-end">
                                                 <!--<p class="text-blue-500 cursor-pointer">Cập nhật</p>-->
                                                 <c:if test="${!userOrder.isIsDefault()}">
-                                                    <p class="text-red-700 cursor-pointer">Xóa</p>
-                                                    <div class="p-1 border border-gray-300 cursor-pointer">Thiết lập mặc định</div>
+                                                    <a href="./remove-user-address?userId=${user.getId()}&addressId=${userOrder.getId()}" class="text-red-700 cursor-pointer">Xóa</a>
+                                                    <!--<div class="p-1 border border-gray-300 cursor-pointer">Thiết lập mặc định</div>-->
                                                 </c:if>
                                             </div>
                                         </div>

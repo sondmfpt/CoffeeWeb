@@ -484,4 +484,29 @@ public class UserDAO {
 
         }
     }
+    
+    public void removeUserAddress(int addressId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM user_order "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, addressId);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

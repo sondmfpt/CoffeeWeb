@@ -128,8 +128,8 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 
+    //create a confirm link
     private String generateConfirmationLink(String username, String password, String firstname, String lastname, String gender, String email, LocalDate date, String token) {
-        // Tạo đường link xác nhận, ví dụ:
         return "http://localhost:9999/SWP_Project/confirm?token=" + token
                 + "&username=" + username
                 + "&password=" + password

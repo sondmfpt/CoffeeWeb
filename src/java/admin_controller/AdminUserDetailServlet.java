@@ -76,6 +76,11 @@ public class AdminUserDetailServlet extends HttpServlet {
                 if (statusUpdate != null) {
                     request.setAttribute("STATUSUPDATE", statusUpdate);
                 }
+                //set type info
+                String typeInfo = request.getParameter("typeInfo");
+                if (typeInfo != null) {
+                    request.setAttribute("TYPEINFO", typeInfo);
+                }
                 RequestDispatcher rd = request.getRequestDispatcher("admin_userDetail.jsp");
                 rd.forward(request, response);
             }
