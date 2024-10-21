@@ -171,7 +171,7 @@ public class AdminUserListServlet extends HttpServlet {
             request.setAttribute("TOTALUSER", totalUser);
             request.setAttribute("TOTALPAGE", totalPage);
 
-            RequestDispatcher rd = request.getRequestDispatcher("admin_productDetail.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("admin_userList.jsp");
             rd.forward(request, response);
 
         } catch (ClassNotFoundException | SQLException ex) {
