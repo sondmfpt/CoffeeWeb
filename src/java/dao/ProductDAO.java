@@ -18,6 +18,11 @@ import models.ProductVariant;
 import models.Trend;
 import org.json.JSONObject;
 
+/**
+ *
+ * @author Son Duong
+ * This DAO will responsive about product tasks
+ */
 public class ProductDAO {
 
     public List<Product> getAllProduct() throws ClassNotFoundException, SQLException {
@@ -132,6 +137,7 @@ public class ProductDAO {
         }
     }
 
+    //get list image of product for show product detail
     public void addListImgToProduct(Product product) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;

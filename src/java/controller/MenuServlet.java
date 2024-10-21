@@ -30,14 +30,18 @@ import org.json.JSONObject;
 /**
  *
  * @author Son Duong
+ * This program will set up and display list items
  */
 @WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
 public class MenuServlet extends HttpServlet {
 
+    //set default number of product in a page
     private int ROWS_PER_PAGE = 5;
     private int totalPage = 0;
 
+    //sort product by price (asc and desc)
     private List<Product> sortProductByPrice(List<Product> products, boolean isIncrease) {
+        //if order by decrease -> reverse list
         if (!isIncrease) {
             return products.stream()
                     .sorted((p1, p2) -> Integer.compare(p2.getPrice(), p1.getPrice()))
@@ -49,18 +53,21 @@ public class MenuServlet extends HttpServlet {
         }
     }
 
+    //sort product by total sold (decrease)
     private List<Product> sortProductByTotalSold(List<Product> products) {
         return products.stream()
                 .sorted((p1, p2) -> Integer.compare(p2.getTotalSold(), p1.getTotalSold()))
                 .collect(Collectors.toList());
     }
 
+    //sort product by date public
     private List<Product> sortProductByCreatedAt(List<Product> products) {
         return products.stream()
                 .sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()))
                 .collect(Collectors.toList());
     }
 
+    //pagination
     private List<Product> getProductFollowingPage(List<Product> products, int page) {
         return products.stream()
                 .skip((page - 1) * ROWS_PER_PAGE) // Bỏ qua 2 phần tử đầu
@@ -68,6 +75,7 @@ public class MenuServlet extends HttpServlet {
                 .collect(Collectors.toList());
     }
 
+    //get product by searching
     private List<Product> getProductBySearching(List<Product> products, String searchValue) {
         if (searchValue == null || searchValue.equals("")) {
             return products;
@@ -83,6 +91,7 @@ public class MenuServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         ProductDAO pDao = new ProductDAO();
+        //get information product and order option, number product in page
         String categoryId = request.getParameter("categoryId");
         String orderValue = request.getParameter("orderValue");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
@@ -93,11 +102,11 @@ public class MenuServlet extends HttpServlet {
         int totalNumberProduct = 0;
         try {
             if (categoryId == "") {
-                products = pDao.getAllProduct();
+                products = pDao.getAllProduct(); //get all product
             } else {
                 String[] listCategoryId = categoryId.split(",");
                 for (String id : listCategoryId) {
-                    products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id)));
+                    products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id))); //get product by category
                 }
             }
             if (products.size() == 0) {
@@ -105,12 +114,14 @@ public class MenuServlet extends HttpServlet {
                 totalPage = 0;
             } else {
 
-                products = getProductBySearching(products, searchValue);
+                products = getProductBySearching(products, searchValue); //get product by searching
 
+                //calculate total page by number of products and number product per page
                 ROWS_PER_PAGE = products.size() < ROWS_PER_PAGE ? products.size() : ROWS_PER_PAGE;
 
                 totalNumberProduct = products.size();
 
+                //sort by order option
                 if (orderValue.equals("new")) {
                     products = sortProductByCreatedAt(products);
                 }
@@ -155,11 +166,17 @@ public class MenuServlet extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
         List<Category> categories = null;
+        
+        //set information product to show
         List<String> information = new ArrayList<>(Arrays.asList("Image", "Name", "Price", "Description", "Sold", "Date"));
 
         try {
             products = pDao.getAllProduct();
+            
+            //calculate total page
             totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
+            
+            //set attribute to view
             request.setAttribute("TOTALPAGE", totalPage);
             products = getProductFollowingPage(products, 1);
             request.setAttribute("PRODUCTS", products);

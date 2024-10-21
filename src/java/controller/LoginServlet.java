@@ -22,6 +22,7 @@ import models.User;
 /**
  *
  * @author Son Duong
+ * This program will login user
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
@@ -31,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        //get username and password that user enter
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -38,7 +40,9 @@ public class LoginServlet extends HttpServlet {
 
         try {
             LoginDAO lDao = new LoginDAO();
+            //check username and password is exist in database
             User user = lDao.checkAccount(username, password);
+            //if user is exist, change url to home page
             if (user != null) {
                 url = HOME;
                 HttpSession session = request.getSession();

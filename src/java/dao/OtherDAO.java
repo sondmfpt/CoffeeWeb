@@ -15,8 +15,10 @@ import java.util.List;
 /**
  *
  * @author Son Duong
+ * This DAO will responsive about other tasks
  */
 public class OtherDAO {
+    //get list image link to set up home galery
     public List<String> getHomeGalery() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;

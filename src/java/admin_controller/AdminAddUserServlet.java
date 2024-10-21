@@ -5,32 +5,32 @@
 package admin_controller;
 
 import api.EmailSender_ChangeUserInformation;
-import com.google.gson.Gson;
 import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Calendar;
+import java.time.LocalDate;  // Java's local date library for handling date-related operations.
+import java.util.Calendar;  // Utility for handling date and time operations.
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
 
 /**
- *
- * @author Son Duong
+ * @author Son Duong 
+ * This servlet is responsible for adding a new user to the
+ * system.
  */
 @WebServlet(name = "AdminAddUserServlet", urlPatterns = {"/admin-add-user"})
+// Defines the servlet and maps it to the URL pattern "/admin-add-user".
 public class AdminAddUserServlet extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        // Extracts form data sent from the user interface.
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String firstname = request.getParameter("firstname");
@@ -43,13 +43,17 @@ public class AdminAddUserServlet extends HttpServlet {
         int day = Integer.parseInt(request.getParameter("date-day"));
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
+
+        // Creates a LocalDate object for the user's birthdate.
         LocalDate date = LocalDate.of(year, month, day);
         boolean isActive = status.equals("active");
 
         UserDAO uDao = new UserDAO();
         try {
-                User user = uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
+            // Adds the user to the database using the DAO and returns the newly created user object.
+            User user = uDao.addUser(username, password, firstname, lastname, email, phone, gender, roleId, isActive, date);
 
+            // Sends an email to the new user if the "sendForUser" parameter is provided.
             if (request.getParameter("sendForUser") != null) {
                 EmailSender_ChangeUserInformation.addNewUser(user);
             }
@@ -61,12 +65,22 @@ public class AdminAddUserServlet extends HttpServlet {
 
     }
 
+    /**
+     * Handles the HTTP GET method. It displays the form for adding a new user.
+     *
+     * @param request Servlet request.
+     * @param response Servlet response.
+     * @throws ServletException If a servlet-specific error occurs.
+     * @throws IOException If an I/O error occurs.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Gets the current year to be used in the form.
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         request.setAttribute("currentYear", currentYear);
 
+        // Retrieves the status parameter from the request and sets it for display in the JSP page.
         String status = request.getParameter("status");
         request.setAttribute("STATUS", status);
 

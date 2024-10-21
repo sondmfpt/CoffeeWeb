@@ -19,14 +19,16 @@ import models.User;
 /**
  *
  * @author Son Duong
+ * This program to send announcement to user's email about adding and updating account
  */
 public class EmailSender_ChangeUserInformation {
 
+    //Send announcement to user's email about changing user's information 
     public static void changeProfile(User before, User after) {
 
-        final String from = "duongminhson1601@gmail.com";
-        final String passwordEmail = "govc qfcq hsbl igjc";
-        final String recipient = before.getEmail();
+        final String from = "duongminhson1601@gmail.com"; //email of sender
+        final String passwordEmail = "govc qfcq hsbl igjc"; // password
+        final String recipient = before.getEmail(); //email of reciver
 
         // Get properties object
         Properties props = new Properties();
@@ -45,6 +47,7 @@ public class EmailSender_ChangeUserInformation {
 
         Session session = Session.getInstance(props, auth);
 
+        //set up content of email
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -77,11 +80,12 @@ public class EmailSender_ChangeUserInformation {
         }
     }
     
+    //Send announcement to email used to register a new account
     public static void addNewUser(User user) {
 
-        final String from = "duongminhson1601@gmail.com";
-        final String passwordEmail = "govc qfcq hsbl igjc";
-        final String recipient = user.getEmail();
+        final String from = "duongminhson1601@gmail.com";  //email of sender
+        final String passwordEmail = "govc qfcq hsbl igjc";  //password
+        final String recipient = user.getEmail();  //email of reciver
 
         // Get properties object
         Properties props = new Properties();
@@ -100,6 +104,7 @@ public class EmailSender_ChangeUserInformation {
 
         Session session = Session.getInstance(props, auth);
 
+        //set up content of email
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

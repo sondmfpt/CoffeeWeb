@@ -24,12 +24,14 @@ import models.User;
 /**
  *
  * @author Son Duong
+ * This servlet is responsible for update user information in the system.
  */
 @WebServlet(name = "AdminUpdateUser", urlPatterns = {"/admin-update-user"})
 public class AdminUpdateUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        // Extracts form data sent from the user interface.
         int id = Integer.parseInt(request.getParameter("id"));
         String password = request.getParameter("password");
         String firstname = request.getParameter("firstname");
@@ -42,12 +44,15 @@ public class AdminUpdateUser extends HttpServlet {
         int day = Integer.parseInt(request.getParameter("date-day"));
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
+        
+         // Creates a LocalDate object for the user's birthdate.
         LocalDate date = LocalDate.of(year, month, day);
         boolean isActive = status.equals("active");
 
         UserDAO uDao = new UserDAO();
         try {
 
+            // Update information for user. If admin click send for user, system will send announment to user's email
             if (request.getParameter("sendForUser") != null) {
                 User userBefore = uDao.getUserById(id);
                 uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
@@ -58,6 +63,7 @@ public class AdminUpdateUser extends HttpServlet {
             }
 
         } finally {
+            //set success status and redirect to user detail page
             String url = "./admin-user-detail?userId=" + id + "&status=success";
             response.sendRedirect(url);
         }

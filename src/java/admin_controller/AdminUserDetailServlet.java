@@ -26,12 +26,14 @@ import models.UserOrder;
 /**
  *
  * @author Son Duong
+ * This servlet is responsible display user detail information in the system.
  */
 @WebServlet(name = "AdminUserDetailServlet", urlPatterns = {"/admin-user-detail"})
 public class AdminUserDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        //get id of user need display
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserDAO uDao = new UserDAO();
         User user = null;
@@ -39,18 +41,20 @@ public class AdminUserDetailServlet extends HttpServlet {
         List<Order> orders = null;
 
         try {
+             // Get current year for the user's birthdate.
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             request.setAttribute("currentYear", currentYear);
 
-            user = uDao.getUserById(userId);
-            userOrders = uDao.getUserOrderByUserId(userId);
-            orders = uDao.getOrderByUserId(userId);
+            user = uDao.getUserById(userId); // for user detail information
+            userOrders = uDao.getUserOrderByUserId(userId);  // for user's address
+            orders = uDao.getOrderByUserId(userId); // for user's orders
 
             request.setAttribute("USER", user);
             request.setAttribute("USERORDER", userOrders);
             request.setAttribute("ORDERS", orders);
 
         } finally {
+            //set status 
             String statusUpdate = request.getParameter("status");
             if(statusUpdate != null){
                 request.setAttribute("STATUSUPDATE", statusUpdate);

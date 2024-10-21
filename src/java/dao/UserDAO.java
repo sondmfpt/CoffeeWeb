@@ -18,6 +18,11 @@ import models.User;
 import models.UserOrder;
 import java.sql.Statement;
 
+/**
+ *
+ * @author Son Duong
+ * This DAO will responsive about user tasks
+ */
 public class UserDAO {
 
     Connection con;

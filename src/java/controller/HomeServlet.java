@@ -28,6 +28,7 @@ import models.User;
 /**
  *
  * @author Son Duong
+ * This program to set up attribute for home page
  */
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
 public class HomeServlet extends HttpServlet {
@@ -41,12 +42,15 @@ public class HomeServlet extends HttpServlet {
         Trend trend = null;
 
         try {
+            //get trend information and product
             trend = pDao.getTrend(1);
             request.setAttribute("TREND", trend);
 
+            //get best selling product of shop
             bestSelling = pDao.getBestSellingProduct();
             request.setAttribute("BESTSELLING", bestSelling);
 
+            //get galeries for slider
             galeries = oDao.getHomeGalery();
             request.setAttribute("GALERIES", galeries);
 
@@ -59,12 +63,16 @@ public class HomeServlet extends HttpServlet {
 
     }
 
+    //This function to save device token of user in to database, if this the first time, create a new tracking ID for device
+    // otherwise it will check tracking id is validate or not
     private void saveUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         HttpSession session = request.getSession();
         LoginDAO lDao = new LoginDAO();
         Cookie[] cookies = request.getCookies();
         String trackingId = null;
 
+        
+        //get tracking ID
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("TrackingID")) {
@@ -74,11 +82,15 @@ public class HomeServlet extends HttpServlet {
             }
         }
 
+        //tracking id is null -> the first time
         if (trackingId == null) {
+            //create a new tracking id
             trackingId = java.util.UUID.randomUUID().toString();
             Cookie newCookie = new Cookie("TrackingID", trackingId);
+            //set up memory for this cookie: 1 year
             newCookie.setMaxAge(60 * 60 * 24 * 365);
             response.addCookie(newCookie);
+            //save tracking id to database
             lDao.saveGuestUser(trackingId);
         }
 
