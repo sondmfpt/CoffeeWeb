@@ -98,7 +98,7 @@
                                             <option value="DESC" class="bg-white">Giá: Cao đến thấp</option>
                                         </select>
                                         <div>
-                                            <input name="searchProduct" type="text" placeholder="Tìm kiếm" class="w-10 rounded px-3 py-1" oninput="SearchEvent()">
+                                            <input name="searchProduct" type="text" placeholder="Tìm kiếm" class="rounded px-3 py-1" oninput="SearchEvent()">
                                         </div>
                                     </div>
                                     <div>

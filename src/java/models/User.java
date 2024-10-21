@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class User {
     private int id;
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String gender;
@@ -19,6 +21,8 @@ public class User {
     private Date date;
     private String email;
     private String role;
+    private boolean active;
+    private Date createdAt;
 
     public User() {
     }
@@ -97,6 +101,38 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     

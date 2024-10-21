@@ -18,6 +18,11 @@ import models.ProductVariant;
 import models.Trend;
 import org.json.JSONObject;
 
+/**
+ *
+ * @author Son Duong
+ * This DAO will responsive about product tasks
+ */
 public class ProductDAO {
 
     public List<Product> getAllProduct() throws ClassNotFoundException, SQLException {
@@ -132,6 +137,7 @@ public class ProductDAO {
         }
     }
 
+    //get list image of product for show product detail
     public void addListImgToProduct(Product product) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -250,6 +256,42 @@ public class ProductDAO {
             }
         }
         return products;
+    }
+    
+    public ProductVariant getVariantById(int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductVariant variant = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM product_variants "
+                        + "WHERE id = ? AND status = 1 ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    JSONObject attribute = new JSONObject(rs.getString("attribute"));
+                    int originPrice = rs.getInt("origin_price");
+                    int salePrice = rs.getInt("sale_price");
+                    variant = new ProductVariant(id, productId, attribute, originPrice, salePrice);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return variant;
+        }
     }
 
     public List<ProductVariant> getListVariantByProductId(int productId) throws ClassNotFoundException, SQLException {

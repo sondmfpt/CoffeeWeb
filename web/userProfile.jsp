@@ -17,7 +17,6 @@
         <p>Phone Number: <%if (u.getPhone() == null) {%>none<%}else{%><%=u.getPhone()%><%}%></p>
         <p>Date of birth: <%if (u.getDate() == null) {%>none<%}else{%><%=u.getDate()%><%}%></p>
         <p>Email: <%if (u.getEmail() == null) {%>none<%}else{%><%=u.getEmail()%><%}%></p>
-        <p>Address: <%if (u.getAddress() == null) {%>none<%}else{%><%=u.getAddress()%><%}%></p>
         <p>Role: <%=u.getRole()%></p>
         <a href="updateProfile" class=""><div class="btn btn-orange">Update Profile</div></a>
         <a href="changePassword" class=""><div class="btn btn-cyan">Change Password</div></a>

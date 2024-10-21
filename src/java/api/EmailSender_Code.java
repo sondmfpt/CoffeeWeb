@@ -14,11 +14,16 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/*
+*   this program send to user's email a code OTP to confirm a action
+*   @param recipient (email of reciver)
+*   @param code to confirm
+*/
 public class EmailSender_Code {
     public static void sendEmail(String recipient, String code) {
         
-        final String from = "duongminhson1601@gmail.com";
-        final String password = "govc qfcq hsbl igjc";
+        final String from = "duongminhson1601@gmail.com";  //email of sender
+        final String password = "govc qfcq hsbl igjc";  //password
 
 
         // Get properties object
@@ -38,6 +43,7 @@ public class EmailSender_Code {
 
         Session session = Session.getInstance(props, auth);
 
+        //set up content of email
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

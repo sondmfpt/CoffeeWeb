@@ -18,9 +18,11 @@ public class SmsSender_Code {
     
     /**
      * @param args the command line arguments
+     * This program send code to user's phone number
+     * Using Infobip API
      */
-    private static final String API_BASE_URL = "https://1gv88d.api.infobip.com/sms/2/text/advanced";
-    private static final String API_KEY = "c18eeb86edf5a7b33e4d261a6bb29090-9c023f83-9fb6-469f-9289-956cc9add2db";  // Replace with your Infobip API key
+    private static final String API_BASE_URL = "https://1gv88d.api.infobip.com/sms/2/text/advanced"; // Infobip base url
+    private static final String API_KEY = "c18eeb86edf5a7b33e4d261a6bb29090-9c023f83-9fb6-469f-9289-956cc9add2db";  // Infobip API key
 
 
     public static void sendSms(String from, String to, String code) {
