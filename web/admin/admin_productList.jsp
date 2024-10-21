@@ -58,7 +58,6 @@
                                             <th class="border-2 border-black">Thumbnail</th>
                                             <th class="border-2 border-black">Name</th>
                                             <th class="border-2 border-black">Category</th>
-                                            <th class="border-2 border-black">Price</th>
                                             <th class="border-2 border-black"></th>
                                         </tr>
                                     </thead>
