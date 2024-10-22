@@ -24,8 +24,9 @@ import org.json.JSONObject;
 @WebServlet(name = "ChatServlet", urlPatterns = {"/chat"})
 public class ChatServlet extends HttpServlet {
 
-    private static final String API_URL = "https://api.together.xyz/v1/chat/completions";
-    private static final String API_KEY = "c7269dfe6f547f56cacebc752f99506b4ab516c2eca30bf93c908a709d8b5f32"; // Thay thế bằng API key của bạn
+    private static final String API_URL = "https://api.together.xyz/v1";
+    private static final String API_KEY = "c7269dfe6f547f56cacebc752f99506b4ab516c2eca30bf93c908a709d8b5f32";
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,6 +43,7 @@ public class ChatServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private String callOpenAIAPI(String userMessage) throws IOException {
         URL url = new URL(API_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -50,14 +52,25 @@ public class ChatServlet extends HttpServlet {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
-        String jsonInputString = "{\"model\": \"meta-llama/Llama-3-8b-chat-hf\", \"messages\": [" +
-                "{\"role\": \"system\", \"content\": \"You are a customer consultant for a website selling drinks.\"}," +
-                "{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
+        String jsonInputString = "{\"model\": \"meta-llama/Llama-3-8b-chat-hf\", \"messages\": ["
+                + "{\"role\": \"system\", \"content\": \"You are a customer consultant for a website selling drinks.\"},"
+                + "{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
 
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
+        } catch (IOException e) {
+            System.out.println("Error opening output stream: " + e.getMessage());
+            throw e;
         }
+
+        // Check response code to debug potential issues
+        int responseCode = conn.getResponseCode();
+        if (responseCode != HttpURLConnection.HTTP_OK) {
+            System.out.println("Error: Received HTTP code " + responseCode);
+            throw new IOException("Failed to connect to API: " + responseCode);
+        }
+
         // Đọc phản hồi từ API
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -69,6 +82,11 @@ public class ChatServlet extends HttpServlet {
         in.close();
 
         return response.toString();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("chatbot.jsp").forward(request, response);
     }
 
     /**
