@@ -57,7 +57,7 @@
     </head>
     <body>
         <div class="chat-container">
-            <div class="messages" id="messages"></div>
+            <div style="white-space: pre-line;" class="messages" id="messages"></div>
             <input type="text" id="user-input" placeholder="Ask something..." />
             <button onclick="sendMessage()">Send</button>
         </div>
@@ -80,11 +80,13 @@
                     body: new URLSearchParams({message: userInput})
                 });
 
-                const data = await response.json
-                console.log(data)
+                const data = await response.json();
+                const message = data.choices[0].message.content;
+                console.log(message);
+                
                 const botMessageDiv = document.createElement('div');
                 botMessageDiv.className = 'message bot';
-                botMessageDiv.textContent = 'Bot: ' + data.message1; // Thay đổi tùy theo cấu trúc phản hồi của API
+                botMessageDiv.textContent = 'Bot: ' + message; // Thay đổi tùy theo cấu trúc phản hồi của API
                 messagesDiv.appendChild(botMessageDiv);
 
                 document.getElementById('user-input').value = '';
