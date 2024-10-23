@@ -1,4 +1,4 @@
-- Shop Name: 3CRoastery
-- Open Time: 7:00 AM - 7:30 PM
+- Tên shop: 3CRoastery
+- Thời gian mở cửa: 7:00 AM - 7:30 PM
 Showroom 01: 21 ngõ 30 Mai Anh Tuấn, phường Ô chợ Dừa, quận Đống Đa, Hà Nội
 Showroom 02: 92 Phan Kế Bính, Đống Đa, Hà Nội

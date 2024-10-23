@@ -5,6 +5,8 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,28 +59,25 @@ public class ChatServlet extends HttpServlet {
         }
 
         //product data
-        String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\products.csv";
-        List<String[]> data = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean hasData = false; // Biến kiểm tra có dữ liệu không
-            while ((line = reader.readLine()) != null) {
-                data.add(line.split(","));
-                hasData = true; // Đã có ít nhất một dòng dữ liệu
-            }
-            if (!hasData) {
-                System.out.println("Tệp không có dữ liệu.");
-            }
-        } catch (IOException e) {
-            System.out.println("Có lỗi xảy ra khi đọc tệp: " + e.getMessage());
-        }
+        String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\products.json";
         Gson gson = new Gson();
-        String json = gson.toJson(data);
+        String jsonString = "";
+        try (FileReader reader = new FileReader(filePath)) {
+            // Đọc file JSON và chuyển đổi thành JsonObject
+            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            for (var jsonObject : jsonArray) {
+                jsonString += gson.toJson(jsonObject);;
+            }
+            jsonString = jsonString.replace("\"", "\\\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         
+
         // Gửi yêu cầu đến OpenAI API
         try {
-            String jsonResponse = callOpenAIAPI(userMessage, infor, json);
+            String jsonResponse = callOpenAIAPI(userMessage, infor, jsonString);
             response.setContentType("application/json; charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(jsonResponse);
@@ -95,10 +95,15 @@ public class ChatServlet extends HttpServlet {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
+        System.out.println(dataProduct);
+        String data = "{\"id\":1,\"product_name\":\"Cappuccino\",\"category_id\":1,\"thumbnail_url\":\"licensed-image.jpg\",\"price\":30000,\"description\":\"Cappuccino is an espresso-based coffee drink that is traditionally prepared with steamed milk including a layer of milk foam. Variations of the drink involve the use of cream instead of milk, using non-dairy milk substitutes and flavoring with cocoa powder or cinnamon. \",\"total_sold\":502,\"status\":1,\"created_at\":\"2024-09-25 03:06:45\"}";
         String jsonInputString = "{\"model\": \"meta-llama/Llama-3-8b-chat-hf\", \"messages\": ["
                 + "{\"role\": \"system\", \"content\": \"Bạn là một trợ lý ảo bán hàng, hãy trả lời câu hỏi của khách hàng bằng tiếng Việt.\"},"
                 + "{\"role\": \"system\", \"content\": \"Đây là dữ liệu các thông tin của shop: " + info + ".\"},"
+                + "{\"role\": \"system\", \"content\": \"Đây là dữ liệu các sản phẩm của shop: " + dataProduct + ".\"},"
+                + "{\"role\": \"system\", \"content\": \"Khi người dùng hỏi về sản phẩm thì chỉ đưa ra id của sản phẩm đó thôi.\"},"
                 + "{\"role\": \"system\", \"content\": \"Khi mà có câu trả lời phải liệt kê ra các ý thì nhớ xuống dòng.\"},"
+                + "{\"role\": \"system\", \"content\": \"Trả lời ngắn gọn, súc tích, không trả lời thừa thãi.\"},"
                 + "{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
 
         try (OutputStream os = conn.getOutputStream()) {
