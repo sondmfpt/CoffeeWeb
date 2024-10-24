@@ -13,8 +13,12 @@ import models.Category;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import models.Attribute;
+import models.Product;
+import org.json.JSONObject;
 
 @WebServlet(name = "AddProductServlet", urlPatterns = {"/admin/addproduct"})
 @MultipartConfig // Needed for handling file uploads
@@ -29,8 +33,6 @@ public class AddProductServlet extends HttpServlet {
         try {
             String name = getFormField(request.getPart("name"));
             String category = getFormField(request.getPart("category"));
-            String priceStr = getFormField(request.getPart("price"));
-            int price = Integer.parseInt(priceStr); 
             String description = getFormField(request.getPart("description"));
             // Handle file upload
             String applicationPath = request.getServletContext().getRealPath("");
@@ -39,20 +41,48 @@ public class AddProductServlet extends HttpServlet {
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
-            Part filePart = request.getPart("thumbnail"); 
-            String fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+            //For thumbnail
+            Part filePart;
+            String fileName;
+            filePart = request.getPart("thumbnail");
+            fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
             filePart.write(uploadFilePath + File.separator + fileName);
-
+            //For detail images
+            int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
+            List<String> imgs = new ArrayList<>();
+            for (int i = 1; i <= imgAmount; i++) {
+                filePart = request.getPart("img" + i); 
+                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                imgs.add(fileName);
+                filePart.write(uploadFilePath + File.separator + fileName);
+            }
             // Save product
             ProductDAO pd = new ProductDAO();
             List<Category> cl = pd.getAllCategories();
             int categoryID = 1;
             for (Category c : cl) {
-                if (c.getName().equals(category))
+                if (c.getName().equals(category)) {
                     categoryID = c.getId();
+                }
             }
-            pd.addProduct(name, categoryID, fileName, price, description);
-
+            pd.addProduct(name, categoryID, fileName, description);
+            Product newp = pd.getLastProduct();   //get last added product
+            //Variants
+            List<Attribute> al = pd.getAllAttributes();
+            JSONObject jso;
+            int oprice, sprice;
+            int vamount = Integer.parseInt(getFormField(request.getPart("vamount")));
+            for (int i = 1; i <= vamount; i++) {
+                jso = new JSONObject();
+                for (Attribute a : al) {
+                    jso.put(a.getName(), getFormField(request.getPart(a.getName().toLowerCase() + i)));
+                }
+                oprice = Integer.parseInt(getFormField(request.getPart("oprice" + i)));
+                sprice = Integer.parseInt(getFormField(request.getPart("sprice" + i)));
+                pd.addProductVariant(newp.getId(), jso, oprice, sprice);
+            }
+            //Detail imgs
+            pd.addImgList(imgs, newp.getId());
             // Redirect to product listing
             response.sendRedirect("products");
         } catch (ClassNotFoundException | SQLException e) {

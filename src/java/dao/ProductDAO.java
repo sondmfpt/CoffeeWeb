@@ -289,21 +289,20 @@ public class ProductDAO {
         }
     }
 
-    public void addProduct(String productName, int categoryId, String thumbnailUrl, int price, String description) throws ClassNotFoundException, SQLException {
+    public void addProduct(String productName, int categoryId, String thumbnailUrl, String description) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO products (product_name, category_id, thumbnail_url, price, description) "
-                        + "VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO products (product_name, category_id, thumbnail_url, description) "
+                        + "VALUES (?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryId);
                 stm.setString(3, thumbnailUrl);
-                stm.setInt(4, price);
-                stm.setString(5, description);
+                stm.setString(4, description);
                 stm.executeUpdate();
 
             }
@@ -319,7 +318,7 @@ public class ProductDAO {
             }
         }
     }
-    
+
     public void editProduct(String productName, int categoryId, String thumbnailUrl, int price, String description, int id) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -327,13 +326,13 @@ public class ProductDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "UPDATE products " +
-                                "SET product_name = ?, " +
-                                "category_id = ?, " +
-                                "thumbnail_url = ?, " +
-                                "price = ?, " +
-                                "description = ? " +
-                                "WHERE id = ?;";
+                String sql = "UPDATE products "
+                        + "SET product_name = ?, "
+                        + "category_id = ?, "
+                        + "thumbnail_url = ?, "
+                        + "price = ?, "
+                        + "description = ? "
+                        + "WHERE id = ?;";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryId);
@@ -430,7 +429,7 @@ public class ProductDAO {
             return trend;
         }
     }
-    
+
     public List<Product> getBestSellingProduct() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -463,7 +462,7 @@ public class ProductDAO {
             return products;
         }
     }
-    
+
     public List<Attribute> getAllAttributes() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -506,5 +505,75 @@ public class ProductDAO {
             return attributes;
         }
     }
-    
+
+    public Product getLastProduct() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Product product = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT p.id as product_id, p.*, c.category_name FROM products p "
+                        + "JOIN categories c ON p.category_id = c.id "
+                        + "ORDER BY p.id DESC "
+                        + "LIMIT 1";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("product_id");
+                    String productName = rs.getString("product_name");
+                    String categoryName = rs.getString("category_name");
+                    String thumbnailUrl = rs.getString("thumbnail_url");
+                    int price = rs.getInt("price");
+                    int totalSold = rs.getInt("total_sold");
+                    String description = rs.getString("description");
+                    Date createdAt = rs.getDate("created_at");
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return product;
+        }
+    }
+
+    public void addImgList(List<String> imgs, int id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                for (String img : imgs) {
+                    String sql = "INSERT INTO list_product_img (product_id, img_url) "
+                            + "VALUES (?, ?)";
+                    stm = con.prepareStatement(sql);
+                    stm.setInt(1, id);
+                    stm.setString(2, img);
+                    stm.executeUpdate();
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
 }
