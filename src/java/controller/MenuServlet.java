@@ -4,7 +4,7 @@
  */
 package controller;
 
-import com.google.gson.Gson;
+import com.google.gson.Gson;  // to convert object to json string
 import dao.ProductDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,17 +15,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.sql.SQLException;  //catch exception
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors;  // to use stream to filter and order product list
 import models.Category;
 import models.Product;
-import models.ProductResponse;
-import org.json.JSONObject;
+import models.ProductResponse;  // product that response to front-end
 
 /**
  *

@@ -172,6 +172,7 @@
             </div>
         </div>
         <script>
+            // order by user's information
             function changePage(type) {
                 var numPageElement = document.getElementById('numPage');
                 var totalPage = +document.getElementById('totalPage').textContent;
@@ -192,6 +193,7 @@
                 numPageChange();
             }
 
+            //redirec to user detail
             function userItemClick(userId) {
                 window.location.href = "http://localhost:9999/SWP_Project/admin-user-detail?userId=" + userId;
             }
@@ -211,6 +213,7 @@
             var numPage = 1;
             var numPerPage = 2;
 
+            // change type of order in user's information
             function orderEvent(typeOrder) {
                 if (typeOrder == order.type) {
                     order.value = toggleOrder(order.value);
