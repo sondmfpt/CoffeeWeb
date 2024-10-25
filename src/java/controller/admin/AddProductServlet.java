@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public class AddProductServlet extends HttpServlet {
 
     private static final String THUMBNAIL_DIR = "img/thumbnail";
-        private static final String DETAIL_DIR = "img/detail";
+    private static final String DETAIL_DIR = "img/detail";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +70,6 @@ public class AddProductServlet extends HttpServlet {
                 sprice = Integer.parseInt(getFormField(request.getPart("sprice" + i)));
                 pd.addProductVariant(newp.getId(), jso, oprice, sprice);
             }
-            //Detail imgs
             //For detail images
             int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
             List<String> imgs = new ArrayList<>();

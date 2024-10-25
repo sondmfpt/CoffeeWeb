@@ -359,7 +359,7 @@ public class ProductDAO {
         }
     }
 
-    public void editProduct(String productName, int categoryId, String thumbnailUrl, int price, String description, int id) throws ClassNotFoundException, SQLException {
+    public void editProduct(String productName, int categoryId, String thumbnailUrl, String description, boolean isPublic, int id) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -370,15 +370,15 @@ public class ProductDAO {
                         + "SET product_name = ?, "
                         + "category_id = ?, "
                         + "thumbnail_url = ?, "
-                        + "price = ?, "
-                        + "description = ? "
+                        + "description = ?, "
+                        + "status = ? "
                         + "WHERE id = ?;";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryId);
                 stm.setString(3, thumbnailUrl);
-                stm.setInt(4, price);
-                stm.setString(5, description);
+                stm.setString(4, description);
+                stm.setBoolean(5, isPublic);
                 stm.setInt(6, id);
                 stm.executeUpdate();
             }
@@ -682,6 +682,64 @@ public class ProductDAO {
                 con.close();
             }
             return imgs;
+        }
+    }
+    
+    public void updateVariant(int originPrice, int salePrice , boolean isPublic, int variant_id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE product_variants "
+                        + "SET origin_price = ?, "
+                        + "sale_price = ?, "
+                        + "status = ? "
+                        + "WHERE id = ?;";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, originPrice);
+                stm.setInt(2, salePrice);
+                stm.setBoolean(3, isPublic);
+                stm.setInt(4, variant_id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void deleteDetailImgWithId( int product_id) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM list_product_img "
+                        + "WHERE product_id = ?;";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, product_id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
     }
     

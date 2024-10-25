@@ -393,7 +393,7 @@
                             vcount--;
                             document.getElementById("vamount").value = vcount;
                         }
-
+                        
                         //For details images
                         let imgs = [], imgCount = 0, input, img;
                         const detailInputList = document.getElementById("detail-input-list");
@@ -485,14 +485,12 @@
                         }
 
                         function previousImg() {
-                            console.log("work1");
                             if (Number(imgPage.innerHTML) > 1) {
                                 toPage(Number(imgPage.innerHTML) - 1)
                             }
                         }
 
                         function nextImg() {
-                            console.log("work2");
                             if (Number(imgPage.innerHTML) < imgCount) {
                                 toPage(Number(imgPage.innerHTML) + 1)
                             }
