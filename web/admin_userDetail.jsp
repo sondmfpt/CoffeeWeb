@@ -52,9 +52,9 @@
 
                         <!--Profile-->
                         <div id="profile" class="bg-white border border-gray-200 rounded shadow-lg">
-                            <div class="p-10">
+                            <div class="p-10 flex justify-center gap-10">
                                 <form action="./admin-update-user?id=${user.getId()}" method="POST" class="flex flex-col items-center">
-                                    <table class="w-2/3">
+                                    <table class="w-full">
                                         <tr>
                                             <td class="text-end text-slate-500">Tên đăng nhập</td>
                                             <td class="py-2 px-5">${user.getUsername()}</td>
@@ -193,6 +193,21 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <div class="flex flex-col gap-5 justify-center items-center">
+                                    <div class="rounded-full overflow-hidden w-32">
+                                        <img src="./img/avatar/${user.getAvatar()}">
+                                    </div>
+                                    <div class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn ảnh</div>
+                                    <div class="text-gray-500">
+                                        <p>Dung lượng ảnh tối đa 1MB</p>
+                                        <p>Định dạng: .JPEG, .PNG</p>
+                                    </div>
+                                    <div>
+                                        <iframe width="320" height="180" src="https://www.youtube.com/embed/sIVt9O-PmKQ" title="Giới Thiệu Khóa Học React TypeScript Pro | Những Kiến Thức Fresher React Cần Biết" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    </div>
+                                    <div class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn video</div>
+                                </div>
                             </div>
                         </div>
 

@@ -235,6 +235,7 @@ public class UserDAO {
                     if (lastname == null) {
                         lastname = "";
                     }
+                    String avatar = rs.getString("avatar");
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -247,6 +248,7 @@ public class UserDAO {
                     user.setActive(active);
                     user.setCreatedAt(createdAt);
                     user.setPassword(password);
+                    user.setAvatar(avatar);
                 }
 
             }
