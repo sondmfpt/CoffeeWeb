@@ -25,7 +25,8 @@ import org.json.JSONObject;
 
 public class AddProductServlet extends HttpServlet {
 
-    private static final String UPLOAD_DIR = "img/thumbnail";
+    private static final String THUMBNAIL_DIR = "img/thumbnail";
+        private static final String DETAIL_DIR = "img/detail";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,26 +37,14 @@ public class AddProductServlet extends HttpServlet {
             String description = getFormField(request.getPart("description"));
             // Handle file upload
             String applicationPath = request.getServletContext().getRealPath("");
-            String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-            File uploadDir = new File(uploadFilePath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
+            String thumbnailFilePath = applicationPath + File.separator + THUMBNAIL_DIR;
+            String detailFilePath = applicationPath + File.separator + DETAIL_DIR;
             //For thumbnail
             Part filePart;
             String fileName;
             filePart = request.getPart("thumbnail");
             fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
-            filePart.write(uploadFilePath + File.separator + fileName);
-            //For detail images
-            int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
-            List<String> imgs = new ArrayList<>();
-            for (int i = 1; i <= imgAmount; i++) {
-                filePart = request.getPart("img" + i); 
-                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
-                imgs.add(fileName);
-                filePart.write(uploadFilePath + File.separator + fileName);
-            }
+            filePart.write(thumbnailFilePath + File.separator + fileName);
             // Save product
             ProductDAO pd = new ProductDAO();
             List<Category> cl = pd.getAllCategories();
@@ -82,6 +71,15 @@ public class AddProductServlet extends HttpServlet {
                 pd.addProductVariant(newp.getId(), jso, oprice, sprice);
             }
             //Detail imgs
+            //For detail images
+            int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
+            List<String> imgs = new ArrayList<>();
+            for (int i = 1; i <= imgAmount; i++) {
+                filePart = request.getPart("img" + i); 
+                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                imgs.add(fileName);
+                filePart.write(detailFilePath + File.separator + fileName);
+            }
             pd.addImgList(imgs, newp.getId());
             // Redirect to product listing
             response.sendRedirect("products");

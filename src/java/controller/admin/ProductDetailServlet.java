@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import models.Attribute;
 import models.Product;
 import models.Category;
 import models.ProductVariant;
@@ -31,10 +32,14 @@ public class ProductDetailServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             ProductDAO pd = new ProductDAO();
             Product p = pd.getProduct(id);
-            List<ProductVariant> vl = pd.get
+            List<ProductVariant> vl = pd.getAllVariantsByProductId(id);
             List<Category> cl = pd.getAllCategories();
+            List<Attribute> al = pd.getAllAttributes();
+            p.setListImage(pd.getAllImgsWithProductId(id));
             request.setAttribute("product", p);
+            request.setAttribute("variant_list", vl);
             request.setAttribute("category_list", cl);
+            request.setAttribute("attribute_list", al);
             request.getRequestDispatcher("admin_productDetail.jsp").forward(request, response);
         } catch (ClassNotFoundException | SQLException | NumberFormatException e) {
             e.printStackTrace();

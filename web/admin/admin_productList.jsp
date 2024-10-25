@@ -140,7 +140,7 @@
                                         <div class="flex justify-between mt-10">
                                             <label class="text-2xl font-semibold">Details Images:</label><div id='detail-input-list'></div><br>
                                         </div>
-                                        <input id='imgAmount' name='imgAmount' type='number'  value='0' />
+                                        <input id='imgAmount' name='imgAmount' type='number'  value='0' style="display:none"/>
                                         <div id='detail-img-list' class="flex justify-center pt-10">
                                         </div>
                                         <div class="flex flex-row justify-center mt-4">

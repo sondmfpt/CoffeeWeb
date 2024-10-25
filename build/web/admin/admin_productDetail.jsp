@@ -15,7 +15,9 @@
         <c:choose>
             <c:when test="${u != null && u.getRole().equals(\"ADMIN\")}">
                 <c:set var="p" value="${product}"/>
+                <c:set var="vl" value="${variant_list}"/>
                 <c:set var="cl" value="${category_list}"/>
+                <c:set var="al" value="${attribute_list}"/>
                 <div class="bg-gray-100 h-screen">
                     <div class="flex">
                         <!--Navigation-->
@@ -43,12 +45,35 @@
                                         <p class="text-2xl font-sans display-box" for="name">${p.getCategory()}</p>
                                     </div>
                                     <div class="flex justify-between my-2">
-                                        <p class="text-2xl font-semibold" for="name">Product's price:</p>
-                                        <p class="text-2xl font-sans display-box" for="name">${p.getPrice()}</p>
+                                        <label class="text-2xl font-semibold" for="price">Product's variants:</label>
                                     </div>
+                                    <table class="table-auto border-2 border-black w-full mb-5">
+                                        <thead>
+                                            <tr>
+                                                <c:forEach var="attribute" items="${al}">
+                                                    <th class="border border-black" >${attribute.getName()}</th>
+                                                    </c:forEach>
+                                                <th class="border border-black">Origin Price</th>
+                                                <th class="border border-black">Sell Price</th>
+                                                <th class="border border-black">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var='variant' items='${vl}'>
+                                                <tr>
+                                                    <c:forEach var="attribute" items="${al}">
+                                                        <td class="border border-gray-300" >${(variant.getAttribute().has(attribute.getName()) ? variant.getAttribute().get(attribute.getName()) : "None")}</td>
+                                                    </c:forEach>
+                                                    <td class="border border-gray-300">${variant.getOriginPrice()}</td>
+                                                    <td class="border border-gray-300">${variant.getSalePrice()}</td>
+                                                    <td class="border border-gray-300" style="color:${(variant.isPublic() ? "green" : "red")}">${(variant.isPublic() ? "public" : "hidden")}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                     <div class="flex justify-between my-2">
                                         <p class="text-2xl font-semibold" for="name">Description:</p>
-                                        <p class="text-2xl font-sans display-box" for="name">${p.getDescription()}</p>
+                                        <p class="text-1xl font-sans display-box" for="name">${p.getDescription()}</p>
                                     </div>
                                 </div>
                                 <div class="w-[40%] px-3">
@@ -56,7 +81,17 @@
                                         <p class="text-2xl font-semibold">Thumbnail Image:</p>
                                     </div>
                                     <div class="flex justify-center pt-10">
-                                        <img style="width:50%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
+                                        <img style="width:30%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
+                                    </div>
+                                    <div class="flex justify-between mt-10">
+                                        <label class="text-2xl font-semibold">Details Images:</label>
+                                    </div>
+                                    <div id='detail-img-list-1' class="flex justify-center pt-10">
+                                    </div>
+                                    <div class="flex flex-row justify-center mt-4">
+                                        <button class="mx-2  border-black border-4" style="width:30px;height:30px" type="button" title="pages" onclick="previousImg1()"><i class='fas fa-angle-left' style='font-size:15px'></i></button>
+                                        <span class="mx-2 px-2 text-2xl" style="height:36px"><span id="img-page-1">0</span>/<span id="total-img-1">0</span></span>
+                                        <button class="mx-2  border-black border-4" style="width:30px;height:30px" type="button" title="pages" onclick="nextImg1()"><i class='fas fa-angle-right' style='font-size:15px'></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -111,13 +146,66 @@
                         document.getElementById('product-details').style.display = "none";
                         document.getElementById('edit-product').style.display = "block";
                     }
-                    ;
 
                     function productDetails() {
                         document.getElementById('edit-product').style.display = "none";
                         document.getElementById('product-details').style.display = "block";
                     }
-                    ;
+
+                    //For product details
+                    //Details images
+                    let i;
+                    let imgList2 = []; //imgList2 is using for update product, just create first to create imgList 1 for product details
+                    <c:forEach var="img" items="${p.getListImage()}">
+                    imgList2.push('${img}');
+                    </c:forEach>
+                        
+                    const imgList1 = imgList2.slice(0, imgList2.length);
+                    const detailImgList1 = document.getElementById("detail-img-list-1");
+                    const imgPage1 = document.getElementById("img-page-1");
+                    const totalImg1 = document.getElementById("total-img-1");
+                    
+                    loadImg1();
+                    
+                    function loadImg1() {
+                        if (${p.getListImage().size()} > 0) {
+                            totalImg1.innerHTML = ${p.getListImage().size()};
+                            for (i = 1; i <= imgList1.length; i++) {
+                                detailImgList1.insertAdjacentHTML("beforeend", "<img style='width:30%' src='../img/detail/" + imgList1[i - 1] + "' alt='image " + i + "'>");
+                            }
+                            toPage1(1);
+                        }
+                    }
+
+                    function toPage1(page) {
+                        imgPage1.innerHTML = page;
+                        hideOtherImg1(page);
+                    }
+
+                    function hideOtherImg1(page) {
+                        let imgs = detailImgList1.getElementsByTagName('img');
+                        for (i = 1; i <= imgs.length; i++) {
+                            if (i != page) {
+                                imgs[i].style.display = "none";
+                            } else {
+                                imgs[i].style.display = "";
+                            }
+                        }
+                    }
+
+                    function previousImg1() {
+                        console.log("work1");
+                        if (Number(imgPage.innerHTML) > 1) {
+                            toPage(Number(imgPage.innerHTML) - 1)
+                        }
+                    }
+
+                    function nextImg() {
+                        console.log("work2");
+                        if (Number(imgPage.innerHTML) < imgCount) {
+                            toPage(Number(imgPage.innerHTML) + 1)
+                        }
+                    }
 
                     function previewImage(event) {
                         // Get the file input and preview image elementsthumbnail

@@ -142,7 +142,7 @@ public class ProductDAO {
             if (con != null) {
                 String sql = "SELECT p.*, c.category_name FROM products p "
                         + "JOIN categories c ON p.category_id = c.id "
-                        + "WHERE p.id = ? AND p.status = 1";
+                        + "WHERE p.id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
@@ -153,8 +153,9 @@ public class ProductDAO {
                     int price = rs.getInt("price");
                     int totalSold = rs.getInt("total_sold");
                     String description = rs.getString("description");
+                    boolean isPublic = rs.getBoolean("status");
                     Date createdAt = rs.getDate("created_at");
-                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt);
+                    product = new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, isPublic, createdAt);
                 }
 
             }
@@ -612,6 +613,75 @@ public class ProductDAO {
             if (con != null) {
                 con.close();
             }
+        }
+    }
+    
+    public List<ProductVariant> getAllVariantsByProductId(int productId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ProductVariant> variants = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM product_variants "
+                        + "WHERE product_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, productId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    JSONObject attribute = new JSONObject(rs.getString("attribute"));
+                    int originPrice = rs.getInt("origin_price");
+                    int salePrice = rs.getInt("sale_price");
+                    boolean isPublic = rs.getBoolean("status");
+                    variants.add(new ProductVariant(id, productId, attribute, originPrice, salePrice, isPublic));
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return variants;
+        }
+    }
+    
+    public List<String> getAllImgsWithProductId(int productId) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<String> imgs = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT img_url FROM list_product_img "
+                        + "WHERE product_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, productId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    imgs.add(rs.getString("img_url"));
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return imgs;
         }
     }
     
