@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class ProductDAO {
 
-    public List<Product> getAllProduct() throws ClassNotFoundException, SQLException {
+    public List<Product> getAllPublicProducts() throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -46,6 +46,45 @@ public class ProductDAO {
                     products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, createdAt));
                 }
 
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            return products;
+        }
+    }
+    
+        public List<Product> getAllProducts() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT p.*, c.category_name FROM products p "
+                        + "JOIN categories c ON p.category_id = c.id ";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String productName = rs.getString("product_name");
+                    String categoryName = rs.getString("category_name");
+                    String thumbnailUrl = rs.getString("thumbnail_url");
+                    int price = rs.getInt("price");
+                    int totalSold = rs.getInt("total_sold");
+                    String description = rs.getString("description");
+                    boolean isPublic = (rs.getBoolean("status"));
+                    Date createdAt = rs.getDate("created_at");
+                    products.add(new Product(id, productName, categoryName, thumbnailUrl, price, totalSold, description, isPublic, createdAt));
+                }
             }
         } finally {
             if (rs != null) {
@@ -132,7 +171,7 @@ public class ProductDAO {
             return product;
         }
     }
-
+    
     public void addListImgToProduct(Product product) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -575,5 +614,5 @@ public class ProductDAO {
             }
         }
     }
-
+    
 }

@@ -33,7 +33,7 @@ public class ProductListServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             ProductDAO pd = new ProductDAO();
-            List<Product> pl = pd.getAllProduct();
+            List<Product> pl = pd.getAllProducts();
             List<Category> cl = pd.getAllCategories();
             List<Attribute> al = pd.getAllAttributes();
             request.setAttribute("product_list", pl);

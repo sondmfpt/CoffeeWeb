@@ -126,7 +126,7 @@ public class Product {
     public boolean isPublic() {
         return this.isPublic;
     }
-
+    
     public Date getCreatedAt() {
         return createdAt;
     }

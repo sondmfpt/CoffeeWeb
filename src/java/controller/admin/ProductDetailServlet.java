@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import models.Product;
 import models.Category;
+import models.ProductVariant;
 /**
 /**
  *
@@ -30,6 +31,7 @@ public class ProductDetailServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             ProductDAO pd = new ProductDAO();
             Product p = pd.getProduct(id);
+            List<ProductVariant> vl = pd.get
             List<Category> cl = pd.getAllCategories();
             request.setAttribute("product", p);
             request.setAttribute("category_list", cl);
