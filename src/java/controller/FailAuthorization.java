@@ -4,16 +4,12 @@
  */
 package controller;
 
-import com.google.gson.Gson;
-import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -32,6 +28,7 @@ public class FailAuthorization extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //redirect to fail authorization page
         request.getRequestDispatcher("failAuthorization.jsp").forward(request, response);
     }
 

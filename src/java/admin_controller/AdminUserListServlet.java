@@ -8,22 +8,21 @@ import com.google.gson.Gson;
 import dao.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException;  //catch exception
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.util.Collections;    // to use stream to filter and order user list
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors;  // to use stream to filter and order user list
 import models.User;
-import models.UserResponse;
-import org.json.JSONObject;
+import models.UserResponse;  // user object that reponse to front-end
+import org.json.JSONObject;  // convert object to json string
 
 /**
  *

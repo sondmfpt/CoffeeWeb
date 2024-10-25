@@ -5,21 +5,18 @@
 package admin_controller;
 
 import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.RequestDispatcher;  
 import java.io.IOException;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException;  //catch exception
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.Calendar; // get current calendar 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Level;   //log error
+import java.util.logging.Logger;  //log error
 import models.Order;
 import models.User;
 import models.UserOrder;

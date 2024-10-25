@@ -4,7 +4,7 @@
  */
 package admin_controller;
 
-import api.EmailSender_ChangeUserInformation;
+import api.EmailSender_ChangeUserInformation;   //class call API to send email when change user information
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,8 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;  // Java's local date library for handling date-related operations.
 import java.util.Calendar;  // Utility for handling date and time operations.

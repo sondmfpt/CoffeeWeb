@@ -4,20 +4,18 @@
  */
 package admin_controller;
 
-import api.EmailSender_ChangeUserInformation;
-import dao.AccountDAO;
+import api.EmailSender_ChangeUserInformation;  // class use API to send email
 import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException; //catch exception
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.LocalDate;      //declare local date variable to save date of birth of user
+import java.util.logging.Level;  //log error
+import java.util.logging.Logger; //log error
 import models.Accounts;
 import models.User;
 
