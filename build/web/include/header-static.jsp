@@ -12,7 +12,7 @@
         <title>Header Static</title>
     </head>
     <body>
-        <div id="header-static" class="w-full border-2 my-4 z-50">
+        <div id="header-static" class="font-serif w-full border-2 my-4 z-50">
             <div class="flex justify-between m-3 items-center">
                 <a href="./home" class="text-4xl font-bold cursor-pointer">Caffeine</a>
                 <div class="">

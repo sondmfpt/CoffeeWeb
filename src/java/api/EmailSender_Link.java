@@ -13,11 +13,16 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+/*
+*   This program send a confirm link to user's email
+*   @param recipient is email of reciver
+*   @param confirmationLink is link to confirm
+*/
 public class EmailSender_Link {
     public static void sendEmail(String recipient, String confirmationLink) {
         
-        final String from = "duongminhson1601@gmail.com";
-        final String password = "govc qfcq hsbl igjc";
+        final String from = "duongminhson1601@gmail.com";  //email of sender
+        final String password = "govc qfcq hsbl igjc";  //password
 
 
         // Get properties object
@@ -37,6 +42,7 @@ public class EmailSender_Link {
 
         Session session = Session.getInstance(props, auth);
 
+        //Set content for email
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

@@ -10,13 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
-import models.Accounts;
 import models.User;
 import database.DBHelper;
 
 /**
  *
  * @author Son Duong
+ * This DAO will responsive about login tasks
  */
 public class LoginDAO {
 
@@ -65,6 +65,7 @@ public class LoginDAO {
         }
     }
 
+    
     public boolean isDupplicatedUsername(String username) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -125,6 +126,7 @@ public class LoginDAO {
         return false;
     }
 
+    //save token confirm link registration into database
     public void saveToken(String email, String token, int minus) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -152,6 +154,8 @@ public class LoginDAO {
         }
     }
 
+    
+    //check token confirm in link is exist or not 
     public boolean checkToken(String token) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -181,6 +185,7 @@ public class LoginDAO {
         return false;
     }
     
+    //save a new guesr user by tracking id
     public void saveGuestUser(String trackingId) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -253,7 +258,6 @@ public class LoginDAO {
     public void saveAccount(int userId, String username, String password) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
-        ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
@@ -269,6 +273,7 @@ public class LoginDAO {
         }
     }
     
+    //remove token when register successfully
     public void removeToken(String email) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -296,6 +301,7 @@ public class LoginDAO {
     
     
 //    RESET PASSWORD
+    
     public User getUser(String username) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;

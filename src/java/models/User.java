@@ -12,13 +12,18 @@ import java.util.Date;
  */
 public class User {
     private int id;
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
+    private String avatar;
     private String gender;
     private String phone;
     private Date date;
     private String email;
     private String role;
+    private boolean active;
+    private Date createdAt;
 
     public User() {
     }
@@ -33,6 +38,24 @@ public class User {
         this.email = email;
         this.role = role;
     }
+
+    public User(int id, String username, String password, String firstName, String lastName, String avatar, String gender, String phone, Date date, String email, String role, boolean active, Date createdAt) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.phone = phone;
+        this.date = date;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+        this.createdAt = createdAt;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -99,6 +122,46 @@ public class User {
         this.role = role;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
     
     
     

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="./output.css" rel="stylesheet">
     </head>
-    <body class="scroll-smooth">
+    <body class="scroll-smooth font-serif">
         <c:set var="user" value="${USER}"/>
         <c:set var="products" value="${PRODUCTS}"/>
         <c:set var="categories" value="${CATEGORIES}"/>
@@ -98,7 +98,7 @@
                                             <option value="DESC" class="bg-white">Giá: Cao đến thấp</option>
                                         </select>
                                         <div>
-                                            <input name="searchProduct" type="text" placeholder="Tìm kiếm" class="w-10 rounded px-3 py-1" oninput="SearchEvent()">
+                                            <input name="searchProduct" type="text" placeholder="Tìm kiếm" class="rounded px-3 py-1" oninput="SearchEvent()">
                                         </div>
                                     </div>
                                     <div>

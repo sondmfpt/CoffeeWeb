@@ -12,8 +12,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        'sans': "'Roboto Mono', sans",
-        'serif': "'Abril Fatface', serif"
+        'sans': ['Inter', 'sans'],
+        'serif': ['serif']
       },
       keyframes: {
         fadeIn: {

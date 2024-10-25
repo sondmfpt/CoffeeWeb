@@ -12,7 +12,7 @@
         <title>Header Dynamic</title>
     </head>
     <body>
-        <div id="navbar" class="bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
+        <div id="navbar" class="font-serif bg-black w-full h-[12%] fixed z-50 text-white hidden animate-moveInDownFull">
             <div class="flex justify-around items-center h-full">
                 <a href="./home" class="text-4xl text-white font-bold cursor-pointer">Caffeine</a>
                 <div class="">

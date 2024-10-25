@@ -14,24 +14,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Calendar;
+import java.util.Calendar;   //to get current date
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
 
 /**
  *
- * @author Son Duong
+ * @author Son Duong This program will login user
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     private final String ERROR_PAGE = "login.jsp";
     private final String HOME = "./home";
-    private final String ADMIN = "./admin/products";
+    private final String ADMINDASHBOARD = "./admin-user-list";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        //get username and password that user enter
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -39,21 +40,24 @@ public class LoginServlet extends HttpServlet {
 
         try {
             LoginDAO lDao = new LoginDAO();
+            //check username and password is exist in database
             User user = lDao.checkAccount(username, password);
+            //if user is exist, change url to home page
             if (user != null) {
                 if (user.getRole().equals("ADMIN")) {
-                    url = ADMIN;
+                    url = ADMINDASHBOARD;
                 } else {
                     url = HOME;
                 }
                 HttpSession session = request.getSession();
                 session.setAttribute("USER", user);
-            } else {
-                url = "./login?status=error";
             }
         } finally {
-            response.sendRedirect(url);
-
+            if (url == ERROR_PAGE) {
+                response.sendRedirect("./login?status=error");
+            } else {
+                response.sendRedirect(url);
+            }
         }
 
     }

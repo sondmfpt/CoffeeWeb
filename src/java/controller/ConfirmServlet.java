@@ -20,12 +20,14 @@ import java.util.logging.Logger;
 /**
  *
  * @author Son Duong
+ * This program confirm the link user click to validate email
  */
 @WebServlet(name = "ConfirmServlet", urlPatterns = {"/confirm"})
 public class ConfirmServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
+        //get information user and token
         String token = request.getParameter("token");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -40,10 +42,12 @@ public class ConfirmServlet extends HttpServlet {
         try {
             LoginDAO lDao = new LoginDAO();
 
+            //check token is dupplicated or not
             if (token != null && lDao.checkToken(token)) {
                 lDao.registration(username, password, firstname, lastname, gender, email, date);
                 response.sendRedirect("./login?status=regisSuccess");
             } else {
+                //send announcement about token is out of date
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
                 out.println("<!DOCTYPE html>");
