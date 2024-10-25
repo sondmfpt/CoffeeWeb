@@ -5,61 +5,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Chatbot</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-                justify-content: center;
-                align-items: center;
-                background-color: #f4f4f9;
-            }
-            .chat-container {
-                width: 400px;
-                background-color: white;
-                padding: 20px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
-            .messages {
-                height: 300px;
-                overflow-y: auto;
-                border-bottom: 1px solid #ddd;
-                margin-bottom: 10px;
-            }
-            .message {
-                margin: 10px 0;
-            }
-            .bot {
-                color: blue;
-            }
-            .user {
-                color: green;
-            }
-            input {
-                width: calc(100% - 20px);
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-            button {
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link href="./output.css" rel="stylesheet">
     </head>
     <body>
-        <div class="chat-container">
-            <div style="white-space: pre-line;" class="messages" id="messages"></div>
-            <input type="text" id="user-input" placeholder="Ask something..." />
-            <button onclick="sendMessage()">Send</button>
+        <div class="w-full max-w-md bg-white p-5 rounded-lg shadow-lg">
+            <div id="messages" class="h-72 overflow-y-auto border-b border-gray-300 mb-4 space-y-3 no-scrollbar">
+                <!--                <div>Xin chào</div>
+                                <div class="flex gap-3 overflow-x-auto">
+                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
+                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
+                                        <p>Cappuchino</p>
+                                    </a>
+                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
+                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
+                                        <p>Cappuchino</p>
+                                    </a>
+                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
+                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
+                                        <p>Cappuchino</p>
+                                    </a>
+                                </div>
+                                <div>Trên đây là các sản phẩm</div>-->
+            </div>
+            <input id="user-input" type="text" placeholder="Ask something..." class="w-full p-2 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button onclick="sendMessage()" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                Send
+            </button>
         </div>
 
         <script>
@@ -70,7 +42,6 @@
 
                 const messagesDiv = document.getElementById('messages');
                 const userMessageDiv = document.createElement('div');
-                userMessageDiv.className = 'message user';
                 userMessageDiv.textContent = 'You: ' + userInput;
                 messagesDiv.appendChild(userMessageDiv);
 
@@ -81,16 +52,53 @@
                 });
 
                 const data = await response.json();
-                const message = data.choices[0].message.content;
-                console.log(message);
-                
-                const botMessageDiv = document.createElement('div');
-                botMessageDiv.className = 'message bot';
-                botMessageDiv.textContent = 'Bot: ' + message; // Thay đổi tùy theo cấu trúc phản hồi của API
-                messagesDiv.appendChild(botMessageDiv);
+                const message = JSON.parse(data.choices[0].message.content);
+                console.log(data.choices[0].message.content)
+
+                //message1
+                const botMessageDiv1 = document.createElement('div');
+                botMessageDiv1.textContent = 'Bot: ' + message.message1;
+                messagesDiv.appendChild(botMessageDiv1);
+
+                //products
+                var products = getProducts(message.products);
+                products.then(productList => {
+                    const botMessageProduct = document.createElement('div');
+                    botMessageProduct.classList.add('flex', 'gap-3', 'overflow-x-auto');
+
+                    productList.forEach((product) => {
+                        var innerProduct = document.createElement('a');
+                        innerProduct.href = ('./product-detail?productId=' + product.id);
+                        innerProduct.classList.add('flex', 'flex-col', 'gap-2', 'p-2', 'min-w-[45%]', 'border', 'border-gray-300', 'rounded-lg', 'hover:-translate-y-1', 'transition-transform', 'duration-200', 'cursor-pointer');
+                        innerProduct.innerHTML =
+                                '<img class="w-full" src="./img/' + product.thumbnailUrl + '" alt="Cappuchino">' +
+                                '<p>' + product.name + '</p>';
+                        botMessageProduct.appendChild(innerProduct);
+                    })
+                    messagesDiv.appendChild(botMessageProduct);
+
+                }).catch(error => {
+                    console.error(error); // xử lý lỗi nếu Promise bị reject
+                });
+
+                //message2
+                const botMessageDiv2 = document.createElement('div');
+                botMessageDiv2.textContent = message.message2;
+                messagesDiv.appendChild(botMessageDiv2);
+
 
                 document.getElementById('user-input').value = '';
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+
+            async function getProducts(products) {
+                const response = await fetch('/SWP_Project/get-product', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: new URLSearchParams({products: products})
+                });
+                const data = await response.json();
+                return data;
             }
         </script>
     </body>

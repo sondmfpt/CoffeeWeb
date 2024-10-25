@@ -7,8 +7,6 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,14 +48,15 @@ public class ChatServlet extends HttpServlet {
         //information data
         String pathOfInformation = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\shop-information.txt"; // Đường dẫn đến tệp của bạn
         String infor = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathOfInformation))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathOfInformation), "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                infor += line;
+                infor += line ;
             }
         } catch (IOException e) {
             e.printStackTrace(); // Xử lý ngoại lệ
         }
+//        System.out.println(infor);
 
         //product data
         String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\products.json";
@@ -95,15 +95,14 @@ public class ChatServlet extends HttpServlet {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
-        System.out.println(dataProduct);
-        String data = "{\"id\":1,\"product_name\":\"Cappuccino\",\"category_id\":1,\"thumbnail_url\":\"licensed-image.jpg\",\"price\":30000,\"description\":\"Cappuccino is an espresso-based coffee drink that is traditionally prepared with steamed milk including a layer of milk foam. Variations of the drink involve the use of cream instead of milk, using non-dairy milk substitutes and flavoring with cocoa powder or cinnamon. \",\"total_sold\":502,\"status\":1,\"created_at\":\"2024-09-25 03:06:45\"}";
         String jsonInputString = "{\"model\": \"meta-llama/Llama-3-8b-chat-hf\", \"messages\": ["
-                + "{\"role\": \"system\", \"content\": \"Bạn là một trợ lý ảo bán hàng, hãy trả lời câu hỏi của khách hàng bằng tiếng Việt.\"},"
-                + "{\"role\": \"system\", \"content\": \"Đây là dữ liệu các thông tin của shop: " + info + ".\"},"
-                + "{\"role\": \"system\", \"content\": \"Đây là dữ liệu các sản phẩm của shop: " + dataProduct + ".\"},"
-                + "{\"role\": \"system\", \"content\": \"Khi người dùng hỏi về sản phẩm thì chỉ đưa ra id của sản phẩm đó thôi.\"},"
-                + "{\"role\": \"system\", \"content\": \"Khi mà có câu trả lời phải liệt kê ra các ý thì nhớ xuống dòng.\"},"
-                + "{\"role\": \"system\", \"content\": \"Trả lời ngắn gọn, súc tích, không trả lời thừa thãi.\"},"
+                + "{\"role\": \"system\", \"content\": \"You are a customer consultant for a website selling drinks.\"},"
+                + "{\"role\": \"system\", \"content\": \"Here is some data of shop: " + info + ".\"},"
+                + "{\"role\": \"system\", \"content\": \"Here is some data of products " + dataProduct + ".\"},"
+                + "{\"role\": \"user\", \"content\": \"Your answer must be only this format and not other ways (including greetings): {\\\"message1\\\": ..., \\\"products\\\": [productId1, productId2, ...], \\\"message2\\\": ...(if any)}\"},"
+                + "{\"role\": \"user\", \"content\": \"message1 is required, products property can be empty and message2 is optional.\"},"
+                + "{\"role\": \"user\", \"content\": \"If my question is not required listing product, then products property will be empty.\"},"
+                + "{\"role\": \"user\", \"content\": \"If my question is Vietnamese, then answer me by Vietnamese, similar to other languages.\"},"
                 + "{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
 
         try (OutputStream os = conn.getOutputStream()) {
