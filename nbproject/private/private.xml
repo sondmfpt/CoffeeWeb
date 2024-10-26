@@ -3,23 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/admin/AddProductServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/Category.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/LoginDAO.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/LoginServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/EditProductServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/ProductVariant.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUpdateUser.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_productList.jsp</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminAddUserServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/no-permission.html</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_productDetail.jsp</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/OtherDAO.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/admin/EditProductServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/include/admin-navigation.jsp</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/admin/ProductListServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUserDetailServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_addUser.jsp</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_userDetail.jsp</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_userList.jsp</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/MenuServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AddProductServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/Product.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/changePassword.jsp</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/database/DBHelper.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/Pair.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/Attribute.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUserListServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/ProductDAO.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/resetPassword.jsp</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/ProductListServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/ProductDetailServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/HomeServlet.java</file>
+            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/AccountDAO.java</file>
         </group>
     </open-files>
 </project-private>

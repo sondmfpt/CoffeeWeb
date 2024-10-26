@@ -1,4 +1,4 @@
-package controller.admin;
+package admin_controller;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -10,20 +10,19 @@ import jakarta.servlet.http.Part;
 import dao.ProductDAO;
 import jakarta.servlet.annotation.WebServlet;
 import models.Category;
-
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import models.Attribute;
-import models.Product;
+import models.ProductVariant;
 import org.json.JSONObject;
 
-@WebServlet(name = "AddProductServlet", urlPatterns = {"/admin/addproduct"})
+@WebServlet(name = "EditProductServlet", urlPatterns = {"/admin/edit-product"})
 @MultipartConfig // Needed for handling file uploads
 
-public class AddProductServlet extends HttpServlet {
+public class EditProductServlet extends HttpServlet {
 
     private static final String THUMBNAIL_DIR = "img/thumbnail";
     private static final String DETAIL_DIR = "img/detail";
@@ -32,20 +31,25 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            String idStr = request.getParameter("id");
+            int id = Integer.parseInt(idStr);
             String name = getFormField(request.getPart("name"));
             String category = getFormField(request.getPart("category"));
             String description = getFormField(request.getPart("description"));
+            boolean isPublic = getFormField(request.getPart("status")).equals("public");
             // Handle file upload
             String applicationPath = request.getServletContext().getRealPath("");
-            String thumbnailFilePath = applicationPath + File.separator + THUMBNAIL_DIR;
-            String detailFilePath = applicationPath + File.separator + DETAIL_DIR;
-            //For thumbnail
-            Part filePart;
             String fileName;
-            filePart = request.getPart("thumbnail");
-            fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
-            filePart.write(thumbnailFilePath + File.separator + fileName);
-            // Save product
+            Part filePart;
+            if (!getFormField(request.getPart("thumbnailURL")).isBlank()) {
+                fileName = getFormField(request.getPart("thumbnailURL"));
+            } else {
+                String thumbnailFilePath = applicationPath + File.separator + THUMBNAIL_DIR;
+                filePart = request.getPart("thumbnail");
+                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                String path = thumbnailFilePath + File.separator + fileName;
+                filePart.write(path);
+            }
             ProductDAO pd = new ProductDAO();
             List<Category> cl = pd.getAllCategories();
             int categoryID = 1;
@@ -54,9 +58,18 @@ public class AddProductServlet extends HttpServlet {
                     categoryID = c.getId();
                 }
             }
-            pd.addProduct(name, categoryID, fileName, description);
-            Product newp = pd.getLastProduct();   //get last added product
-            //Variants
+            pd.editProduct(name, categoryID, fileName, description, isPublic, id);
+            //Update variants
+            int originPrice, salePrice;
+            boolean isVariantPublic;
+            List<ProductVariant>vl = pd.getAllVariantsByProductId(id);
+            for (ProductVariant v : vl) {
+                originPrice = Integer.parseInt(getFormField(request.getPart(v.getId() + "-origin-price")));
+                salePrice = Integer.parseInt(getFormField(request.getPart(v.getId() + "-sale-price")));
+                isVariantPublic = getFormField(request.getPart(v.getId() + "-status")).equals("public");
+                pd.updateVariant(originPrice, salePrice, isVariantPublic, v.getId());
+            }
+            //Add new variants
             List<Attribute> al = pd.getAllAttributes();
             JSONObject jso;
             int oprice, sprice;
@@ -68,20 +81,34 @@ public class AddProductServlet extends HttpServlet {
                 }
                 oprice = Integer.parseInt(getFormField(request.getPart("oprice" + i)));
                 sprice = Integer.parseInt(getFormField(request.getPart("sprice" + i)));
-                pd.addProductVariant(newp.getId(), jso, oprice, sprice);
+                pd.addProductVariant(id, jso, oprice, sprice);
             }
-            //For detail images
-            int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
+           //For detail images
+           //Delete all old one
+           List<String> imgList = pd.getAllImgsWithProductId(id);
+           for (String img : imgList) {
+               File oldImg = new File("img/detail/" + img);
+               oldImg.deleteOnExit();
+           }
+           pd.deleteDetailImgWithId(id);    //Delete in database
+           //Add new one
+           String detailFilePath = applicationPath + File.separator + DETAIL_DIR;
+           int imgAmount = Integer.parseInt(getFormField(request.getPart("imgAmount")));
             List<String> imgs = new ArrayList<>();
             for (int i = 1; i <= imgAmount; i++) {
-                filePart = request.getPart("img" + i); 
-                fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                if (request.getPart("detail" + i) != null) {
+                    fileName = getFormField(request.getPart("detail" + i));
+                } else {
+                    filePart = request.getPart("img" + i); 
+                    fileName = UUID.randomUUID().toString() + "_" + extractFileName(filePart);
+                    filePart.write(detailFilePath + File.separator + fileName);
+                }
                 imgs.add(fileName);
-                filePart.write(detailFilePath + File.separator + fileName);
+                
             }
-            pd.addImgList(imgs, newp.getId());
-            // Redirect to product listing
-            response.sendRedirect("products");
+            pd.addImgList(imgs, id);
+           // Redirect to product listing
+            response.sendRedirect("product?id=" + id);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

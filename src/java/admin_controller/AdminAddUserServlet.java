@@ -23,7 +23,7 @@ import models.User;
  * @author Son Duong This servlet is responsible for adding a new user to the
  * system.
  */
-@WebServlet(name = "AdminAddUserServlet", urlPatterns = {"/admin-add-user"})
+@WebServlet(name = "AdminAddUserServlet", urlPatterns = {"/admin/admin-add-user"})
 // Defines the servlet and maps it to the URL pattern "/admin-add-user".
 public class AdminAddUserServlet extends HttpServlet {
 

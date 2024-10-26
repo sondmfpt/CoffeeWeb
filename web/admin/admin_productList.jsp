@@ -91,7 +91,7 @@
                             <div class="p-5">
                                 <h1 class="text-4xl font-semibold">Add new Product</h1>
                             </div>
-                            <form action="addproduct" method="POST" enctype="multipart/form-data">
+                            <form action="add-product" method="POST" enctype="multipart/form-data">
                                 <div class="flex">
                                     <div class="w-[60%] px-3">
                                         <div class="flex justify-between my-2">

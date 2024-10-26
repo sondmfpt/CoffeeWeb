@@ -24,7 +24,7 @@ import models.User;
  * @author Son Duong
  * This servlet is responsible for update user information in the system.
  */
-@WebServlet(name = "AdminUpdateUser", urlPatterns = {"/admin-update-user"})
+@WebServlet(name = "AdminUpdateUser", urlPatterns = {"/admin/admin-update-user"})
 public class AdminUpdateUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

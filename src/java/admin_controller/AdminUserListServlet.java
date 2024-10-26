@@ -28,7 +28,7 @@ import org.json.JSONObject;  // convert object to json string
  *
  * @author Son Duong
  */
-@WebServlet(name = "AdminUserListServlet", urlPatterns = {"/admin-user-list"})
+@WebServlet(name = "AdminUserListServlet", urlPatterns = {"/admin/admin-user-list"})
 public class AdminUserListServlet extends HttpServlet {
 
     //set default numbers of students in the list: 2

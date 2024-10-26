@@ -102,7 +102,7 @@
                         </div>
                         <!-- Edit Product here -->
                         <div id="edit-product" style="display:none" class="flex-1 flex-row p-5">
-                            <form action="editproduct?id=${p.getId()}" method="POST" enctype="multipart/form-data">
+                            <form action="edit-product?id=${p.getId()}" method="POST" enctype="multipart/form-data">
                                 <div class="p-5" >
                                     <span class="text-4xl font-semibold">Edit Product</span>
                                     <div style="position: relative; left:10%;display:inline-block">

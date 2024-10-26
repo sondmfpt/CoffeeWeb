@@ -26,7 +26,7 @@ import models.UserOrder;
  * @author Son Duong This servlet is responsible display user detail information
  * in the system.
  */
-@WebServlet(name = "AdminUserDetailServlet", urlPatterns = {"/admin-user-detail"})
+@WebServlet(name = "AdminUserDetailServlet", urlPatterns = {"/admin/admin-user-detail"})
 public class AdminUserDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
