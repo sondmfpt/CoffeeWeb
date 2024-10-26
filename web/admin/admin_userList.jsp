@@ -318,7 +318,7 @@
             function callUserList() {
                 const xhr = new XMLHttpRequest();
 
-                xhr.open('POST', '/SWP_Project/admin-user-list?order=' + encodeURIComponent(JSON.stringify(order))
+                xhr.open('POST', '/SWP_Project/admin/admin-user-list?order=' + encodeURIComponent(JSON.stringify(order))
                         + '&roleUser=' + encodeURIComponent(roleUserSelected)
                         + '&searchValue=' + encodeURIComponent(searchValue)
                         + '&numPage=' + encodeURIComponent(numPage)
