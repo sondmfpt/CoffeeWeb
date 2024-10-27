@@ -15,7 +15,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
         <link href="./output.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+
     </head>
     <body>
         <c:set var="user" value="${USER}"/>
@@ -192,13 +195,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--avatar upload-->
+                                    <input type="hidden" name="croppedImage" id="croppedImage">        
                                 </form>
 
                                 <div class="flex flex-col gap-5 justify-center items-center">
                                     <div class="rounded-full overflow-hidden w-32">
-                                        <img src="./img/avatar/${user.getAvatar()}">
+                                        <img id="avatar" src="./img/avatar/${user.avatar != null ? user.avatar : 'default-image.png'}">
                                     </div>
-                                    <div class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn ảnh</div>
+                                    <div onclick="showUploadImgForm()" class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn ảnh</div>
                                     <div class="text-gray-500">
                                         <p>Dung lượng ảnh tối đa 1MB</p>
                                         <p>Định dạng: .JPEG, .PNG</p>
@@ -328,6 +333,20 @@
                     </div>
                 </div>
             </c:if>
+
+            <!--choose image-->
+            <div id="uploadAvatarForm" class="flex justify-center items-center fixed inset-0 bg-gray-500/75 z-20 hidden">
+                <div class="bg-white rounded p-5">
+                    <div class="flex flex-col gap-5" id="uploadForm">
+                        <input type="file" id="avatarInput" accept="image/*">
+                        <div class=" overflow-hidden flex justify-center">
+                            <img class="max-w-72 max-h-72 max-w-full hidden" id="avatarPreview">
+                        </div>
+                        <button class="px-3 py-2 border border-gray-300" type="button" onclick="cropImage()">Crop & Upload</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </body>
@@ -397,4 +416,46 @@
         })
     </script>
 
+
+    <!--//crop image-->
+    <script>
+        function showUploadImgForm(){
+            document.getElementById('uploadAvatarForm').classList.remove('hidden');
+        }
+        let cropper;
+        document.getElementById('avatarInput').addEventListener('change', function (event) {
+            const avatarPreview = document.getElementById('avatarPreview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                avatarPreview.src = e.target.result;
+                avatarPreview.classList.remove('hidden');
+
+                // Khởi tạo Cropper.js
+                if (cropper)
+                    cropper.destroy();
+                cropper = new Cropper(avatarPreview, {
+                    aspectRatio: 1,
+                    viewMode: 1
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function cropImage() {
+            const croppedCanvas = cropper.getCroppedCanvas({
+                width: 300,
+                height: 300
+            });
+
+            // Chuyển đổi ảnh đã cắt thành Base64
+            const croppedImage = croppedCanvas.toDataURL('image/png');
+            document.getElementById('croppedImage').value = croppedImage;
+            document.getElementById('avatar').src = croppedImage;
+            document.getElementById('uploadAvatarForm').classList.add('hidden');
+        }
+
+    </script>
 </html>

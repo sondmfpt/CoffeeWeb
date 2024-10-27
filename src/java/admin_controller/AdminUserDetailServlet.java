@@ -50,7 +50,7 @@ public class AdminUserDetailServlet extends HttpServlet {
             request.setAttribute("USER", user);
             request.setAttribute("USERORDER", userOrders);
             request.setAttribute("ORDERS", orders);
-
+            
         } finally {
             //set status 
             String statusUpdate = request.getParameter("status");

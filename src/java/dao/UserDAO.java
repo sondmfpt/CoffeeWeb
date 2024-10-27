@@ -347,6 +347,30 @@ public class UserDAO {
             }
         }
     }
+    
+    public void updateUserAvatar(int id, String avatar) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET avatar = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, avatar);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 
     public List<Order> getOrderByUserId(int userId) throws ClassNotFoundException, SQLException {
         Connection con = null;

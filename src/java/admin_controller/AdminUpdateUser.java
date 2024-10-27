@@ -5,6 +5,7 @@
 package admin_controller;
 
 import api.EmailSender_ChangeUserInformation;  // class use API to send email
+import api.ImageSaver;
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException; //catch exception
@@ -43,6 +44,10 @@ public class AdminUpdateUser extends HttpServlet {
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
         
+        //get cropped image
+        String base64Image = request.getParameter("croppedImage");
+        System.out.println(base64Image);
+        
          // Creates a LocalDate object for the user's birthdate.
         LocalDate date = LocalDate.of(year, month, day);
         boolean isActive = status.equals("active");
@@ -61,6 +66,14 @@ public class AdminUpdateUser extends HttpServlet {
             }
 
         } finally {
+            //save image
+            if(base64Image != null){
+                String name = "avatar-userId" + id + ".png";
+                String path = getServletContext().getRealPath("/") + "img/avatar/" + name;
+                ImageSaver.saveImage(base64Image, path);
+                uDao.updateUserAvatar(id, name);
+            }
+            
             //set success status and redirect to user detail page
             String url = "./admin-user-detail?userId=" + id + "&status=success";
             response.sendRedirect(url);
