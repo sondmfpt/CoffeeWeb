@@ -336,7 +336,8 @@
 
             <!--choose image-->
             <div id="uploadAvatarForm" class="flex justify-center items-center fixed inset-0 bg-gray-500/75 z-20 hidden">
-                <div class="bg-white rounded p-5">
+                <div class="bg-white rounded p-5 relative">
+                    <div onclick="turnOffImgForm()" class="absolute py-3 px-4 top-0 right-0 cursor-pointer text-gray-500 hover:bg-gray-200 rounded"><i class="fa-solid fa-x"></i></div>
                     <div class="flex flex-col gap-5" id="uploadForm">
                         <input type="file" id="avatarInput" accept="image/*">
                         <div class=" overflow-hidden flex justify-center">
@@ -419,8 +420,11 @@
 
     <!--//crop image-->
     <script>
-        function showUploadImgForm(){
+        function showUploadImgForm() {
             document.getElementById('uploadAvatarForm').classList.remove('hidden');
+        }
+        function turnOffImgForm() {
+            document.getElementById('uploadAvatarForm').classList.add('hidden');
         }
         let cropper;
         document.getElementById('avatarInput').addEventListener('change', function (event) {
