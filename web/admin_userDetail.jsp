@@ -196,7 +196,9 @@
                                         </div>
                                     </div>
                                     <!--avatar upload-->
-                                    <input type="hidden" name="croppedImage" id="croppedImage">        
+                                    <input type="hidden" name="croppedImage" id="croppedImage">  
+                                    <!--iframe upload-->
+                                    <input type="hidden" name="iframeUpload" id="iframeUpload">  
                                 </form>
 
                                 <div class="flex flex-col gap-5 justify-center items-center">
@@ -208,10 +210,11 @@
                                         <p>Dung lượng ảnh tối đa 1MB</p>
                                         <p>Định dạng: .JPEG, .PNG</p>
                                     </div>
-                                    <div>
-                                        <iframe width="320" height="180" src="https://www.youtube.com/embed/sIVt9O-PmKQ" title="Giới Thiệu Khóa Học React TypeScript Pro | Những Kiến Thức Fresher React Cần Biết" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <div id="iframe">
+                                        ${user.getIframe()}
+                                        <!--<iframe width="320" height="180" src="https://www.youtube.com/embed/sIVt9O-PmKQ" title="Giới Thiệu Khóa Học React TypeScript Pro | Những Kiến Thức Fresher React Cần Biết" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>-->
                                     </div>
-                                    <div class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn video</div>
+                                    <div onclick="showUploadVideoForm()" class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn video</div>
                                 </div>
                             </div>
                         </div>
@@ -348,6 +351,20 @@
                 </div>
             </div>
 
+            <!--choose video-->
+            <div id="uploadVideoForm" class="flex justify-center items-center fixed inset-0 bg-gray-500/75 z-20 hidden">
+                <div class="w-1/2 bg-white rounded p-5 relative">
+                    <div onclick="turnOffVideoForm()" class="absolute py-3 px-4 top-0 right-0 cursor-pointer text-gray-500 hover:bg-gray-200 rounded"><i class="fa-solid fa-x"></i></div>
+                    <div class="flex flex-col gap-5" id="uploadForm">
+                        <label class="my-3">
+                            <p class="my-3">Nhập iframe: </p>
+                            <input class="px-3 py-2 border border-gray-300 w-full rounded" type="text" id="videoIframe" placeholder="Nhập iframe ... ">
+                        </label>
+                    </div>
+                    <button class="px-3 py-2 border border-gray-300 rounded" onclick="uploadVideo()" type="button">Tải lên</button>
+                </div>
+            </div>
+
         </div>
 
     </body>
@@ -461,5 +478,32 @@
             document.getElementById('uploadAvatarForm').classList.add('hidden');
         }
 
+    </script>
+
+    <!--Upload Video-->
+    <script>
+        function showUploadVideoForm() {
+            document.getElementById('uploadVideoForm').classList.remove('hidden');
+        }
+        function turnOffVideoForm() {
+            document.getElementById('uploadVideoForm').classList.add('hidden');
+        }
+
+        function uploadVideo() {
+            var video = document.getElementById('iframe');
+            video.innerHTML = '';
+            var iframe = stringToElement(document.getElementById('videoIframe').value);
+            iframe.width = 320;
+            iframe.height = 180;
+            video.appendChild(iframe);
+            document.getElementById('iframeUpload').value = iframe.outerHTML;
+            turnOffVideoForm();
+        }
+
+        function stringToElement(htmlString) {
+            const template = document.createElement('div');
+            template.innerHTML = htmlString.trim(); // Trim to remove any extra whitespace
+            return template.firstChild; // Gets the first element in the div
+        }
     </script>
 </html>

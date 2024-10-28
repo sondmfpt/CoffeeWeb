@@ -236,6 +236,7 @@ public class UserDAO {
                         lastname = "";
                     }
                     String avatar = rs.getString("avatar");
+                    String iframe = rs.getString("iframe");
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -249,6 +250,8 @@ public class UserDAO {
                     user.setCreatedAt(createdAt);
                     user.setPassword(password);
                     user.setAvatar(avatar);
+                    user.setIframe(iframe);
+                    
                 }
 
             }
@@ -359,6 +362,30 @@ public class UserDAO {
                         + "WHERE id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, avatar);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void updateUserIframe(int id, String iframe) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET iframe = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, iframe);
                 stm.setInt(2, id);
                 stm.executeUpdate();
             }

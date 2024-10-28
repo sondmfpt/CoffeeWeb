@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/User.java</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/api/ImageSaver.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/UserDAO.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/admin_userDetail.jsp</file>
+            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/admin_controller/AdminUpdateUser.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/filter/AuthorizationFilter.java</file>
             <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/admin_controller/AdminUserDetailServlet.java</file>
         </group>
