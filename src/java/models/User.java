@@ -16,6 +16,10 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private String avatar;
+    private String iframe;
+    private String video;
+    private String videoNote;
     private String gender;
     private String phone;
     private Date date;
@@ -37,6 +41,24 @@ public class User {
         this.email = email;
         this.role = role;
     }
+
+    public User(int id, String username, String password, String firstName, String lastName, String avatar, String gender, String phone, Date date, String email, String role, boolean active, Date createdAt) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.phone = phone;
+        this.date = date;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+        this.createdAt = createdAt;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -135,6 +157,38 @@ public class User {
         this.password = password;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getIframe() {
+        return iframe;
+    }
+
+    public void setIframe(String iframe) {
+        this.iframe = iframe;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String getVideoNote() {
+        return videoNote;
+    }
+
+    public void setVideoNote(String videoNote) {
+        this.videoNote = videoNote;
+    }
+    
     
     
     

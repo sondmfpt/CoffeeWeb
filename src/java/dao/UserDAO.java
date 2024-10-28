@@ -235,6 +235,10 @@ public class UserDAO {
                     if (lastname == null) {
                         lastname = "";
                     }
+                    String avatar = rs.getString("avatar");
+                    String iframe = rs.getString("iframe");
+                    String video = rs.getString("video");
+                    String videoNote = rs.getString("video_note");
                     String gender = rs.getString("gender");
                     String phone = rs.getString("phone");
                     Date dateofbirth = rs.getDate("date_of_birth");
@@ -247,6 +251,10 @@ public class UserDAO {
                     user.setActive(active);
                     user.setCreatedAt(createdAt);
                     user.setPassword(password);
+                    user.setAvatar(avatar);
+                    user.setIframe(iframe);
+                    user.setVideo(video);
+                    user.setVideoNote(videoNote);
                 }
 
             }
@@ -296,14 +304,14 @@ public class UserDAO {
         }
     }
 
-    public void updateUser(int id, String password, String firstname, String lastname, String email, String phone, String gender, LocalDate date, int roleId, boolean isActive) throws ClassNotFoundException, SQLException {
+    public void updateUser(int id, String password, String firstname, String lastname, String email, String phone, String gender, LocalDate date, int roleId, boolean isActive, String videoNote) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "UPDATE users "
-                        + "SET first_name = ?, last_name = ?, gender = ?, phone = ?, date_of_birth = ?, email = ?, role_id = ?  "
+                        + "SET first_name = ?, last_name = ?, gender = ?, phone = ?, date_of_birth = ?, email = ?, role_id = ?, video_note = ? "
                         + "WHERE id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, firstname);
@@ -313,7 +321,8 @@ public class UserDAO {
                 stm.setDate(5, java.sql.Date.valueOf(date));
                 stm.setString(6, email);
                 stm.setInt(7, roleId);
-                stm.setInt(8, id);
+                stm.setString(8, videoNote);
+                stm.setInt(9, id);
                 stm.executeUpdate();
             }
         } finally {
@@ -334,6 +343,95 @@ public class UserDAO {
                 stm.setString(1, password);
                 stm.setBoolean(2, isActive);
                 stm.setInt(3, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void updateUserAvatar(int id, String avatar) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET avatar = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, avatar);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void updateUserIframe(int id, String iframe) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET iframe = ? "
+                        + "WHERE id = ?";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, iframe);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+                
+                String sql2 = "UPDATE users "
+                        + "SET video = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql2);
+                stm.setString(1, null);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void updateUserVideo(int id, String video) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users "
+                        + "SET video = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, video);
+                stm.setInt(2, id);
+                stm.executeUpdate();
+                
+                String sql2 = "UPDATE users "
+                        + "SET iframe = ? "
+                        + "WHERE id = ?";
+                stm = con.prepareStatement(sql2);
+                stm.setString(1, null);
+                stm.setInt(2, id);
                 stm.executeUpdate();
             }
         } finally {

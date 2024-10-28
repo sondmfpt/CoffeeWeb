@@ -4,8 +4,8 @@
  */
 package controller;
 
-import api.EmailSender_Code;
-import api.SmsSender_Code;
+import api.EmailSender_Code; //class call API send code to user's email
+import api.SmsSender_Code;  // class call API send code to user's sms
 import dao.LoginDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,10 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Random;
+import java.util.Random;  // get random code
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern;  // to validate password 
 import models.User;
 
 /**

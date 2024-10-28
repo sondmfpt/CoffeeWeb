@@ -4,7 +4,7 @@
  */
 package admin_controller;
 
-import api.EmailSender_ChangeUserInformation;
+import api.EmailSender_ChangeUserInformation;   //class call API to send email when change user information
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,8 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;  // Java's local date library for handling date-related operations.
 import java.util.Calendar;  // Utility for handling date and time operations.
@@ -77,32 +75,15 @@ public class AdminAddUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Decentralization: only allow admin access to page
-        HttpSession session = request.getSession();
-        User actor = (User) session.getAttribute("USER");
-        if (actor == null || !actor.getRole().equals("ADMIN")) {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Validate Role</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Bạn không có quyền truy cập vào trang web này.</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } else {
-            // Gets the current year to be used in the form.
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            request.setAttribute("currentYear", currentYear);
+        // Gets the current year to be used in the form.
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        request.setAttribute("currentYear", currentYear);
 
-            // Retrieves the status parameter from the request and sets it for display in the JSP page.
-            String status = request.getParameter("status");
-            request.setAttribute("STATUS", status);
+        // Retrieves the status parameter from the request and sets it for display in the JSP page.
+        String status = request.getParameter("status");
+        request.setAttribute("STATUS", status);
 
-            request.getRequestDispatcher("admin_addUser.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("admin_addUser.jsp").forward(request, response);
     }
 
     /**

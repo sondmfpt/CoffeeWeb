@@ -4,7 +4,7 @@
  */
 package controller;
 
-import api.EmailSender_Link;
+import api.EmailSender_Link;   // class call API to send email a link to confirm
 import dao.LoginDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,10 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.UUID;
+import java.sql.SQLException;  // catch exception
+import java.time.LocalDate;  // declare local date variable
+import java.util.Calendar;  // get current calendar (year)
+import java.util.UUID;      // create a random UUID
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;

@@ -5,17 +5,15 @@
 package controller;
 
 import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;  //catch exception
+import java.util.logging.Level;  //log error
+import java.util.logging.Logger; //log error
 
 /**
  *

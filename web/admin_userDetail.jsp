@@ -15,7 +15,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
         <link href="./output.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+
     </head>
     <body>
         <c:set var="user" value="${USER}"/>
@@ -52,9 +55,9 @@
 
                         <!--Profile-->
                         <div id="profile" class="bg-white border border-gray-200 rounded shadow-lg">
-                            <div class="p-10">
-                                <form action="./admin-update-user?id=${user.getId()}" method="POST" class="flex flex-col items-center">
-                                    <table class="w-2/3">
+                            <form action="./admin-update-user?id=${user.getId()}" method="POST" enctype="multipart/form-data" class="p-10 flex justify-center gap-10">
+                                <div class="flex flex-col items-center">
+                                    <table class="w-full">
                                         <tr>
                                             <td class="text-end text-slate-500">Tên đăng nhập</td>
                                             <td class="py-2 px-5">${user.getUsername()}</td>
@@ -192,8 +195,36 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                    <!--avatar upload-->
+                                    <input type="hidden" name="croppedImage" id="croppedImage">  
+                                    <!--iframe upload-->
+                                    <input type="hidden" name="iframeUpload" id="iframeUpload">  
+                                    <!--video upload-->
+                                    <input type="file" name="videoUpload" id="videoUpload" class="hidden">  
+                                </div>
+
+                                <div class="flex flex-col gap-5 justify-center items-center">
+                                    <div class="rounded-full overflow-hidden w-32">
+                                        <img id="avatar" src="./img/avatar/${user.avatar != null ? user.avatar : 'default-image.png'}">
+                                    </div>
+                                    <div onclick="showUploadImgForm()" class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn ảnh</div>
+                                    <div class="text-gray-500">
+                                        <p>Dung lượng ảnh tối đa 1MB</p>
+                                        <p>Định dạng: .JPEG, .PNG</p>
+                                    </div>
+                                    <div id="iframe" class="${user.getIframe().equals("") ? 'hidden' : ''}">
+                                        ${user.getIframe()}
+                                    </div>
+                                    <video id="video" width="320" controls class="${user.getVideo() == null ? 'hidden' : ''}">
+                                        <source src="./video/profile/${user.getVideo()}" type="video/mp4">
+                                    </video>
+                                    <div>
+                                        <span class="">Note:</span>
+                                        <input class="text-gray-500 px-3 py-2" type="text" name="videoNote" value="${user.getVideoNote()}">
+                                    </div>
+                                    <div onclick="showUploadVideoForm()" class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn video</div>
+                                </div>
+                            </form>
                         </div>
 
                         <!--Address-->
@@ -313,6 +344,51 @@
                     </div>
                 </div>
             </c:if>
+
+            <!--choose image-->
+            <div id="uploadAvatarForm" class="flex justify-center items-center fixed inset-0 bg-gray-500/75 z-20 hidden">
+                <div class="bg-white rounded p-5 relative animate-[fadeIn_.75s_ease-out_,_moveInDownFull_.75s_ease-out]">
+                    <div onclick="turnOffImgForm()" class="absolute py-3 px-4 top-0 right-0 cursor-pointer text-gray-500 hover:bg-gray-200 rounded"><i class="fa-solid fa-x"></i></div>
+                    <div class="flex flex-col gap-5" id="uploadForm">
+                        <input type="file" id="avatarInput" accept="image/*">
+                        <div class=" overflow-hidden flex justify-center">
+                            <img class="max-w-72 max-h-72 max-w-full hidden" id="avatarPreview">
+                        </div>
+                        <button class="px-3 py-2 border border-gray-300" type="button" onclick="cropImage()">Crop & Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--choose video-->
+            <div id="uploadVideoForm" class="flex justify-center items-center fixed inset-0 bg-gray-500/75 z-20 hidden">
+                <div class="w-1/2 bg-white rounded p-5 relative animate-[fadeIn_.75s_ease-out_,_moveInDownFull_.75s_ease-out]">
+                    <div onclick="turnOffVideoForm()" class="absolute py-3 px-4 top-0 right-0 cursor-pointer text-gray-500 hover:bg-gray-200 rounded"><i class="fa-solid fa-x"></i></div>
+                    <div class="flex gap-5 justify-center">
+                        <label class="cursor-pointer border-b-2 border-b-coffee-500">
+                            Nhúng
+                            <input type="radio" name="typeVideoUpload" value="iframe" class="hidden">
+                        </label>
+                        <label class="cursor-pointer">
+                            Tải lên
+                            <input type="radio" name="typeVideoUpload" value="upload" class="hidden">
+                        </label>
+                    </div>
+                    <div id="iframeUploadForm" class="">
+                        <div class="flex flex-col gap-5" id="uploadForm">
+                            <label class="my-3">
+                                <p class="my-3">Nhập iframe: </p>
+                                <input class="px-3 py-2 border border-gray-300 w-full rounded" type="text" id="videoIframe" placeholder="Nhập iframe ... ">
+                            </label>
+                        </div>
+                        <button class="px-3 py-2 border border-gray-300 rounded" onclick="uploadVideo()" type="button">Tải lên</button>
+                    </div>
+                    <div class="flex flex-col gap-5 hidden" id="videoUploadForm">
+                        <input type="file" id="videoInput" accept="video/*">
+                        <button class="px-3 py-2 border border-gray-300" type="button" onclick="">Tải lên</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </body>
@@ -382,4 +458,114 @@
         })
     </script>
 
+
+    <!--//crop image-->
+    <script>
+        function showUploadImgForm() {
+            document.getElementById('uploadAvatarForm').classList.remove('hidden');
+        }
+        function turnOffImgForm() {
+            document.getElementById('uploadAvatarForm').classList.add('hidden');
+        }
+        let cropper;
+        document.getElementById('avatarInput').addEventListener('change', function (event) {
+            const avatarPreview = document.getElementById('avatarPreview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                avatarPreview.src = e.target.result;
+                avatarPreview.classList.remove('hidden');
+
+                // Khởi tạo Cropper.js
+                if (cropper)
+                    cropper.destroy();
+                cropper = new Cropper(avatarPreview, {
+                    aspectRatio: 1,
+                    viewMode: 1
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function cropImage() {
+            const croppedCanvas = cropper.getCroppedCanvas({
+                width: 300,
+                height: 300
+            });
+
+            // Chuyển đổi ảnh đã cắt thành Base64
+            const croppedImage = croppedCanvas.toDataURL('image/png');
+            document.getElementById('croppedImage').value = croppedImage;
+            document.getElementById('avatar').src = croppedImage;
+            document.getElementById('uploadAvatarForm').classList.add('hidden');
+        }
+
+    </script>
+
+    <!--Upload Iframe Video-->
+    <script>
+        function showUploadVideoForm() {
+            document.getElementById('uploadVideoForm').classList.remove('hidden');
+        }
+        function turnOffVideoForm() {
+            document.getElementById('uploadVideoForm').classList.add('hidden');
+        }
+
+        function uploadVideo() {
+            var video = document.getElementById('iframe');
+            video.innerHTML = '';
+            var iframe = stringToElement(document.getElementById('videoIframe').value);
+            iframe.width = 320;
+            iframe.height = 180;
+            video.appendChild(iframe);
+            video.classList.remove('hidden');
+            document.getElementById('iframeUpload').value = iframe.outerHTML;
+            document.getElementById('video').classList.add('hidden');
+            turnOffVideoForm();
+        }
+
+        function stringToElement(htmlString) {
+            const template = document.createElement('div');
+            template.innerHTML = htmlString.trim(); // Trim to remove any extra whitespace
+            return template.firstChild; // Gets the first element in the div
+        }
+    </script>
+
+    <!--Upload Video-->
+    <script>
+        document.getElementById('videoInput').addEventListener('change', function (event) {
+            const fileInput = document.getElementById("videoInput");
+            const videoUpload = document.getElementById('videoUpload');
+            videoUpload.files = fileInput.files;
+            document.getElementById('iframe').classList.add('hidden');
+            document.getElementById('video').classList.remove('hidden');
+            document.querySelector('#video source').src = './video/profile/';
+            turnOffVideoForm();
+        });
+    </script>
+
+    <!--toggle 2 type of video upload-->
+    <script>
+        var typeVideoUploads = document.querySelectorAll('input[name="typeVideoUpload"]');
+        typeVideoUploads.forEach((type) => {
+            type.addEventListener('change', () => {
+                typeVideoUploads.forEach((t) => {
+                    if (t.checked == true) {
+                        if (t.value == 'iframe') {
+                            document.getElementById('iframeUploadForm').classList.remove('hidden');
+                            document.getElementById('videoUploadForm').classList.add('hidden');
+                        } else {
+                            document.getElementById('iframeUploadForm').classList.add('hidden');
+                            document.getElementById('videoUploadForm').classList.remove('hidden');
+                        }
+                        t.parentElement.classList.add('border-b-2', 'border-b-coffee-500');
+                    } else {
+                        t.parentElement.classList.remove('border-b-2', 'border-b-coffee-500');
+                    }
+                })
+            })
+        })
+    </script>
 </html>
