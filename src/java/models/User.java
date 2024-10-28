@@ -18,6 +18,8 @@ public class User {
     private String lastName;
     private String avatar;
     private String iframe;
+    private String video;
+    private String videoNote;
     private String gender;
     private String phone;
     private Date date;
@@ -169,6 +171,22 @@ public class User {
 
     public void setIframe(String iframe) {
         this.iframe = iframe;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String getVideoNote() {
+        return videoNote;
+    }
+
+    public void setVideoNote(String videoNote) {
+        this.videoNote = videoNote;
     }
     
     

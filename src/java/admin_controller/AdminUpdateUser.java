@@ -6,13 +6,18 @@ package admin_controller;
 
 import api.EmailSender_ChangeUserInformation;  // class use API to send email
 import api.ImageSaver;
+import api.VideoSaver;
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException; //catch exception
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;      //declare local date variable to save date of birth of user
 import java.util.logging.Level;  //log error
@@ -26,6 +31,7 @@ import models.User;
  * the system.
  */
 @WebServlet(name = "AdminUpdateUser", urlPatterns = {"/admin-update-user"})
+@MultipartConfig
 public class AdminUpdateUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -43,12 +49,17 @@ public class AdminUpdateUser extends HttpServlet {
         int day = Integer.parseInt(request.getParameter("date-day"));
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
+        String videoNote = request.getParameter("videoNote");
 
         //get cropped image
         String base64Image = request.getParameter("croppedImage");
 
         //get iframe video
         String iframe = request.getParameter("iframeUpload");
+
+        
+        //get upload video
+        Part filePart = request.getPart("videoUpload"); 
 
         // Creates a LocalDate object for the user's birthdate.
         LocalDate date = LocalDate.of(year, month, day);
@@ -60,24 +71,32 @@ public class AdminUpdateUser extends HttpServlet {
             // Update information for user. If admin click send for user, system will send announment to user's email
             if (request.getParameter("sendForUser") != null) {
                 User userBefore = uDao.getUserById(id);
-                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
+                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive, videoNote);
                 User userAfter = uDao.getUserById(id);
                 EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter);
             } else {
-                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive);
+                uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive, videoNote);
             }
 
         } finally {
             //save image
-            if (base64Image != null) {
+            if (base64Image.length() != 0) {
+                System.out.println("hello");
                 String name = "avatar-userId" + id + ".png";
                 String path = getServletContext().getRealPath("/") + "img/avatar/" + name;
                 ImageSaver.saveImage(base64Image, path);
                 uDao.updateUserAvatar(id, name);
             }
 
-            if(iframe != null) {
+            if(iframe.length() != 0) {
                 uDao.updateUserIframe(id, iframe);
+            }
+            
+            if(filePart.getSize() != 0){
+                String path = getServletContext().getRealPath("/") + "video/profile/";
+                String fileName = "video-profile-userId" + id + ".mp4";
+                VideoSaver.saveVideo(filePart, path, fileName);
+                uDao.updateUserVideo(id, fileName);
             }
             
             //set success status and redirect to user detail page
