@@ -11,38 +11,34 @@
     <body>
         <div class="w-full max-w-md bg-white p-5 rounded-lg shadow-lg">
             <div id="messages" class="h-72 overflow-y-auto border-b border-gray-300 mb-4 space-y-3 no-scrollbar">
-                <!--                <div>Xin chào</div>
-                                <div class="flex gap-3 overflow-x-auto">
-                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
-                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
-                                        <p>Cappuchino</p>
-                                    </a>
-                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
-                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
-                                        <p>Cappuchino</p>
-                                    </a>
-                                    <a class="flex flex-col gap-2 p-2 min-w-[45%] border border-gray-300 rounded-lg hover:-translate-y-1 transition-transform duration-200 cursor-pointer">
-                                        <img class="w-full" src="./img/2dsqqv9v.png" alt="Cappuchino">
-                                        <p>Cappuchino</p>
-                                    </a>
-                                </div>
-                                <div>Trên đây là các sản phẩm</div>-->
+
             </div>
-            <input id="user-input" type="text" placeholder="Ask something..." class="w-full p-2 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <button onclick="sendMessage()" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <input id="user-input" onkeydown="handleKeyDown(event)" type ="text" placeholder="Ask something..." class="w-full p-2 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button onclick="sendMessage()" class="w-full py-2 bg-blue-500 text-white border border-gray-500 rounded-lg hover:bg-blue-600 transition-colors">
                 Send
             </button>
         </div>
 
         <script>
+            function handleKeyDown(event) {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            }
             async function sendMessage() {
                 const userInput = document.getElementById('user-input').value;
+                document.getElementById('user-input').value = null;
                 if (!userInput)
                     return;
 
                 const messagesDiv = document.getElementById('messages');
                 const userMessageDiv = document.createElement('div');
-                userMessageDiv.textContent = 'You: ' + userInput;
+                userMessageDiv.classList.add('flex', 'justify-end')
+                userMessageDiv.innerHTML =
+                        '<div class="flex gap-1">' +
+                        '<p>' + userInput + '</p>' +
+                        '<i class="fa-solid fa-robot"></i>' 
+                        '</div>';
                 messagesDiv.appendChild(userMessageDiv);
 
                 const response = await fetch('/SWP_Project/chat', {
@@ -57,7 +53,10 @@
 
                 //message1
                 const botMessageDiv1 = document.createElement('div');
-                botMessageDiv1.textContent = 'Bot: ' + message.message1;
+                botMessageDiv1.innerHTML =
+                        '<div class="flex gap-1"><i class="fa-solid fa-robot"></i>' +
+                        '<p>' + message.message1 + '</p>' +
+                        '</div>';
                 messagesDiv.appendChild(botMessageDiv1);
 
                 //products
