@@ -21,7 +21,7 @@
         <div class="flex flex-col bg-coffee-200">
             <!-- NAVBAR SCROLL-->
             <%@ include file="./include/header-dynamic.jsp" %>
-
+            <%@ include file="./chatbot.jsp" %>
 
             <div class="container mx-auto">
 

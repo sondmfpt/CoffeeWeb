@@ -25,7 +25,8 @@
                     <div class="container m-auto">
                         <!-- HEADER STATIC -->
                         <%@ include file="./include/header-static.jsp" %>
-                        
+                        <%@ include file="./chatbot.jsp" %>
+
                         <!-- CONTENT -->
                         <div class="grid grid-cols-12 gap-2 mt-7">
                             <!-- CONTENT LEFT -->

@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,15 +10,29 @@
         <link href="./output.css" rel="stylesheet">
     </head>
     <body>
-        <div class="w-full max-w-md bg-white p-5 rounded-lg shadow-lg">
-            <div id="messages" class="h-72 overflow-y-auto border-b border-gray-300 mb-4 space-y-3 no-scrollbar">
-
-            </div>
-            <input id="user-input" onkeydown="handleKeyDown(event)" type ="text" placeholder="Ask something..." class="w-full p-2 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <button onclick="sendMessage()" class="w-full py-2 bg-blue-500 text-white border border-gray-500 rounded-lg hover:bg-blue-600 transition-colors">
-                Send
-            </button>
+        <input id='avatarUser' type="hidden" value='${user.getAvatar()}'>
+        <div onclick="toggleChatBox()" class="fixed bottom-5 right-5 z-50">
+            <div class="inline rounded-full p-2 cursor-pointer bg-white text-2xl text-black"><i class="fa-solid fa-headset"></i></div>
         </div>
+        <div id="chatBox" class="w-full max-w-md bg-gray-100 p-5 rounded-lg shadow-lg fixed bottom-2 right-16 z-50 font-sans hidden">
+            <div id="messages" class="h-72 overflow-y-auto border-b border-gray-300 mb-4 space-y-3 no-scrollbar">
+                 <!--chat-->
+            </div>
+            <div class="flex gap-2 items-center">
+                <input id="user-input" onkeydown="handleKeyDown(event)" type ="text" placeholder="Ask something..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button onclick="sendMessage()">
+                    <i class="fa-solid fa-paper-plane text-blue-500 text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!--show chatbot-->
+        <script>
+            function toggleChatBox() {
+                document.getElementById('chatBox').classList.toggle('hidden');
+                document.getElementById('user-input').focus();
+            }
+        </script>
 
         <script>
             function handleKeyDown(event) {
@@ -31,14 +46,18 @@
                 if (!userInput)
                     return;
 
+                var avatarUser = document.getElementById('avatarUser').value;
+                avatarUser = avatarUser == "" ? "default-image.png" : avatarUser;
                 const messagesDiv = document.getElementById('messages');
                 const userMessageDiv = document.createElement('div');
-                userMessageDiv.classList.add('flex', 'justify-end')
+                userMessageDiv.classList.add('flex', 'justify-end');
                 userMessageDiv.innerHTML =
                         '<div class="flex gap-1">' +
-                        '<p>' + userInput + '</p>' +
-                        '<i class="fa-solid fa-robot"></i>' 
-                        '</div>';
+                        '<p class="p-2 bg-blue-100 rounded-lg">' + userInput + '</p>' +
+                        '<div class="w-8 h-8 rounded-full overflow-hidden">' +
+                        '<img src="./img/avatar/' + avatarUser + '"></img>' +
+                        '</div>'
+                '</div>';
                 messagesDiv.appendChild(userMessageDiv);
 
                 const response = await fetch('/SWP_Project/chat', {
@@ -49,13 +68,16 @@
 
                 const data = await response.json();
                 const message = JSON.parse(data.choices[0].message.content);
-                console.log(data.choices[0].message.content)
+//                console.log(data.choices[0].message.content)
 
                 //message1
                 const botMessageDiv1 = document.createElement('div');
                 botMessageDiv1.innerHTML =
-                        '<div class="flex gap-1"><i class="fa-solid fa-robot"></i>' +
-                        '<p>' + message.message1 + '</p>' +
+                        '<div class="flex gap-1">' +
+                        '<div class="flex justify-center items-center w-8 h-8 rounded-full border border-black p-2">' +
+                        '<i class="fa-solid fa-robot"></i>' +
+                        '</div>' +
+                        '<p class="p-2 bg-blue-100 rounded-lg">' + message.message1 + '</p>' +
                         '</div>';
                 messagesDiv.appendChild(botMessageDiv1);
 
@@ -81,10 +103,17 @@
                 });
 
                 //message2
-                const botMessageDiv2 = document.createElement('div');
-                botMessageDiv2.textContent = message.message2;
-                messagesDiv.appendChild(botMessageDiv2);
-
+                if (message.message2 != null && message.message2 !== "") {
+                    const botMessageDiv2 = document.createElement('div');
+                    botMessageDiv2.innerHTML =
+                            '<div class="flex gap-1">' +
+                            '<div class="flex justify-center items-center w-8 h-8 rounded-full border border-black overflow-hidden">' +
+                            '<i class="fa-solid fa-robot"></i>' +
+                            '</div>' +
+                            '<p class="p-2 bg-blue-500 rounded-lg">' + message.message2 + '</p>' +
+                            '</div>';
+                    messagesDiv.appendChild(botMessageDiv2);
+                }
 
                 document.getElementById('user-input').value = '';
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
