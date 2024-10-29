@@ -16,7 +16,6 @@ public class ProductVariant {
     private JSONObject attribute;
     private int originPrice;
     private int salePrice;
-    private boolean isPublic;
 
     public ProductVariant() {
     }
@@ -27,15 +26,6 @@ public class ProductVariant {
         this.attribute = attribute;
         this.originPrice = originPrice;
         this.salePrice = salePrice;
-    }
-    
-    public ProductVariant(int id, int product_id, JSONObject attribute, int originPrice, int salePrice, boolean isPublic) {
-        this.id = id;
-        this.product_id = product_id;
-        this.attribute = attribute;
-        this.originPrice = originPrice;
-        this.salePrice = salePrice;
-        this.isPublic = isPublic;
     }
 
     public int getId() {
@@ -77,9 +67,6 @@ public class ProductVariant {
     public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
     }
-
-    public boolean isPublic() {
-        return isPublic;
-    }
+    
     
 }

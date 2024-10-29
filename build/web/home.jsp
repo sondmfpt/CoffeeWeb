@@ -25,7 +25,8 @@
                     <div class="container m-auto">
                         <!-- HEADER STATIC -->
                         <%@ include file="./include/header-static.jsp" %>
-                        
+                        <%@ include file="./chatbot.jsp" %>
+
                         <!-- CONTENT -->
                         <div class="grid grid-cols-12 gap-2 mt-7">
                             <!-- CONTENT LEFT -->
@@ -70,7 +71,7 @@
                                     Caffeine</h1>
                             </div>
                             <div class="col-span-7 ml-7 z-10 animate-moveInLeftFull">
-                                <img class="" src="./img/page/—Pngtree—flying%20cup%20of%20coffee%20with_5057949.png"
+                                <img class="" src="./img/—Pngtree—flying%20cup%20of%20coffee%20with_5057949.png"
                                      alt="Coffee Cup">
                             </div>
                         </div>
@@ -99,7 +100,7 @@
                                     class="absolute w-[300px] h-[300px] border-2 border-black transform skew-x-[20deg] rotate-45">
                                 </div>
                                 <div class="w-[400px] h-[400px] overflow-hidden rotate-[-6deg]">
-                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/thumbnail/${productTrend1.getKey().getThumbnailUrl()}" alt="">
+                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/${productTrend1.getKey().getThumbnailUrl()}" alt="">
                                 </div>
                             </div>
                             <div class="col-span-1 mt-10">
@@ -130,7 +131,7 @@
                                     class="absolute w-[300px] h-[300px] border-2 border-black transform skew-y-[10deg] rotate-45">
                                 </div>
                                 <div class="w-[400px] h-[400px] overflow-hidden rotate-[3deg]">
-                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/thumbnail/${productTrend2.getKey().getThumbnailUrl()}" alt="">
+                                    <img class="object-cover w-full h-full object-left-top border-2 border-black" src="./img/${productTrend2.getKey().getThumbnailUrl()}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -155,7 +156,7 @@
                                         <div class="absolute bg-black top-0 left-0 right-0 bottom-1/2"></div>
                                         <div class="w-[250px] h-[250px] p-5 z-10">
                                             <img class="object-cover w-full h-full border-8 border-coffee-500"
-                                                 src="./img/thumbnail/${pro.getThumbnailUrl()}" alt="">
+                                                 src="./img/${pro.getThumbnailUrl()}" alt="">
                                         </div>
                                         <div class="text-3xl font-bold pb-3">${pro.getName()}</div>
                                     </div>
@@ -185,7 +186,7 @@
                                 <div id="slider" class="flex ease-in-out duration-500">
                                     <c:forEach var="galery" items="${GALERIES}">
                                         <div class="slide min-w-full">
-                                            <img src="./img/page/${galery}" alt="Image 1" class="w-full h-full object-cover">
+                                            <img src="./img/${galery}" alt="Image 1" class="w-full h-full object-cover">
                                         </div>
                                     </c:forEach>
                                 </div>

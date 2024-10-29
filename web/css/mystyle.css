@@ -41,28 +41,3 @@ a {
     background: #3fbfa9;
 }
 
-.btn-right {
-    display: inline-block;
-    
-}
-
-.hyperlink {
-    color: blue;
-    text-decoration: underline;
-}
-
-.display-box {
-    padding: 5px 10px;
-    width: 50%;
-}
-
-.input-box {
-    border: 1px solid black;
-    padding: 5px 10px;
-    width: 50%;
-}
-
-.input-box:active {
-    outline: 2px solid black;
-}
-

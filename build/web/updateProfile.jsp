@@ -40,7 +40,8 @@
             <input type="submit" name="type" value ="Cancel"/>
         </form>
         <%} else {%>
-        <%@ include file="../include/no-permission.html" %>
+        <h1>User not found, please login</h1>
+        <a href="login"><div class="btn btn-cyan">Login</div></a>
         <%}%>
     </body>
     

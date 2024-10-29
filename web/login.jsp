@@ -18,12 +18,12 @@
         <c:set var="status" value="${LOGINSTATUS}"/>
         <c:set var="regisErrors" value="${REGIS_ERRORS}"/>
         <img class="absolute h-full w-full object-cover"
-             src="./img/page/pexels-n-voitkevich-7852566.jpg" alt="">
+             src="./img/pexels-n-voitkevich-7852566.jpg" alt="">
         <div class="flex flex-col justify-center items-center h-screen max-w-5xl mx-auto">
             <div class="rounded w-full grid grid-cols-12 bg-white z-10">
                 <div class="col-span-5">
                     <img class="w-full h-full object-cover rounded-l"
-                         src="./img/page/pexels-photo-302896.webp"
+                         src="./img/pexels-photo-302896.webp"
                          alt="Coffee">
                 </div>
 

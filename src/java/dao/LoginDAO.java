@@ -47,7 +47,15 @@ public class LoginDAO {
                     String gender = rs.getString("gender");
                     Date date = rs.getDate("date_of_birth");
                     String role = rs.getString("role_name");
+                    String avatar = rs.getString("avatar");
+                    String video = rs.getString("video");
+                    String iframe = rs.getString("iframe");
+                    String videoNote = rs.getString("video_note");
                     user = new User(id, firstName, lastName, gender, phone, date, email, role);
+                    user.setAvatar(avatar);
+                    user.setIframe(iframe);
+                    user.setVideo(video);
+                    user.setVideoNote(videoNote);
                 }
 
             }
