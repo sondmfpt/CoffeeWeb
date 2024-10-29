@@ -19,7 +19,7 @@
             <nav class="mt-10">
                 <ul>
                     <li class="mb-6">
-                        <a href="products" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
+                        <a href="admin-products" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
                             Products
                         </a>
                     </li>

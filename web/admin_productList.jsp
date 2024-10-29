@@ -7,8 +7,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product List</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <link href="../output.css" rel="stylesheet">
-        <link href="../css/mystyle.css" rel="stylesheet">
+        <link href="./output.css" rel="stylesheet">
+        <link href="./css/mystyle.css" rel="stylesheet">
     </head>
     <body>
         <c:set var="u" value="${USER}"/>
@@ -20,7 +20,7 @@
                 <div class="bg-gray-100 h-screen">
                     <div class="flex">
                         <!--Navigation-->
-                        <%@ include file="../include/admin-navigation.jsp" %>
+                        <%@ include file="./include/admin-navigation.jsp" %>
 
                         <!-- Main Content -->
                         <!-- Product List here -->
@@ -91,7 +91,7 @@
                             <div class="p-5">
                                 <h1 class="text-4xl font-semibold">Add new Product</h1>
                             </div>
-                            <form action="add-product" method="POST" enctype="multipart/form-data">
+                            <form action="admin-add-product" method="POST" enctype="multipart/form-data">
                                 <div class="flex">
                                     <div class="w-[60%] px-3">
                                         <div class="flex justify-between my-2">
@@ -317,11 +317,11 @@
                                 item1 = pl[i].split("|");
                                 string += "<tr id=" + pl[i] + ">\n"
                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[0] + "</td>"
-                                        + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"../img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>"
+                                        + "<td class=\"border-2 border-gray-300 p-2\"><img style=\"width:30px;\" src=\"./img/thumbnail/" + item1[1] + "\" alt=\"" + item1[2] + "\"/></td>"
                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[2].replace("_", " ") + "</td>"
                                         + "<td class=\"border-2 border-gray-300 p-2\">" + item1[3] + "</td>"
                                         + "<td class=\"border-2 border-gray-300 p-2\" style='color:" + (item1[4] == 'public' ? 'green' : 'red') + "'>" + item1[4] + "</td>"
-                                        + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"product?id=" + item1[0] + "\">view</a></td>"
+                                        + "<td class=\"border-2 border-gray-300 p-2\"><a class=\"hyperlink\" href=\"admin-product?id=" + item1[0] + "\">view</a></td>"
                                         + "</tr>"
                             }
                             document.getElementById('productList').innerHTML = string;
@@ -498,7 +498,7 @@
                 </script>
             </c:when>
             <c:otherwise>
-                <%@ include file="no-permission.html" %>
+                <%@ include file="include/no-permission.html" %>
             </c:otherwise>
         </c:choose>
     </body>

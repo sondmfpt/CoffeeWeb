@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <link href="../output.css" rel="stylesheet">
+        <link href="./output.css" rel="stylesheet">
     </head>
     <body>
         <c:set var="user" value="${USER}"/>
@@ -23,7 +23,7 @@
         <div class="bg-gray-100 relative">
             <div class="flex">
                 <!--Navigation-->
-                <%@ include file="../include/admin-navigation.jsp" %>
+                <%@ include file="./include/admin-navigation.jsp" %>
 
                 <!-- Main Content -->
                 <div class="flex-1 p-10">
@@ -196,7 +196,7 @@
 
                                 <div class="flex flex-col gap-5 justify-center items-center">
                                     <div class="rounded-full overflow-hidden w-32">
-                                        <img src="../img/avatar/${user.getAvatar()}">
+                                        <img src="./img/avatar/${user.getAvatar()}">
                                     </div>
                                     <div class="px-3 py-2 border border-gray-200 cursor-pointer">Chọn ảnh</div>
                                     <div class="text-gray-500">
@@ -283,7 +283,7 @@
                                                 <a href="./product?id=${orderItem.getProduct().getId()}" class="flex justify-between cursor-pointer rounded p-2 hover:bg-coffee-200">
                                                     <div class="flex gap-3">
                                                         <div class="w-20 h-20 bg-red-500 rounded overflow-hidden">
-                                                            <img src="../img/thumbnail/${orderItem.getProduct().getThumbnailUrl()}">
+                                                            <img src="./img/thumbnail/${orderItem.getProduct().getThumbnailUrl()}">
                                                         </div>
                                                         <div class="flex flex-col gap-1">
                                                             <p class="line-clamp-1">${orderItem.getProduct().getName()}</p>

@@ -20,7 +20,7 @@ import models.Category;
  *
  * @author MyPC
  */
-@WebServlet(name = "ProductListServlet", urlPatterns = {"/admin/products"})
+@WebServlet(name = "ProductListServlet", urlPatterns = {"/admin-products"})
 public class ProductListServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

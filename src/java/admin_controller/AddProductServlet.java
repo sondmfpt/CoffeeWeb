@@ -20,7 +20,7 @@ import models.Attribute;
 import models.Product;
 import org.json.JSONObject;
 
-@WebServlet(name = "AddProductServlet", urlPatterns = {"/admin/add-product"})
+@WebServlet(name = "AddProductServlet", urlPatterns = {"/admin-add-product"})
 @MultipartConfig // Needed for handling file uploads
 
 public class AddProductServlet extends HttpServlet {
@@ -81,7 +81,7 @@ public class AddProductServlet extends HttpServlet {
             }
             pd.addImgList(imgs, newp.getId());
             // Redirect to product listing
-            response.sendRedirect("products");
+            response.sendRedirect("admin-products");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

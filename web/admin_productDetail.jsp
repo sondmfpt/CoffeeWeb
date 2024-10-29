@@ -7,8 +7,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product Detail</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <link href="../output.css" rel="stylesheet">
-        <link href="../css/mystyle.css" rel="stylesheet">
+        <link href="./output.css" rel="stylesheet">
+        <link href="./css/mystyle.css" rel="stylesheet">
     </head>
     <body>
         <c:set var="u" value="${USER}"/>
@@ -21,7 +21,7 @@
                 <div class="bg-gray-100 h-screen">
                     <div class="flex">
                         <!--Navigation-->
-                        <%@ include file="../include/admin-navigation.jsp" %>
+                        <%@ include file="./include/admin-navigation.jsp" %>
 
                         <!-- Main Content -->
                         <!-- Product Details here -->
@@ -84,7 +84,7 @@
                                         <p class="text-2xl font-semibold">Thumbnail Image:</p>
                                     </div>
                                     <div class="flex justify-center pt-10">
-                                        <img style="width:30%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
+                                        <img style="width:30%" src="./img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
                                     </div>
                                     <div class="flex justify-between mt-10">
                                         <label class="text-2xl font-semibold">Details Images:</label>
@@ -98,11 +98,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class=" text-1xl font-semibold border-4 border-black p-2" href="products">Back</a>
+                            <a class=" text-1xl font-semibold border-4 border-black p-2" href="admin-products">Back</a>
                         </div>
                         <!-- Edit Product here -->
                         <div id="edit-product" style="display:none" class="flex-1 flex-row p-5">
-                            <form action="edit-product?id=${p.getId()}" method="POST" enctype="multipart/form-data">
+                            <form action="admin-edit-product?id=${p.getId()}" method="POST" enctype="multipart/form-data">
                                 <div class="p-5" >
                                     <span class="text-4xl font-semibold">Edit Product</span>
                                     <div style="position: relative; left:10%;display:inline-block">
@@ -170,7 +170,7 @@
                                             <label class="text-2xl font-semibold">Thumbnail Image:</label><label class="text-1xl font-semibold border-2 border-black px-2" for="thumbnail">Upload</label><input id="thumbnail" name="thumbnail" type="file" style="display: none" accept="image/*" onchange="previewImage()"/><input id="thumbnailURL" type="text" name="thumbnailURL" value="${p.getThumbnailUrl()}" style="display:none"/><br>
                                         </div>
                                         <div class="flex justify-center pt-10">
-                                            <img id="preview" style="width:30%" src="../img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
+                                            <img id="preview" style="width:30%" src="./img/thumbnail/${p.getThumbnailUrl()}" alt="Image Preview">
                                         </div>
                                         <div class="flex justify-between mt-10">
                                             <label class="text-2xl font-semibold">Details Images:</label><div id='detail-input-list'></div><br>
@@ -223,7 +223,7 @@
                         if (imgList1.length > 0) {
                             totalImg1.innerHTML = ${p.getListImage().size()};
                             for (i = 1; i <= imgList1.length; i++) {
-                                detailImgList1.insertAdjacentHTML("beforeend", "<img style='width:30%; display:none' src='../img/detail/" + imgList1[i - 1] + "' alt='image " + i + "'>");
+                                detailImgList1.insertAdjacentHTML("beforeend", "<img style='width:30%; display:none' src='./img/detail/" + imgList1[i - 1] + "' alt='image " + i + "'>");
                             }
                             toPage1(1);
                         }
@@ -340,7 +340,7 @@
                             if (imgList2.length > 0) {
                                 totalImg.innerHTML = ${p.getListImage().size()};
                                 for (i = 1; i <= imgList1.length; i++) {
-                                    detailImgList.insertAdjacentHTML("beforeend", "<img id='img" + i + "' style='width:30%; display:none' src='../img/detail/" + imgList1[i - 1] + "' alt='image " + i + "'>");
+                                    detailImgList.insertAdjacentHTML("beforeend", "<img id='img" + i + "' style='width:30%; display:none' src='./img/detail/" + imgList1[i - 1] + "' alt='image " + i + "'>");
                                     detailInputList.insertAdjacentHTML("beforeend", "<label id='label" + i + "' class='text-1xl font-semibold border-2 border-black px-2' for='input" + i + "' style='display:none'>Upload</label><input id='input" + i + "' name='img" + i + "' type='file' style='display: none' accept='image/*' onchange='addImage()'/>");
                                     detailInputList.insertAdjacentHTML("beforeend", "<input id='secretdetail" + i + "' name='secretdetail" + i + "' type='input' style='display:none' value='" + imgList1[i - 1] + "'/>");
                                 }
@@ -449,7 +449,7 @@
                 </script>
             </c:when>
             <c:otherwise>
-                <%@ include file="no-permission.html" %>
+                <%@ include file="include/no-permission.html" %>
             </c:otherwise>
         </c:choose>
     </body>

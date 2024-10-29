@@ -13,14 +13,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <link href="../output.css" rel="stylesheet">
+        <link href="./output.css" rel="stylesheet">
     </head>
     <body>
         <c:set var="allUsers" value="${ALLUSERS}"/>
         <div class="bg-gray-100 min-h-screen">
             <div class="flex">
                 <!--Navigation-->
-                <%@ include file="../include/admin-navigation.jsp" %>
+                <%@ include file="./include/admin-navigation.jsp" %>
 
                 <!-- Main Content -->
                 <div class="flex-1 p-10">
@@ -318,7 +318,7 @@
             function callUserList() {
                 const xhr = new XMLHttpRequest();
 
-                xhr.open('POST', '/SWP_Project/admin/admin-user-list?order=' + encodeURIComponent(JSON.stringify(order))
+                xhr.open('POST', '/SWP_Project/admin-user-list?order=' + encodeURIComponent(JSON.stringify(order))
                         + '&roleUser=' + encodeURIComponent(roleUserSelected)
                         + '&searchValue=' + encodeURIComponent(searchValue)
                         + '&numPage=' + encodeURIComponent(numPage)
