@@ -19,8 +19,13 @@
             <nav class="mt-10">
                 <ul>
                     <li class="mb-6">
+<<<<<<< HEAD
                         <a href="#" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
                             Dashboard
+=======
+                        <a href="admin-products" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
+                            Products
+>>>>>>> post
                         </a>
                     </li>
                     <li class="mb-6">

@@ -16,6 +16,10 @@ public class ProductVariant {
     private JSONObject attribute;
     private int originPrice;
     private int salePrice;
+<<<<<<< HEAD
+=======
+    boolean isPublic;
+>>>>>>> post
 
     public ProductVariant() {
     }
@@ -67,6 +71,13 @@ public class ProductVariant {
     public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> post
     
+    public boolean isPublic() {
+        return this.isPublic;
+    }
+
 }

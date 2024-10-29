@@ -19,6 +19,7 @@
         <div class="flex flex-col">
             <!-- HEADER DYNAMIC -->
             <%@ include file="./include/header-dynamic.jsp" %>
+            <%@ include file="./chatbot.jsp" %>
 
             <section class="h-screen">
                 <div class="absolute bottom-0 top-0 left-0 right-0 bg-gradient-to-r from-black to-[#331c0e] text-white">

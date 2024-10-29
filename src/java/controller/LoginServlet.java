@@ -28,7 +28,11 @@ public class LoginServlet extends HttpServlet {
 
     private final String ERROR_PAGE = "login.jsp";
     private final String HOME = "./home";
+<<<<<<< HEAD
     private final String ADMINDASHBOARD = "./admin-user-list";
+=======
+    private final String ADMINDASHBOARD = "./admin-products";
+>>>>>>> post
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {

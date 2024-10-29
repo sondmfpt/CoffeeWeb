@@ -995,6 +995,7 @@ exists or setup the property manually. For example like this:
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
+<<<<<<< HEAD
         <copy file="${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.jakarta.servlet.jsp.jstl-api-2.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.javax.activation.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
@@ -1004,6 +1005,17 @@ exists or setup the property manually. For example like this:
         <copy file="${file.reference.mysql-connector-j-9.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.json-20240303.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.gson-2.11.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+=======
+        <copyfiles files="${file.reference.gson-2.11.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-api-2.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.javax.activation.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.javax.mail-api-1.6.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.javax.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.json-20240303.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.mssql-jdbc-10.2.2.jre17.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.mysql-connector-j-9.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+>>>>>>> post
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
