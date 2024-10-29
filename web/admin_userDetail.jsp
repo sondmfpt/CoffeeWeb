@@ -299,7 +299,7 @@
                                                 <a href="./product-detail?productId=${orderItem.getProduct().getId()}" class="flex justify-between cursor-pointer rounded p-2 hover:bg-coffee-200">
                                                     <div class="flex gap-3">
                                                         <div class="w-20 h-20 bg-red-500 rounded overflow-hidden">
-                                                            <img src="./img/${orderItem.getProduct().getThumbnailUrl()}">
+                                                            <img src="./img/thumbnail/${orderItem.getProduct().getThumbnailUrl()}">
                                                         </div>
                                                         <div class="flex flex-col gap-1">
                                                             <p class="line-clamp-1">${orderItem.getProduct().getName()}</p>

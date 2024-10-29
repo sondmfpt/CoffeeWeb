@@ -93,7 +93,7 @@
                             innerProduct.href = ('./product-detail?productId=' + product.id);
                             innerProduct.classList.add('flex', 'flex-col', 'gap-2', 'p-2', 'min-w-[45%]', 'border', 'border-gray-300', 'rounded-lg', 'hover:-translate-y-1', 'transition-transform', 'duration-200', 'cursor-pointer');
                             innerProduct.innerHTML =
-                                    '<img class="w-full" src="./img/' + product.thumbnailUrl + '" alt="Cappuchino">' +
+                                    '<img class="w-full" src="./img/thumbnail/' + product.thumbnailUrl + '" alt="Cappuchino">' +
                                     '<p>' + product.name + '</p>';
                             botMessageProduct.appendChild(innerProduct);
                         })

@@ -119,10 +119,10 @@
                                             <div id="product-Image">
                                                 <c:choose>
                                                     <c:when test="${empty product.getThumbnailUrl()}">
-                                                        <img class="rounded-t" src="./img/invalid-image.png" alt="">
+                                                        <img class="rounded-t" src="./img/page/invalid-image.png" alt="">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <img class="rounded-t" src="./img/${product.getThumbnailUrl()}" alt="">
+                                                        <img class="rounded-t" src="./img/thumbnail/${product.getThumbnailUrl()}" alt="">
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
@@ -491,7 +491,7 @@
                                 productItem.classList.add('col-span-1', 'bg-white', 'rounded', 'hover:-translate-y-1', 'transition', 'ease-in-out', 'duration-200', 'cursor-pointer');
                                 productItem.innerHTML =
                                         '<div id="product-Image">' +
-                                        '<img class="rounded-t" src="./img/' + thumbnailUrl + '" alt="">' +
+                                        '<img class="rounded-t" src="./img/thumbnail/' + thumbnailUrl + '" alt="">' +
                                         '</div>' +
                                         '<div class="p-2">' +
                                         '<div id="product-Name" class="text-xl">' +

@@ -498,7 +498,7 @@
                 </script>
             </c:when>
             <c:otherwise>
-                <%@ include file="include/no-permission.html" %>
+                <%@ include file="failAuthorization.jsp" %>
             </c:otherwise>
         </c:choose>
     </body>
