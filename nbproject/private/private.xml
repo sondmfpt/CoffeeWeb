@@ -5,25 +5,15 @@
         <group>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/LoginDAO.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/LoginServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/EditProductServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/ProductVariant.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUpdateUser.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_productList.jsp</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminAddUserServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/no-permission.html</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_productDetail.jsp</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUserDetailServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_addUser.jsp</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_userDetail.jsp</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin/admin_userList.jsp</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/MenuServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AddProductServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/models/Product.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/AdminUserListServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/ProductDAO.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/ProductListServlet.java</file>
-            <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/admin_controller/ProductDetailServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/HomeServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/dao/AccountDAO.java</file>
         </group>
