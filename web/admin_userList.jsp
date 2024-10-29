@@ -195,7 +195,7 @@
 
             //redirec to user detail
             function userItemClick(userId) {
-                window.location.href = "http://localhost:9999/SWP_Project/admin-user-detail?userId=" + userId;
+                window.location.href = "admin-user-detail?userId=" + userId;
             }
 
             function informationOptionShow() {

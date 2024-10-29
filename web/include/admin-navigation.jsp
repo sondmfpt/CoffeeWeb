@@ -14,13 +14,13 @@
     <body>
         <div class="w-64 min-h-screen bg-gray-800 shadow-md">
             <div class="p-6">
-                <h2 class="text-white text-2xl font-bold">Admin Dashboard</h2>
+                <h2 class="text-white text-2xl font-bold">Admin Page</h2>
             </div>
             <nav class="mt-10">
                 <ul>
                     <li class="mb-6">
-                        <a href="#" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
-                            Dashboard
+                        <a href="admin-products" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
+                            Products
                         </a>
                     </li>
                     <li class="mb-6">
