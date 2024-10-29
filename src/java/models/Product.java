@@ -21,6 +21,7 @@ public class Product {
     private int totalSold;
     private String description;
     private List<String> listImage;
+    private boolean isPublic;
     private Date createdAt;
 
     public Product() {
@@ -38,6 +39,19 @@ public class Product {
         this.description = description;
         this.createdAt = createdAt;
         this.listImage = new ArrayList<>();
+    }
+    
+    public Product(int id, String name, String category, String thumbnailUrl, int price, int totalSold, String description, boolean isPublic, Date createdAt) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.thumbnailUrl = thumbnailUrl;
+        this.price = price;
+        this.totalSold = totalSold;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.listImage = new ArrayList<>();
+        this.isPublic = isPublic;
     }
 
     public int getId() {
@@ -108,7 +122,11 @@ public class Product {
     public void addImage(String url){
         this.listImage.add(url);
     }
-
+    
+    public boolean isPublic() {
+        return this.isPublic;
+    }
+    
     public Date getCreatedAt() {
         return createdAt;
     }

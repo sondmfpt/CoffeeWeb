@@ -101,7 +101,7 @@ public class MenuServlet extends HttpServlet {
         int totalNumberProduct = 0;
         try {
             if (categoryId == "") {
-                products = pDao.getAllProduct(); //get all product
+                products = pDao.getAllPublicProducts(); //get all product
             } else {
                 String[] listCategoryId = categoryId.split(",");
                 for (String id : listCategoryId) {
@@ -170,7 +170,7 @@ public class MenuServlet extends HttpServlet {
         List<String> information = new ArrayList<>(Arrays.asList("Image", "Name", "Price", "Description", "Sold", "Date"));
 
         try {
-            products = pDao.getAllProduct();
+            products = pDao.getAllPublicProducts();
             
             //calculate total page
             totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;

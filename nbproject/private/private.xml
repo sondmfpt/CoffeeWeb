@@ -3,20 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/HomeServlet.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/models/User.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/ChatServlet.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/admin_userDetail.jsp</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/menu.jsp</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/dao/LoginDAO.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/controller/LoginServlet.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/admin_controller/AdminUpdateUser.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/src/java/admin_controller/AdminUserDetailServlet.java</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/chatbot.jsp</file>
-            <file>file:/D:/Code/Java/JavaWeb/CoffeeWeb/web/home.jsp</file>
-=======
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/ChangePasswordServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/UserProfileServlet.java</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/src/java/controller/LoginServlet.java</file>
@@ -44,7 +30,6 @@
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/admin_userDetail.jsp</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/resetPassword.jsp</file>
             <file>file:/D:/Learning/Fpt/Github/CoffeeWeb/web/login.jsp</file>
->>>>>>> post
         </group>
     </open-files>
 </project-private>
