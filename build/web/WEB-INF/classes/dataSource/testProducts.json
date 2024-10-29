@@ -1,0 +1,176 @@
+[
+  {
+    "id": 1,
+    "name": "Cappuccino",
+    "category": "Coffee",
+    "thumbnailUrl": "licensed-image.jpg",
+    "price": 30000,
+    "totalSold": 502,
+    "description": "Cappuccino is an espresso-based coffee drink that is traditionally prepared with steamed milk including a layer of milk foam. Variations of the drink involve the use of cream instead of milk, using non-dairy milk substitutes and flavoring with cocoa powder or cinnamon. ",
+    "listImage": [],
+    "createdAt": "Sep 25, 2024"
+  },
+  {
+    "id": 2,
+    "name": "Latte",
+    "category": "Coffee",
+    "thumbnailUrl": "4vrenb7r.png",
+    "price": 35000,
+    "totalSold": 1200,
+    "description": "Caffè latte, often shortened to just latte in English, is a coffee drink of Italian origin made with espresso and steamed milk, traditionally served in a glass.",
+    "listImage": [],
+    "createdAt": "Sep 24, 2024"
+  },
+  {
+    "id": 3,
+    "name": "Espresso",
+    "category": "Coffee",
+    "thumbnailUrl": "456agpue.png",
+    "price": 20000,
+    "totalSold": 2132,
+    "description": "Espresso is a concentrated form of coffee produced by forcing hot water under high pressure through finely-ground coffee beans. Originating in Italy, espresso has become one of the most popular coffee-brewing methods worldwide.",
+    "listImage": [],
+    "createdAt": "Sep 18, 2024"
+  },
+  {
+    "id": 4,
+    "name": "White Tea",
+    "category": "Tea",
+    "thumbnailUrl": "lhtzrrjp.png",
+    "price": 32000,
+    "totalSold": 1231,
+    "description": "White tea may refer to one of several styles of tea which generally feature young or minimally processed leaves of the Camellia sinensis plant. Currently there is no generally accepted definition of white tea and very little international agreement on how it can be defined.",
+    "listImage": [],
+    "createdAt": "Sep 20, 2024"
+  },
+  {
+    "id": 5,
+    "name": "Green Tea",
+    "category": "Tea",
+    "thumbnailUrl": "h69wolcd.png",
+    "price": 16000,
+    "totalSold": 213,
+    "description": "Green tea is a popular tea variety and is made from the Camellia sinensis plant. It is unoxidised and contains less caffeine than black tea. It is fired or steamed shortly after picking in order to prevent the oxidation process. It often has a fresh flavour profile that can be slightly grassy. Popular varieties of green tea include Sencha, Matcha and Gunpowder Green tea.",
+    "listImage": [],
+    "createdAt": "Sep 21, 2024"
+  },
+  {
+    "id": 6,
+    "name": "Herbal Tea",
+    "category": "Tea",
+    "thumbnailUrl": "2dsqqv9v.png",
+    "price": 18000,
+    "totalSold": 4234,
+    "description": "Herbal teas, technically known as herbal infusions, and less commonly called tisanes, are beverages made from the infusion or decoction of herbs, spices, or other plant material in hot water. Often herb tea, or the plain term tea, is used as a reference to all sorts of herbal teas.",
+    "listImage": [],
+    "createdAt": "Sep 25, 2024"
+  },
+  {
+    "id": 7,
+    "name": "Carbonated Drinks",
+    "category": "Soda",
+    "thumbnailUrl": "uxr8p8k3.png",
+    "price": 30000,
+    "totalSold": 241,
+    "description": "Soft drinks are drinks largely made up of water. Other ingredients are then added to this basic component such as sugar, juice, carbon dioxide, caffeine, aromas ...",
+    "listImage": [],
+    "createdAt": "Sep 18, 2024"
+  },
+  {
+    "id": 8,
+    "name": "Ginger Ale",
+    "category": "Soda",
+    "thumbnailUrl": "0q7fbl0o.png",
+    "price": 35000,
+    "totalSold": 352,
+    "description": "Ginger ale is a carbonated soft drink flavoured with ginger. It is consumed on its own or used as a mixer, often with spirit-based drinks. There are two main types of ginger ale. The golden style is credited to the Irish doctor Thomas Joseph Cantrell.",
+    "listImage": [],
+    "createdAt": "Sep 24, 2024"
+  },
+  {
+    "id": 9,
+    "name": "Pale Lager",
+    "category": "Beer",
+    "thumbnailUrl": "efb1xh86.png",
+    "price": 45000,
+    "totalSold": 423,
+    "description": "Pale lager is a pale-to-golden lager beer with a well-attenuated body and a varying degree of noble hop bitterness. In the mid-19th century, Gabriel Sedlmayr took British pale ale brewing and malt making techniques back to the Spaten Brewery in Germany and applied them to existing lagering methods.",
+    "listImage": [],
+    "createdAt": "Sep 12, 2024"
+  },
+  {
+    "id": 10,
+    "name": "Brown Ale",
+    "category": "Beer",
+    "thumbnailUrl": "eelspe68.png",
+    "price": 42000,
+    "totalSold": 645,
+    "description": "Brown ale is a style of beer with a dark amber or brown colour. The term was first used by London brewers in the late 17th century to describe a lightly hopped ale brewed from 100% brown malt. Today brown ales are made in England, Belgium and America.",
+    "listImage": [],
+    "createdAt": "Sep 26, 2024"
+  },
+  {
+    "id": 11,
+    "name": "White Beer",
+    "category": "Beer",
+    "thumbnailUrl": "5mrxx0hv.png",
+    "price": 31000,
+    "totalSold": 321,
+    "description": "Wheat beer is a top-fermented beer which is brewed with a large proportion of wheat relative to the amount of malted barley. The two main varieties are German Weizenbier and Belgian witbier; other types include Lambic, Berliner Weisse, and Gose.",
+    "listImage": [],
+    "createdAt": "Sep 17, 2024"
+  },
+  {
+    "id": 12,
+    "name": "Oolong",
+    "category": "Tea",
+    "thumbnailUrl": "opawkl9o.png",
+    "price": 27000,
+    "totalSold": 165,
+    "description": "Oolong produced through a process that includes withering the leaves under strong sun and allowing some oxidation to occur before curling and twisting. Most oolong teas, especially those of fine quality, involve unique tea plant cultivars that are exclusively used for particular varieties.",
+    "listImage": [],
+    "createdAt": "Sep 29, 2024"
+  },
+  {
+    "id": 13,
+    "name": "Yellow Tea",
+    "category": "Tea",
+    "thumbnailUrl": "u4gsajg7.png",
+    "price": 25000,
+    "totalSold": 365,
+    "description": "Yellow tea is a particular lightly oxidized tea, either Chinese huángchá and Korean hwangcha.",
+    "listImage": [],
+    "createdAt": "Sep 29, 2024"
+  },
+  {
+    "id": 14,
+    "name": "Rooibos",
+    "category": "Tea",
+    "thumbnailUrl": "0kqeqjuu.png",
+    "price": 26000,
+    "totalSold": 651,
+    "description": "Rooibos tea is a caffeine free tea that has a rich and earthy flavour that can sometimes have floral hints. This type of tea is made from fermented leaves ...",
+    "listImage": [],
+    "createdAt": "Sep 29, 2024"
+  },
+  {
+    "id": 15,
+    "name": "Pale Ale",
+    "category": "Beer",
+    "thumbnailUrl": "2e6vj1rg.png",
+    "price": 32000,
+    "totalSold": 2100,
+    "description": "Pale ale is a golden to amber coloured beer style brewed with pale malt. The term first appeared in England around 1703 for beers made from malts dried with high-carbon coke, which resulted in a lighter colour than other beers popular at that time",
+    "listImage": [],
+    "createdAt": "Sep 29, 2024"
+  },
+  {
+    "id": 16,
+    "name": "test",
+    "category": "Coffee",
+    "price": 12000,
+    "totalSold": 123,
+    "listImage": [],
+    "createdAt": "Sep 29, 2024"
+  }
+]

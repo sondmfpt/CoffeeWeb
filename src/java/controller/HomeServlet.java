@@ -5,6 +5,7 @@
 package controller;
 
 
+import api.DataPuller;
 import dao.LoginDAO;
 import dao.OtherDAO;
 import dao.ProductDAO;
@@ -40,6 +41,8 @@ public class HomeServlet extends HttpServlet {
         List<Product> bestSelling = null;
         List<String> galeries = null;
         Trend trend = null;
+        
+        DataPuller.pullData();
 
         try {
             //get trend information and product

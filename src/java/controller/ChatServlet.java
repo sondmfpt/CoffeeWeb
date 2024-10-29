@@ -59,7 +59,7 @@ public class ChatServlet extends HttpServlet {
 //        System.out.println(infor);
 
         //product data
-        String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\products.json";
+        String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\testProducts.json";
         Gson gson = new Gson();
         String jsonString = "";
         try (FileReader reader = new FileReader(filePath)) {
