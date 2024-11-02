@@ -46,12 +46,13 @@ public class ChatServlet extends HttpServlet {
         String userMessage = request.getParameter("message");
 
         //information data
-        String pathOfInformation = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\shop-information.txt"; // Đường dẫn đến tệp của bạn
+        String pathOfInformation = "WEB-INF/resources/shop-information.txt"; // Đường dẫn đến tệp của bạn
+        String absolutePathInformation = getServletContext().getRealPath(pathOfInformation);
         String infor = "";
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathOfInformation), "UTF-8"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePathInformation), "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                infor += line ;
+                infor += line;
             }
         } catch (IOException e) {
             e.printStackTrace(); // Xử lý ngoại lệ
@@ -59,10 +60,12 @@ public class ChatServlet extends HttpServlet {
 //        System.out.println(infor);
 
         //product data
-        String filePath = "D:\\Code\\Java\\JavaWeb\\CoffeeWeb\\src\\java\\dataSource\\testProducts.json";
+        String filePathProducts = "WEB-INF/resources/testProducts2.json";
+        String absolutePathProducts = getServletContext().getRealPath(filePathProducts);
+        System.out.println(absolutePathProducts);
         Gson gson = new Gson();
         String jsonString = "";
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader(absolutePathProducts)) {
             // Đọc file JSON và chuyển đổi thành JsonObject
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for (var jsonObject : jsonArray) {
@@ -72,8 +75,6 @@ public class ChatServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        
 
         // Gửi yêu cầu đến OpenAI API
         try {

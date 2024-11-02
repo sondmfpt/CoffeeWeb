@@ -42,7 +42,7 @@ public class HomeServlet extends HttpServlet {
         List<String> galeries = null;
         Trend trend = null;
         
-        DataPuller.pullData();
+        DataPuller.pullData(getServletContext());
 
         try {
             //get trend information and product
