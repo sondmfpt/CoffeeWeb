@@ -948,6 +948,10 @@ video {
   height: 400px;
 }
 
+.h-\[80\%\]{
+  height: 80%;
+}
+
 .h-full{
   height: 100%;
 }
@@ -1032,8 +1036,16 @@ video {
   width: 300px;
 }
 
+.w-\[40\%\]{
+  width: 40%;
+}
+
 .w-\[400px\]{
   width: 400px;
+}
+
+.w-\[60\%\]{
+  width: 60%;
 }
 
 .w-\[75px\]{
@@ -1078,6 +1090,10 @@ video {
 
 .flex-1{
   flex: 1 1 0%;
+}
+
+.table-auto{
+  table-layout: auto;
 }
 
 .border-collapse{
@@ -1683,11 +1699,6 @@ video {
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
 }
 
-.bg-blue-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-}
-
 .bg-coffee-200{
   --tw-bg-opacity: 1;
   background-color: rgb(238 225 196 / var(--tw-bg-opacity));
@@ -2123,6 +2134,10 @@ video {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.filter{
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .transition{
