@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import models.User;
 import database.DBHelper;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  *
@@ -28,17 +30,20 @@ public class LoginDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT u.*, r.role_name "
+                String sql = "SELECT u.*, r.role_name, a.password, a.active "
                         + "FROM accounts a "
                         + "JOIN users u ON a.user_id = u.id "
                         + "JOIN role r ON r.id = u.role_id "
-                        + "WHERE username = ? "
-                        + "AND password = ?";
+                        + "WHERE username = ? AND active = 1";
+                
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
-                stm.setString(2, password);
                 rs = stm.executeQuery();
                 if (rs.next()) {
+                    //check password is correct after hash
+                    String pw = rs.getString("password");
+                    if(!BCrypt.checkpw(password, pw)) return null;
+                    
                     int id = rs.getInt("id");
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
@@ -266,6 +271,7 @@ public class LoginDAO {
     public void saveAccount(int userId, String username, String password) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
@@ -358,6 +364,7 @@ public class LoginDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
             con = DBHelper.makeConnection();
             if (con != null) {

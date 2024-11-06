@@ -39,7 +39,7 @@
                     <div class="col-span-1"></div>
                     <div class="col-span-3 py-20 border-x-2 border-x-coffee-500">
                         <div class="w-11/12 mx-auto border-4 border-white">
-                            <img src="./img/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
+                            <img src="./img/page/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg" alt="">
                         </div>
                         <div class="m-4 text-xl">
                             <div>Enjoy Better And Better</div>
@@ -63,7 +63,9 @@
                     </div>
                     <div class="col-span-3 py-20 border-x-2 border-x-coffee-500">
                         <div>
-                            <div class="w-11/12 h-[200px] mx-auto border-4 border-white">Video</div>
+                            <div class="w-11/12 flex justify-center mx-auto border-4 border-white overflow-hidden">
+                                <iframe width="370" height="200" src="https://www.youtube.com/embed/0jIeCAOkgcQ" title="Coffee reels - macro videos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
                         </div>
                         <div class="mx-4 my-8">
                             <h1 class="text-2xl font-bold">Follow Us</h1>

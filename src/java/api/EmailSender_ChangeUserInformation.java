@@ -24,7 +24,7 @@ import models.User;
 public class EmailSender_ChangeUserInformation {
 
     //Send announcement to user's email about changing user's information 
-    public static void changeProfile(User before, User after) {
+    public static void changeProfile(User before, User after, String password) {
 
         final String from = "duongminhson1601@gmail.com"; //email of sender
         final String passwordEmail = "govc qfcq hsbl igjc"; // password
@@ -63,7 +63,7 @@ public class EmailSender_ChangeUserInformation {
                     + "<h2>Đây là thông tin hiện tại của bạn:</h2>"
                     + "<p>ID: " + before.getId() + "</p>"
                     + "<p>Tên đăng nhập: " + before.getUsername() + "</p>"
-                    + (before.getPassword().equals(after.getPassword()) ? "" : ("<p>Mật khẩu: " + before.getPassword() + " -> " + after.getPassword() + "</p>"))
+                    + (password == null ? "" : ("<p>Mật khẩu: " + password + "</p>"))
                     + (before.getFirstName().equals(after.getFirstName()) ? "" : ("<p>Tên: " + before.getFirstName() + " -> " + after.getFirstName() + "</p>"))
                     + (before.getLastName().equals(after.getLastName()) ? "" : ("<p>Họ: " + before.getLastName() + " -> " + after.getLastName() + "</p>"))
                     + (before.getEmail().equals(after.getEmail()) ? "" : ("<p>Email: " + before.getEmail() + " -> " + after.getEmail() + "</p>"))

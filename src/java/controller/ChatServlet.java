@@ -62,7 +62,7 @@ public class ChatServlet extends HttpServlet {
         //product data
         String filePathProducts = "WEB-INF/resources/testProducts2.json";
         String absolutePathProducts = getServletContext().getRealPath(filePathProducts);
-        System.out.println(absolutePathProducts);
+//        System.out.println(absolutePathProducts);
         Gson gson = new Gson();
         String jsonString = "";
         try (FileReader reader = new FileReader(absolutePathProducts)) {

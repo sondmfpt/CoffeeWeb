@@ -50,6 +50,8 @@ public class AdminUpdateUser extends HttpServlet {
         int month = Integer.parseInt(request.getParameter("date-month"));
         int year = Integer.parseInt(request.getParameter("date-year"));
         String videoNote = request.getParameter("videoNote");
+        
+        if(password.equals("••••••••")) password = null;
 
         //get cropped image
         String base64Image = request.getParameter("croppedImage");
@@ -73,7 +75,7 @@ public class AdminUpdateUser extends HttpServlet {
                 User userBefore = uDao.getUserById(id);
                 uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive, videoNote);
                 User userAfter = uDao.getUserById(id);
-                EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter);
+                EmailSender_ChangeUserInformation.changeProfile(userBefore, userAfter, password);
             } else {
                 uDao.updateUser(id, password, firstname, lastname, email, phone, gender, date, roleId, isActive, videoNote);
             }

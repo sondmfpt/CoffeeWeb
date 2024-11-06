@@ -17,11 +17,11 @@ import models.ProductVariant;
 import models.User;
 import models.UserOrder;
 import java.sql.Statement;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
- * @author Son Duong
- * This DAO will responsive about user tasks
+ * @author Son Duong This DAO will responsive about user tasks
  */
 public class UserDAO {
 
@@ -333,16 +333,28 @@ public class UserDAO {
     private void updateAccount(int id, String password, boolean isActive) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
+        if (password != null) {
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+        }
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "UPDATE accounts "
-                        + "SET password = ?, active = ? "
-                        + "WHERE user_id = ? ";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, password);
-                stm.setBoolean(2, isActive);
-                stm.setInt(3, id);
+                if (password != null) {
+                    String sql = "UPDATE accounts "
+                            + "SET password = ?, active = ? "
+                            + "WHERE user_id = ? ";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, password);
+                    stm.setBoolean(2, isActive);
+                    stm.setInt(3, id);
+                }else{
+                    String sql = "UPDATE accounts "
+                            + "SET active = ? "
+                            + "WHERE user_id = ? ";
+                    stm = con.prepareStatement(sql);
+                    stm.setBoolean(1, isActive);
+                    stm.setInt(2, id);
+                }
                 stm.executeUpdate();
             }
         } finally {
@@ -354,7 +366,7 @@ public class UserDAO {
             }
         }
     }
-    
+
     public void updateUserAvatar(int id, String avatar) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -378,7 +390,7 @@ public class UserDAO {
             }
         }
     }
-    
+
     public void updateUserIframe(int id, String iframe) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -388,12 +400,12 @@ public class UserDAO {
                 String sql = "UPDATE users "
                         + "SET iframe = ? "
                         + "WHERE id = ?";
-                
+
                 stm = con.prepareStatement(sql);
                 stm.setString(1, iframe);
                 stm.setInt(2, id);
                 stm.executeUpdate();
-                
+
                 String sql2 = "UPDATE users "
                         + "SET video = ? "
                         + "WHERE id = ?";
@@ -411,7 +423,7 @@ public class UserDAO {
             }
         }
     }
-    
+
     public void updateUserVideo(int id, String video) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -425,7 +437,7 @@ public class UserDAO {
                 stm.setString(1, video);
                 stm.setInt(2, id);
                 stm.executeUpdate();
-                
+
                 String sql2 = "UPDATE users "
                         + "SET iframe = ? "
                         + "WHERE id = ?";
@@ -566,6 +578,7 @@ public class UserDAO {
     public void addAccount(String username, String password, boolean isActive, int userId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
@@ -582,7 +595,7 @@ public class UserDAO {
 
         }
     }
-    
+
     public void removeUserAddress(int addressId) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;

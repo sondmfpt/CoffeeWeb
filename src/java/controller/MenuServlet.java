@@ -137,7 +137,7 @@ public class MenuServlet extends HttpServlet {
                 totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
                 products = getProductFollowingPage(products, pageNum);
             }
-            System.out.println(ROWS_PER_PAGE);
+//            System.out.println(ROWS_PER_PAGE);
             productResponse = new ProductResponse(products, pageNum, totalPage);
             productResponse.setTotalNumberProduct(totalNumberProduct);
             productResponse.setRowPerPage(ROWS_PER_PAGE);

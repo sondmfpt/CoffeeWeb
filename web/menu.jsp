@@ -150,13 +150,34 @@
                                 </div>
                                 <div id="page-button" class="flex items-center justify-center my-3">
                                     <c:forEach begin="1" end="${TOTALPAGE}" step="${1}" var="i">
-                                        <div>
-                                            <label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100 ${i == 1 ? "bg-white" : ""}" for="page-button-${i}">${i}</label>
-                                            <input type="radio" id="page-button-${i}" name="page" value="${i}" onchange="pageButtonClick()" class="hidden">
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${i <= 3}">
+                                                <div>
+                                                    <label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100 ${i == 1 ? "bg-white" : ""}" for="page-button-${i}">${i}</label>
+                                                    <input type="radio" id="page-button-${i}" name="page" value="${i}" onchange="pageButtonClick()" class="hidden">
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+
+                                                <!-- Hiển thị dấu "..." nếu i == 4 và tổng số trang lớn hơn 5 -->
+                                                <c:if test="${i == 4 && TOTALPAGE > 5}">
+                                                    <div class="h-9 w-9 mx-3 flex items-center justify-center">...</div>
+                                                </c:if>
+
+                                                <!-- Hiển thị hai trang cuối -->
+                                                <c:if test="${i > TOTALPAGE - 2}">
+                                                    <div>
+                                                        <label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100" for="page-button-${i}">${i}</label>
+                                                        <input type="radio" id="page-button-${i}" name="page" value="${i}" onchange="pageButtonClick()" class="hidden">
+                                                    </div>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </c:forEach>
 
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -465,7 +486,7 @@
                         var totalNumProduct = productResponse.totalNumberProduct;
                         var rowPerPage = productResponse.rowPerPage;
 
-                        console.log(rowPerPage);
+//                        console.log(rowPerPage);
 
                         //Set max and value of number product per page
                         numberPerPage.setAttribute("max", totalNumProduct);
@@ -515,18 +536,37 @@
                         //Change number of page
                         const pageButtons = document.getElementById('page-button');
                         pageButtons.innerHTML = '';
-                        for (var i = 1; i <= totalPage; i++) {
+                        console.log(prePage);
+                        var start = 2;
+                        if(prePage > 1) start = prePage;
+                        for (var i = start - 1; i <= totalPage; i++) {
                             var pageButton = document.createElement('div');
-                            if (i == prePage) {
-                                pageButton.innerHTML =
-                                        '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded bg-white hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
-                                        '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" checked class="hidden">'
+                            if (i <= start + 1) {
+                                if (i == prePage) {
+                                    pageButton.innerHTML =
+                                            '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded bg-white hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
+                                            '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" checked class="hidden">'
+                                } else {
+                                    pageButton.innerHTML =
+                                            '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
+                                            '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" class="hidden">'
+                                }
+                                pageButtons.appendChild(pageButton);
                             } else {
-                                pageButton.innerHTML =
-                                        '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
-                                        '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" class="hidden">'
+                                if (i == start + 2 && totalPage > 5) {
+                                    var dot = document.createElement('div');
+                                    dot.classList.add('h-9', 'w-9', 'mx-3', 'flex', 'items-center', 'justify-center');
+                                            dot.innerHTML = '...';
+                                    pageButtons.appendChild(dot);
+                                }
+                                if (i > totalPage - 2) {
+                                    pageButton.innerHTML =
+                                            '<label class="h-9 w-9 mx-3 flex items-center justify-center cursor-pointer rounded hover:bg-slate-100" for="page-button-' + i + '">' + i + '</label>' +
+                                            '<input type="radio" id="page-button-' + i + '" name="page" value="' + i + '" onchange="pageButtonClick()" class="hidden">'
+                                    pageButtons.appendChild(pageButton);
+
+                                }
                             }
-                            pageButtons.appendChild(pageButton);
                         }
 
                         informationEvent();

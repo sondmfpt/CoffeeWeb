@@ -61,8 +61,10 @@
                                     <p>No option anymore!</p>
                                 </div>
                             </c:if>
-                            <input class="mt-3 col-span-3 py-2 px-3 bg-green-500 rounded cursor-pointer text-white col-span-4" type="submit"
-                                   value="Submit"/>
+                            <div class="text-center col-span-12">
+                                <input class="mt-3 col-span-3 py-2 px-3 bg-green-500 rounded cursor-pointer text-white col-span-4 w-full" type="submit"
+                                       value="Submit"/>
+                            </div>
                         </form>
                     </div>
                 </c:if>

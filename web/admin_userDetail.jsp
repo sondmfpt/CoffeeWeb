@@ -65,7 +65,7 @@
                                         <tr>
                                             <td class="text-end text-slate-500">Mật khẩu</td>
                                             <td class="py-2 px-5">
-                                                <input class="px-2 py-2 border border-gray-200 rounded" type="text" value="${user.getPassword()}" name="password">
+                                                <input class="px-2 py-2 border border-gray-200 rounded" type="text" value="••••••••" name="password">
                                             </td>
                                         </tr>
                                         <tr>

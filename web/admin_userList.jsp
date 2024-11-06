@@ -120,35 +120,59 @@
                                 <tr>
                                     <th id="header-username" onclick="orderEvent('username')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Tên người dùng
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                     <th id="header-firstname" onclick="orderEvent('firstname')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Tên
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                     <th id="header-lastname" onclick="orderEvent('lastname')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Họ
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                     <th id="header-email" onclick="" class="py-2 px-4 border-b">Email</th>
                                     <th id="header-phone" onclick="" class="py-2 px-4 border-b">Số điện thoại</th>
                                     <th id="header-role" onclick="orderEvent('role')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Vai trò
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                     <th id="header-date" onclick="orderEvent('date')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Ngày tạo
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                     <th id="header-status" onclick="orderEvent('status')" class="py-2 px-4 border-b hover:bg-coffee-300 cursor-pointer">
                                         Trạng thái
-                                        <i class="fa-solid fa-caret-up hidden"></i>
-                                        <i class="fa-solid fa-caret-down hidden"></i>
+                                        <span class="hidden arrow-up">
+                                            <i class="fa-solid fa-caret-up"></i>
+                                        </span>
+                                        <span class="hidden arrow-down">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </span>
                                     </th>
                                 </tr>
                             </thead>
@@ -228,10 +252,15 @@
                 })
 
                 if (order.value == 'asc') {
-                    event.target.querySelector('.fa-caret-up').classList.remove('hidden');
+                    event.target.querySelector('.arrow-up').classList.remove('hidden');
+                    event.target.querySelector('.arrow-down').classList.add('hidden');
                 }
-                if (order.value == 'desc') {
-                    event.target.querySelector('.fa-caret-down').classList.remove('hidden');
+                else if (order.value == 'desc') {
+                    event.target.querySelector('.arrow-down').classList.remove('hidden');
+                    event.target.querySelector('.arrow-up').classList.add('hidden');
+                }else{
+                    event.target.querySelector('.arrow-up').classList.add('hidden');
+                    event.target.querySelector('.arrow-down').classList.add('hidden');
                 }
 
                 callUserList();
