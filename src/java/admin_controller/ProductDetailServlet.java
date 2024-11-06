@@ -22,7 +22,7 @@ import models.ProductVariant;
  *
  * @author MyPC
  */
-@WebServlet(name = "ProductDetailServlet", urlPatterns = {"/admin-product"})
+@WebServlet(name = "AdminProductDetailServlet", urlPatterns = {"/admin-product"})
 public class ProductDetailServlet extends HttpServlet {
 
     @Override
