@@ -486,7 +486,6 @@
                         var totalNumProduct = productResponse.totalNumberProduct;
                         var rowPerPage = productResponse.rowPerPage;
 
-//                        console.log(rowPerPage);
 
                         //Set max and value of number product per page
                         numberPerPage.setAttribute("max", totalNumProduct);
@@ -536,7 +535,6 @@
                         //Change number of page
                         const pageButtons = document.getElementById('page-button');
                         pageButtons.innerHTML = '';
-                        console.log(prePage);
                         var start = 2;
                         if(prePage > 1) start = prePage;
                         for (var i = start - 1; i <= totalPage; i++) {

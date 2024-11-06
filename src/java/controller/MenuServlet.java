@@ -28,8 +28,7 @@ import models.ProductResponse;  // product that response to front-end
 
 /**
  *
- * @author Son Duong
- * This program will set up and display list items
+ * @author Son Duong This program will set up and display list items
  */
 @WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
 public class MenuServlet extends HttpServlet {
@@ -108,12 +107,11 @@ public class MenuServlet extends HttpServlet {
                     products.addAll(pDao.getListProductByCategoryId(Integer.parseInt(id))); //get product by category
                 }
             }
+            products = getProductBySearching(products, searchValue); //get product by searching
             if (products.size() == 0) {
                 pageNum = 0;
                 totalPage = 0;
             } else {
-
-                products = getProductBySearching(products, searchValue); //get product by searching
 
                 //calculate total page by number of products and number product per page
                 ROWS_PER_PAGE = products.size() < ROWS_PER_PAGE ? products.size() : ROWS_PER_PAGE;
@@ -165,16 +163,16 @@ public class MenuServlet extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;
         List<Category> categories = null;
-        
+
         //set information product to show
         List<String> information = new ArrayList<>(Arrays.asList("Image", "Name", "Price", "Description", "Sold", "Date"));
 
         try {
             products = pDao.getAllPublicProducts();
-            
+
             //calculate total page
             totalPage = (products.size()) % ROWS_PER_PAGE == 0 ? products.size() / ROWS_PER_PAGE : products.size() / ROWS_PER_PAGE + 1;
-            
+
             //set attribute to view
             request.setAttribute("TOTALPAGE", totalPage);
             products = getProductFollowingPage(products, 1);
