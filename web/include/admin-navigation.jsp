@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li class="mb-6">
-                        <a href="#" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
+                        <a href="./login" class="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white py-2 px-4 transition-colors duration-200 rounded-lg">
                             Logout
                         </a>
                     </li>

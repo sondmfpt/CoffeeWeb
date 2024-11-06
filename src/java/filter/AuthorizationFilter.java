@@ -47,14 +47,25 @@ public class AuthorizationFilter implements Filter {
 
         // Authorize page following roles 
         if (requestURI.contains("admin")) {
-            // Chỉ cho phép người dùng có vai trò là "ADMIN" truy cập trang /admin
-//            if (userRole != null && userRole.equals("ADMIN")) {
-            if (true) {
-                // Users with access
-                chain.doFilter(request, response);
-            } else {
-                //  User is not allowed access page, redirect to error page
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/fail-authorization");
+            if(requestURI.contains("user")){
+                // Chỉ cho phép người dùng có vai trò là "ADMIN" truy cập trang /admin
+                if (userRole != null && userRole.equals("ADMIN")) {
+    //            if (true) {
+                    // Users with access
+                    chain.doFilter(request, response);
+                } else {
+                    //  User is not allowed access page, redirect to error page
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/fail-authorization");
+                }
+            }else {
+                // Chỉ cho phép người dùng có vai trò là "ADMIN" truy cập trang /admin
+                if (userRole != null && (userRole.equals("ADMIN") || userRole.equals("EMPLOYEE"))) {
+                    // Users with access
+                    chain.doFilter(request, response);
+                } else {
+                    //  User is not allowed access page, redirect to error page
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/fail-authorization");
+                }
             }
         } else {
             // If page is not authorization require => allow user access

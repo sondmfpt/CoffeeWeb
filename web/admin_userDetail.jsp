@@ -159,10 +159,17 @@
                                         <tr>
                                             <td class="text-end text-slate-500">Vai trò</td>
                                             <td class="py-2 px-5 flex gap-5">
-                                                <select name="roleId" class="px-2 py-2 border border-gray-200 rounded">
-                                                    <option value="1" ${user.getRole() == 'ADMIN' ? 'selected' : ''}>Quản trị viên</option>
-                                                    <option value="2" ${user.getRole() == 'CUSTOMER' ? 'selected' : ''}>Khách hàng</option>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${user.getRole() == 'ADMIN'}">
+                                                        <p class="px-3 py-2 bg-gray-100 text-gray-500 border border-gray-200 rounded">Quản trị viên</p>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select name="roleId" class="px-2 py-2 border border-gray-200 rounded">
+                                                            <option value="3" ${user.getRole() == 'EMPLOYEE' ? 'selected' : ''}>Nhân viên</option>
+                                                            <option value="2" ${user.getRole() == 'CUSTOMER' ? 'selected' : ''}>Khách hàng</option>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </tr>
                                         <tr>

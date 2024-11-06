@@ -132,7 +132,7 @@
                                             <td class="text-end text-slate-500">Vai trò</td>
                                             <td class="py-2 px-5 flex gap-5">
                                                 <select name="roleId" class="px-2 py-2 border border-gray-200 rounded">
-                                                    <option value="1">Quản trị viên</option>
+                                                    <option value="3">Nhân viên</option>
                                                     <option value="2">Khách hàng</option>
                                                 </select>
                                             </td>

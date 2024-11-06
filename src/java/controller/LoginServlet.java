@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
             User user = lDao.checkAccount(username, password);
             //if user is exist, change url to home page
             if (user != null) {
-                if (user.getRole().equals("ADMIN")) {
+                if (user.getRole().equals("ADMIN") || user.getRole().equals("EMPLOYEE")) {
                     url = ADMINDASHBOARD;
                 } else {
                     url = HOME;
