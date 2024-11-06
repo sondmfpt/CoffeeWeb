@@ -35,7 +35,7 @@
                     </div>
                     <div class="grid grid-cols-12 gap-6">
                         <!-- LEFT -->
-                        <div class="col-span-3 md:hidden lg:block">
+                        <div class="col-span-3 hidden lg:block">
                             <div class="mb-7">
                                 <div class="flex gap-4 items-center">
                                     <i class="fa-solid fa-bars"></i>
@@ -74,7 +74,7 @@
                         </div>
 
                         <!-- RIGHT -->
-                        <div class="md:col-span-12 lg:col-span-9">
+                        <div class="col-span-12 lg:col-span-9">
                             <!-- ORDER LIST -->
                             <div class="bg-coffee-300 rounded">
                                 <div class="flex justify-between items-center px-7 py-4">
