@@ -4,6 +4,7 @@
     Author     : Son Duong
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,7 @@
     </head>
     <body>
         <c:set var="user" value="${USER}"/>
+        <c:set var="product" value="${PRODUCT}"/>
         <div class="flex flex-col">
             <!-- NAVBAR -->
             <div class="flex flex-col bg-coffee-200">
@@ -37,7 +39,7 @@
                         <!--PRODUCT-->
                         <div class="flex flex-col md:flex-row items-center justify-center py-10">
                             <div class="md:w-1/2 flex flex-col justify-center gap-2">
-                                <img src="https://3croastery.com/wp-content/uploads/2021/12/Thiet-ke-chua-co-ten-4.jpg" alt="Lac Duong Coffee" class="shadow-lg rounded-md">
+                                <img src="./img/thumbnail/${product.thumbnailUrl}" alt="Lac Duong Coffee" class="shadow-lg rounded-md">
                                 <div class="flex gap-3 item-center overflow-x-scroll">
                                     <img class="w-20 h-20 bg-red-800 rounded">
                                     <img class="w-20 h-20 bg-red-800 rounded">
@@ -48,8 +50,8 @@
                             </div>
 
                             <div class="md:w-2/3 p-6">
-                                <h1 class="text-2xl font-bold mb-4">Cà Phê Arabica Lạc Dương</h1>
-                                <p class="text-xl font-semibold text-red-500 mb-4">130.000VND - 325.000VND</p>
+                                <h1 class="text-2xl font-bold mb-4">${product.name}</h1>
+                                <p class="text-xl font-semibold text-red-500 mb-4">${product.price}</p>
 
                                 <div class="mb-4 flex gap-4 items-center">
                                     <label for="weight" class="block text-lg font-medium text-gray-700">Khối lượng</label>
@@ -108,9 +110,9 @@
                                 </div>
                             </div>
                             <!--DESCRIPTION-->
-                            <div class="my-5">
+                            <div class="my-5 font-medium">
                                 <div>
-
+                                    ${product.description}
                                 </div>
                             </div>
 

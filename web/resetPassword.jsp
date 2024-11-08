@@ -21,8 +21,10 @@
         <c:set var="lastname" value="${USER_LASTNAME}"/>
         <c:set var="phone" value="${USER_PHONE}"/>
         <c:set var="email" value="${USER_EMAIL}"/>
+
         <div class="fixed top-0 bottom-0 right-0 left-0 bg-slate-600/40 z-20 flex justify-center items-center">
             <div class="bg-white rounded w-[30%]">
+                <!--form enter username-->
                 <c:if test="${status.equals('enterAccount')}">
                     <form action="./reset-password?statusPost=checkUsername" class="p-5 flex items-center flex-col" method='POST'>
                         <h1 class="text-center text-xl font-bold text-slate-800">Enter your account need to reset</h1>
@@ -39,6 +41,7 @@
                     </div>
                 </c:if>
 
+                <!--form chose option-->
                 <c:if test="${status.equals('chooseOption')}">
                     <div class="p-5 flex items-center flex-col">
                         <h1>Your account: <span class="font-bold">${firstname} ${lastname}</span></h1>
@@ -69,6 +72,7 @@
                     </div>
                 </c:if>
 
+                <!--form enter code-->
                 <c:if test="${fn:contains(status, 'enterCode')}">
                     <form class="p-5 flex items-center flex-col" action="./reset-password?statusPost=enterCode_${fn:contains(status, 'email') ? "email" : "phone"}" method="POST">
                         <h1 class="my-3 text-center text-xl font-bold text-slate-800">
@@ -94,6 +98,7 @@
                     </form>
                 </c:if>
 
+                <!--form reset password-->
                 <c:if test="${fn:contains(status, 'resetPassword')}">
                     <div class="p-5 flex items-center flex-col">
                         <h1 class="my-3 text-center text-xl font-bold text-slate-800">Reset Password</h1>
@@ -116,7 +121,6 @@
                         </form>
                     </div>
                 </c:if>
-
 
             </div>
         </div>

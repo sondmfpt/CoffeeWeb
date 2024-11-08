@@ -103,7 +103,7 @@
                                     </div>
                                     <div>
                                         <div>
-                                            <input type="number" name="numPerPage" class="w-12 text-right" value="5" min="1">
+                                            <input type="number" name="numPerPage" class="w-12 text-right" value="12" min="1">
                                             <span>/ Page</span>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                             </div>
 
                             <!-- PRODUCT LIST -->
-                            <div class="my-5 font-sans">
+                            <div class="my-5 font-sans font-medium">
                                 <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                                     <c:forEach var="product" items="${products}">
                                         <a href="./product-detail?productId=${product.getId()}"
@@ -246,14 +246,14 @@
 
             radios.forEach(function (radio) {
                 radio.addEventListener('change', function () {
-                    var selectedAddress = [];
+                    var selectedCategories = [];
                     var orderValue = "";
                     var pageNum = 1;
-                    var numPerPage = 5;
+                    var numPerPage = 12;
                     var searchValue = document.querySelector('input[name="searchProduct"]').value;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
-                            selectedAddress.push(radio.value);
+                            selectedCategories.push(radio.value);
                     });
 
                     if (orderByPrice.value == '') {
@@ -277,20 +277,20 @@
                     }
 
                     numPerPage = numberPerPage.value;
-                    callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                    callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
                 });
             });
 
             orderType.forEach(function (ot) {
                 ot.addEventListener('change', function () {
-                    var selectedAddress = [];
+                    var selectedCategories = [];
                     var orderValue = "";
                     var pageNum = 1;
-                    var numPerPage = 5;
+                    var numPerPage = 12;
                     var searchValue = document.querySelector('input[name="searchProduct"]').value;
                     radios.forEach(function (radio) {
                         if (radio.checked == true)
-                            selectedAddress.push(radio.value);
+                            selectedCategories.push(radio.value);
                     });
 
                     orderType.forEach(function (ot) {
@@ -317,19 +317,19 @@
 
                     numPerPage = numberPerPage.value;
 
-                    callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                    callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
                 });
             });
 
             orderByPrice.addEventListener('change', function () {
-                var selectedAddress = [];
+                var selectedCategories = [];
                 var orderValue = "";
                 var pageNum = 1;
-                var numPerPage = 5;
+                var numPerPage = 12;
                 var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
-                        selectedAddress.push(radio.value);
+                        selectedCategories.push(radio.value);
                 });
 
 
@@ -353,18 +353,18 @@
 
                 numPerPage = numberPerPage.value;
 
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
             });
 
             numberPerPage.addEventListener('change', function () {
-                var selectedAddress = [];
+                var selectedCategories = [];
                 var orderValue = "";
                 var pageNum = 1;
-                var numPerPage = 5;
+                var numPerPage = 12;
                 var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
-                        selectedAddress.push(radio.value);
+                        selectedCategories.push(radio.value);
                 });
 
                 if (orderByPrice.value == '') {
@@ -388,18 +388,18 @@
                 }
 
                 numPerPage = numberPerPage.value;
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
             });
 
             function pageButtonClick() {
                 pages = document.querySelectorAll('input[name="page"]');
-                var selectedAddress = [];
+                var selectedCategories = [];
                 var orderValue = "";
                 var pageNum = 1;
                 var searchValue = document.querySelector('input[name="searchProduct"]').value;
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
-                        selectedAddress.push(radio.value);
+                        selectedCategories.push(radio.value);
                 });
 
                 if (orderByPrice.value == '') {
@@ -423,18 +423,18 @@
 
                 numPerPage = numberPerPage.value;
 
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
             }
 
             function SearchEvent() {
-                var selectedAddress = [];
+                var selectedCategories = [];
                 var orderValue = "";
                 var pageNum = 1;
-                var numPerPage = 5;
+                var numPerPage = 12;
 
                 radios.forEach(function (radio) {
                     if (radio.checked == true)
-                        selectedAddress.push(radio.value);
+                        selectedCategories.push(radio.value);
                 });
 
                 if (orderByPrice.value == '') {
@@ -461,14 +461,14 @@
 
                 var searchValue = document.querySelector('input[name="searchProduct"]').value;
 
-                callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue);
+                callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue);
             }
 
-            function callMenu(selectedAddress, orderValue, pageNum, numPerPage, searchValue) {
+            function callMenu(selectedCategories, orderValue, pageNum, numPerPage, searchValue) {
                 const xhr = new XMLHttpRequest();
 
 
-                xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedAddress)
+                xhr.open('POST', '/SWP_Project/menu?categoryId=' + encodeURIComponent(selectedCategories)
                         + '&orderValue=' + encodeURIComponent(orderValue)
                         + '&pageNum=' + encodeURIComponent(pageNum)
                         + '&numPerPage=' + encodeURIComponent(numPerPage)

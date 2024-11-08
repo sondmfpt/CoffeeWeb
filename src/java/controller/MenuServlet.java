@@ -34,7 +34,7 @@ import models.ProductResponse;  // product that response to front-end
 public class MenuServlet extends HttpServlet {
 
     //set default number of product in a page
-    private int ROWS_PER_PAGE = 5;
+    private static int ROWS_PER_PAGE = 12;
     private int totalPage = 0;
 
     //sort product by price (asc and desc)
@@ -93,8 +93,9 @@ public class MenuServlet extends HttpServlet {
         String categoryId = request.getParameter("categoryId");
         String orderValue = request.getParameter("orderValue");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-        ROWS_PER_PAGE = Integer.parseInt(request.getParameter("numPerPage"));
+        int numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
         String searchValue = request.getParameter("searchValue");
+//        list product would be show
         List<Product> products = new ArrayList<>();
         ProductResponse productResponse = null;
         int totalNumberProduct = 0;
@@ -114,7 +115,15 @@ public class MenuServlet extends HttpServlet {
             } else {
 
                 //calculate total page by number of products and number product per page
-                ROWS_PER_PAGE = products.size() < ROWS_PER_PAGE ? products.size() : ROWS_PER_PAGE;
+                if (numPerPage != ROWS_PER_PAGE) {
+                    ROWS_PER_PAGE = numPerPage;
+                } else {
+                    if (products.size() < ROWS_PER_PAGE) {
+                        ROWS_PER_PAGE = products.size();
+                    } else if (products.size() >= 12 && numPerPage < 4) {
+                        ROWS_PER_PAGE = 12;
+                    }
+                }
 
                 totalNumberProduct = products.size();
 
@@ -158,7 +167,7 @@ public class MenuServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("ORDERTYPE", "");
 
-        ROWS_PER_PAGE = 5;
+        ROWS_PER_PAGE = 12;
 
         ProductDAO pDao = new ProductDAO();
         List<Product> products = null;

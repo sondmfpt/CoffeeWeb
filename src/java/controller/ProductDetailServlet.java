@@ -4,12 +4,17 @@
  */
 package controller;
 
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Product;
 
 
 /**
@@ -20,7 +25,11 @@ import java.io.IOException;
 public class ProductDetailServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        ProductDAO pDao = new ProductDAO();
+        Product product = pDao.getProduct(productId);
+        request.setAttribute("PRODUCT", product);
         request.getRequestDispatcher("product-detail.jsp").forward(request, response);
     }
 
@@ -36,7 +45,13 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -50,7 +65,13 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

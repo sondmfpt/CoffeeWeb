@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link href="./output.css" rel="stylesheet">
     </head>
-    <body class="font-sans">
+    <body class="font-sans relative">
         <c:set var="status" value="${LOGINSTATUS}"/>
         <c:set var="regisErrors" value="${REGIS_ERRORS}"/>
         <img class="absolute h-full w-full object-cover"
@@ -54,7 +54,7 @@
                                     <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Register successfully!</i>
                                 </div>
                             </c:if>
-                            
+
                             <c:if test="${status.equals('resetSuccess')}">
                                 <div>
                                     <i class="text-green-600 p-3 bg-green-200 inline-block rounded my-2 w-full">Reset Password successfully!</i>
@@ -222,8 +222,13 @@
                 </div>
 
             </div>
-        </div>
 
+
+        </div>
+        <!--home button-->
+        <a href="./home" class="absolute flex justify-center items-center top-5 left-5 w-10 h-10 bg-white rounded-full overflow-hidden cursor-pointer hover:bg-coffee-200 transition ease-in-out duration-200">
+            <i class="fa-solid fa-house"></i>
+        </a>
         <script>
             document.querySelector('#loginToggle').addEventListener("click", function () {
                 window.location.replace('/SWP_Project/registration');

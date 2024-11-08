@@ -12,7 +12,7 @@
     <body>
         <input id='avatarUser' type="hidden" value='${user.getAvatar()}'>
         <div onclick="toggleChatBox()" class="fixed bottom-5 right-5 z-50">
-            <div class="inline rounded-full p-2 cursor-pointer bg-white text-2xl text-black"><i class="fa-solid fa-headset"></i></div>
+            <div class="inline rounded-full p-2 cursor-pointer bg-white text-2xl text-black hover:bg-coffee-200 transition ease-in-out duration-200"><i class="fa-solid fa-headset"></i></div>
         </div>
         <div id="chatBox" class="w-full max-w-md bg-gray-100 p-5 rounded-lg shadow-lg fixed bottom-2 right-16 z-50 font-sans text-black hidden">
             <div id="messages" class="h-72 overflow-y-auto border-b border-gray-300 mb-4 space-y-3 no-scrollbar">
