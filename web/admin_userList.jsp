@@ -34,8 +34,13 @@
                             </div>
                             <div class="border-r-2 border-black mx-4"></div>
                             <div>
-                                <label class="hover:text-coffee-700 cursor-pointer" for='adminUser'>Quản lý <span>(${TOTALADMIN})</span></label>
+                                <label class="hover:text-coffee-700 cursor-pointer" for='adminUser'>Quản trị viên <span>(${TOTALADMIN})</span></label>
                                 <input onchange="roleUserEvent()" id='adminUser' value="admin" type='radio' name='roleUserSelect' class="hidden">
+                            </div>
+                            <div class="border-r-2 border-black mx-4"></div>
+                            <div>
+                                <label class="hover:text-coffee-700 cursor-pointer" for='employeeUser'>Nhân viên <span>(${TOTALEMPLOYEE})</span></label>
+                                <input onchange="roleUserEvent()" id='employeeUser' value="employee" type='radio' name='roleUserSelect' class="hidden">
                             </div>
                             <div class="border-r-2 border-black mx-4"></div>
                             <div>
@@ -97,7 +102,7 @@
                                     <hr class="border-gray-300 py-1">
                                     <div class="font-medium">
                                         Số lượng người dùng trong 1 trang: 
-                                        <input class="w-8 border border-gray-300 rounded" onchange="numPerPageChange()" type="number" name="numPerPage" value="2" min="1">
+                                        <input class="w-8 border border-gray-300 rounded" onchange="numPerPageChange()" type="number" name="numPerPage" value="5" min="1">
                                     </div>
                                 </div>
                             </div>

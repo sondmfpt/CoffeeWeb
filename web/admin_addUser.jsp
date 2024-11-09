@@ -154,16 +154,18 @@
                                     <div class="flex justify-center">
                                         <div id='saveForm' class="px-4 py-2 w-20 bg-coffee-500 rounded cursor-pointer text-center">Thêm</div>
                                     </div>
-                                    <div id='confirmUpdate' class="flex justify-center items-center top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 absolute hidden">
-                                        <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.5s_ease-out_,_moveInDownFull_.5s_ease-out]">
-                                            <h1 class="text-3xl text-gray-800 text-center font-bold">Bạn có chắc chắn thêm người dùng?</h1>
-                                            <label class="flex items-center gap-2">
-                                                <input type="checkbox" name="sendForUser" value="Yes">
-                                                Gửi thông báo đến email người dùng
-                                            </label>
-                                            <div class="flex gap-5">
-                                                <div id='reject' class="py-2 px-3 bg-red-500 rounded w-20 cursor-pointer">Quay lại</div>
-                                                <input id='concept' type="submit" value='Đồng ý' class="py-2 px-3 bg-green-500 rounded w-20 cursor-pointer">
+                                    <div id='confirmUpdate' class="fixed top-0 right-0 left-0 bottom-0 bg-gray-500/75 z-20 hidden">
+                                        <div class="flex justify-center items-center h-full">
+                                            <div class="bg-white rounded p-12 flex flex-col gap-10 justify-center items-center animate-[fadeIn_.5s_ease-out_,_moveInDownFull_.5s_ease-out]">
+                                                <h1 class="text-3xl text-gray-800 text-center font-bold">Bạn có chắc chắn thêm người dùng?</h1>
+                                                <label class="flex items-center gap-2">
+                                                    <input type="checkbox" name="sendForUser" value="Yes">
+                                                    Gửi thông báo đến email người dùng
+                                                </label>
+                                                <div class="flex gap-5">
+                                                    <div id='reject' class="text-center py-2 px-3 bg-red-500 rounded w-24 cursor-pointer">Quay lại</div>
+                                                    <input id='concept' type="submit" value='Đồng ý' class="text-center py-2 px-3 bg-green-500 rounded w-24 cursor-pointer">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

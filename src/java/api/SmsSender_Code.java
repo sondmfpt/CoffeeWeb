@@ -21,9 +21,11 @@ public class SmsSender_Code {
      * This program send code to user's phone number
      * Using Infobip API
      */
-    private static final String API_BASE_URL = "https://1gv88d.api.infobip.com/sms/2/text/advanced"; // Infobip base url
-    private static final String API_KEY = "c18eeb86edf5a7b33e4d261a6bb29090-9c023f83-9fb6-469f-9289-956cc9add2db";  // Infobip API key
+//    private static final String API_BASE_URL = "https://1gv88d.api.infobip.com/sms/2/text/advanced"; // Infobip base url
+//    private static final String API_KEY = "c18eeb86edf5a7b33e4d261a6bb29090-9c023f83-9fb6-469f-9289-956cc9add2db";  // Infobip API key
 
+    private static final String API_BASE_URL = "https://z3v4n6.api.infobip.com/sms/2/text/advanced";
+    private static final String API_KEY = "a7330629946a3fc9df06bb0ef75ef30e-fc1bcf20-d9f8-4752-8db5-e0a9216b833b";
 
     public static void sendSms(String from, String to, String code) {
         try {

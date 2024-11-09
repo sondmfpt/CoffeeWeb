@@ -68,7 +68,7 @@
 
                 const data = await response.json();
                 const message = JSON.parse(data.choices[0].message.content);
-//                console.log(data.choices[0].message.content);
+                console.log(data.choices[0].message.content);
 
                 //message1
                 const botMessageDiv1 = document.createElement('div');

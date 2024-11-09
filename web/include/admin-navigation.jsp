@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div class="w-64 min-h-screen bg-gray-800 shadow-md relative">
+        <div class="w-64 min-h-screen bg-gray-800 shadow-md">
             <div class="p-6">
                 <h2 class="text-white text-2xl font-bold">Admin Page</h2>
             </div>
@@ -54,9 +54,11 @@
                     </li>
                 </ul>
             </nav>
-            <a href="./home" class="absolute flex justify-center items-center bottom-5 left-5 w-10 h-10 bg-white rounded-full overflow-hidden cursor-pointer hover:bg-coffee-200 transition ease-in-out duration-200">
-                <i class="fa-solid fa-house"></i>
-            </a>
+            <div class="fixed bottom-5 left-5">
+                <a href="./home" class="flex justify-center items-center w-10 h-10 bg-white rounded-full overflow-hidden cursor-pointer hover:bg-coffee-200 transition ease-in-out duration-200">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+            </div>
         </div>
         <script>
             function toggleDropdown(dropdownId) {

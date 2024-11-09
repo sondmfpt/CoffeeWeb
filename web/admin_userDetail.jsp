@@ -162,6 +162,7 @@
                                                 <c:choose>
                                                     <c:when test="${user.getRole() == 'ADMIN'}">
                                                         <p class="px-3 py-2 bg-gray-100 text-gray-500 border border-gray-200 rounded">Quản trị viên</p>
+                                                        <input type="hidden" value="1" name="roleId"/>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select name="roleId" class="px-2 py-2 border border-gray-200 rounded">

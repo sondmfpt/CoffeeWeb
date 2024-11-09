@@ -32,7 +32,7 @@ import org.json.JSONObject;  // convert object to json string
 public class AdminUserListServlet extends HttpServlet {
 
     //set default numbers of students in the list: 2
-    private int ROWS_PER_PAGE = 2;
+    private int ROWS_PER_PAGE = 5;
 
     // Method to count the number of users belonging to a specific role
     private int getTotalUserInRole(List<User> users, String role) {
@@ -157,6 +157,7 @@ public class AdminUserListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            ROWS_PER_PAGE = 5;
             //get user by default
             UserDAO uDao = new UserDAO();
             List<User> allUsers = uDao.getAllUser();
@@ -164,6 +165,7 @@ public class AdminUserListServlet extends HttpServlet {
 
             int totalAdmin = getTotalUserInRole(allUsers, "ADMIN");
             int totalCustomer = getTotalUserInRole(allUsers, "CUSTOMER");
+            int totalEmployee = getTotalUserInRole(allUsers, "EMPLOYEE");
             int totalUser = allUsers.size();
             //calculate total page by total user and numbers user in page
             int totalPage = totalUser % ROWS_PER_PAGE == 0 ? totalUser / ROWS_PER_PAGE : (totalUser / ROWS_PER_PAGE) + 1;
@@ -172,6 +174,7 @@ public class AdminUserListServlet extends HttpServlet {
             request.setAttribute("ALLUSERS", allUsersInPage);
             request.setAttribute("TOTALADMIN", totalAdmin);
             request.setAttribute("TOTALCUSTOMER", totalCustomer);
+            request.setAttribute("TOTALEMPLOYEE", totalEmployee);
             request.setAttribute("TOTALUSER", totalUser);
             request.setAttribute("TOTALPAGE", totalPage);
 
