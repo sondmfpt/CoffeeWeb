@@ -1,8 +1,9 @@
-Name of Shop is 3CRoastery
-Showroom 01: 21 ngõ 30 Mai Anh Tuấn, phường Ô chợ Dừa, quận Đống Đa, Hà Nội
-Showroom 02: 92 Phan Kế Bính, Đống Đa, Hà Nội
-Time open: 07:00 AM - 7:30PM
-Contact: 0971241515
+Name of Shop is 3CRoastery;
+Shop has 2 showroom: 
+Showroom 01: 21 ngõ 30 Mai Anh Tuấn, phường Ô chợ Dừa, quận Đống Đa, Hà Nội;
+Showroom 02: 92 Phan Kế Bính, Đống Đa, Hà Nội;
+Time open: 07:00 AM - 7:30PM;
+Contact: 0971241515;
 3C Roastery is proud to be one of the first pioneers of the 3rd wave of beverages in Vietnam. From a small bar, with the first self-brewing pour bottle in hand and the burning passion of the 4-member founding team, until now, we feel honored to have served more than 10,000+ customers who love specialty drinks.
 In addition, every year 3C is lucky to accompany, train and develop with 100+ employees who are eager to learn, constantly develop and improve themselves.
 With the rapid development of the coffee industry in Vietnam in particular and the world in general, we understand that beverages are for everyone, everyone can bring their own interesting coffee experiences. No matter who you are, as long as you want to explore, you need an experienced and dedicated companion, 3C Academy is very willing to do it.

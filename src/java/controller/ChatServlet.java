@@ -103,6 +103,7 @@ public class ChatServlet extends HttpServlet {
                 + "{\"role\": \"user\", \"content\": \"Your answer always must be only this format and not other ways (including greetings): {\\\"message1\\\": ..., \\\"products\\\": [productId1, productId2, ...], \\\"message2\\\": ...(if any)}\"},"
                 + "{\"role\": \"user\", \"content\": \"message1 is required, products property can be empty and message2 is optional.\"},"
                 + "{\"role\": \"user\", \"content\": \"If my question is not required listing product, then products property will be empty.\"},"
+                + "{\"role\": \"user\", \"content\": \"products property has only list of product id, not other.\"},"
                 + "{\"role\": \"user\", \"content\": \"If my question is Vietnamese, then answer me by Vietnamese, similar to other languages.\"},"
                 + "{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
 
