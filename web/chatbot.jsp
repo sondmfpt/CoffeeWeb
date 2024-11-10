@@ -99,23 +99,39 @@
                         })
                         messagesDiv.appendChild(botMessageProduct);
 
+                        console.log("hi");
+                        //message2
+                        if (message.message2 != null && message.message2 !== "") {
+                            const botMessageDiv2 = document.createElement('div');
+                            botMessageDiv2.innerHTML =
+                                    '<div class="flex gap-1">' +
+                                    '<div class="flex justify-center items-center w-8 h-8 rounded-full border border-black p-2">' +
+                                    '<i class="fa-solid fa-robot"></i>' +
+                                    '</div>' +
+                                    '<p class="p-2 bg-blue-100 rounded-lg">' + message.message2 + '</p>' +
+                                    '</div>';
+                            messagesDiv.appendChild(botMessageDiv2);
+                        }
+
                     }).catch(error => {
                         console.error(error); // xử lý lỗi nếu Promise bị reject
                     });
+                } else {
+                    //message2
+                    if (message.message2 != null && message.message2 !== "") {
+                        const botMessageDiv2 = document.createElement('div');
+                        botMessageDiv2.innerHTML =
+                                '<div class="flex gap-1">' +
+                                '<div class="flex justify-center items-center w-8 h-8 rounded-full border border-black p-2">' +
+                                '<i class="fa-solid fa-robot"></i>' +
+                                '</div>' +
+                                '<p class="p-2 bg-blue-100 rounded-lg">' + message.message2 + '</p>' +
+                                '</div>';
+                        messagesDiv.appendChild(botMessageDiv2);
+                    }
                 }
 
-                //message2
-                if (message.message2 != null && message.message2 !== "") {
-                    const botMessageDiv2 = document.createElement('div');
-                    botMessageDiv2.innerHTML =
-                            '<div class="flex gap-1">' +
-                            '<div class="flex justify-center items-center w-8 h-8 rounded-full border border-black p-2">' +
-                            '<i class="fa-solid fa-robot"></i>' +
-                            '</div>' +
-                            '<p class="p-2 bg-blue-100 rounded-lg">' + message.message2 + '</p>' +
-                            '</div>';
-                    messagesDiv.appendChild(botMessageDiv2);
-                }
+
 
                 document.getElementById('user-input').value = '';
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
