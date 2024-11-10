@@ -75,15 +75,22 @@ public class MenuServlet extends HttpServlet {
 
     //get product by searching
     private List<Product> getProductBySearching(List<Product> products, String searchValue) {
+        List<Product> result = new ArrayList<>();
+        String[] part = searchValue.split("\\s+");
         if (searchValue == null || searchValue.equals("")) {
             return products;
         }
 
-        String lowerCaseSearchValue = searchValue.toLowerCase().trim();
-
-        return products.stream()
-                .filter(pro -> pro.getName().toLowerCase().trim().contains(lowerCaseSearchValue))
-                .collect(Collectors.toList());
+        for (String p : part) {
+            String lowerCaseSearchValue = p.toLowerCase().trim();
+            List<Product> temp = products.stream()
+            .filter(pro -> pro.getName().toLowerCase().trim().contains(lowerCaseSearchValue))
+                    .collect(Collectors.toList());
+            for(Product pro : temp){
+                if(!result.contains(pro)) result.add(pro);
+            }
+        }
+        return result;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
