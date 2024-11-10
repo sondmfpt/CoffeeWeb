@@ -53,7 +53,7 @@ public class AdminUserListServlet extends HttpServlet {
     private List<User> searchUser(List<User> users, String search) {
         // Stream through the list of users, filter by username, and return the matching results
         return users.stream()
-                .filter(user -> user.getUsername().toLowerCase().contains(search.toLowerCase()))
+                .filter(user -> user.getUsername().toLowerCase().trim().contains(search.toLowerCase().trim()))
                 .collect(Collectors.toList());
     }
 

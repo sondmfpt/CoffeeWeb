@@ -79,10 +79,10 @@ public class MenuServlet extends HttpServlet {
             return products;
         }
 
-        String lowerCaseSearchValue = searchValue.toLowerCase();
+        String lowerCaseSearchValue = searchValue.toLowerCase().trim();
 
         return products.stream()
-                .filter(pro -> pro.getName().toLowerCase().contains(lowerCaseSearchValue))
+                .filter(pro -> pro.getName().toLowerCase().trim().contains(lowerCaseSearchValue))
                 .collect(Collectors.toList());
     }
 
