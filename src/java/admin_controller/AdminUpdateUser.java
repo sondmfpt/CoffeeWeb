@@ -90,10 +90,12 @@ public class AdminUpdateUser extends HttpServlet {
                 uDao.updateUserAvatar(id, name);
             }
 
+            //save iframe
             if(iframe.length() != 0) {
                 uDao.updateUserIframe(id, iframe);
             }
             
+            //save video
             if(filePart.getSize() != 0){
                 String path = getServletContext().getRealPath("/") + "video/profile/";
                 String fileName = "video-profile-userId" + id + ".mp4";
